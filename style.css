@@ -1,5 +1,30 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Platforms band */
+.platforms-band { background: var(--off-white); padding: 56px 56px; border-top: 1px solid var(--grey-light); border-bottom: 1px solid var(--grey-light); }
+.platforms-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+.platforms-title {
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--grey); margin-bottom: 28px;
+}
+.platforms-logos {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 22px 48px;
+}
+.platform-logo {
+  height: 46px; width: auto; display: block;
+  object-fit: contain;
+  opacity: 0.85;
+  filter: grayscale(35%);
+  transition: opacity 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+}
+.platform-logo:hover { opacity: 1; filter: grayscale(0%); transform: translateY(-2px); }
+@media (max-width: 700px) {
+  .platforms-band { padding: 44px 24px; }
+  .platforms-logos { gap: 18px 30px; }
+  .platform-logo { height: 38px; }
+}
+
 /* Scroll reveal animations */
 .reveal {
   opacity: 0;

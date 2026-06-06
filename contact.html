@@ -102,6 +102,16 @@
     }
     .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
     .form-note { font-size: 0.75rem; color: var(--grey); text-align: center; margin-top: 12px; }
+    .form-trust {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: 10px 22px; margin-top: 18px;
+      padding-top: 18px; border-top: 1px solid var(--grey-light);
+    }
+    .form-trust span {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.8rem; font-weight: 500; color: var(--dark);
+    }
+    .form-trust svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
 
     @media (max-width: 900px) {
       .contact-section { padding: 72px 24px; }
@@ -220,6 +230,11 @@
           </div>
           <button type="submit" class="form-submit">Envoyer ma demande</button>
           <p class="form-note">En soumettant ce formulaire, vous acceptez d'être recontacté par MADYS Conciergerie.</p>
+          <div class="form-trust">
+            <span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Sans engagement</span>
+            <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> Réponse sous 24h</span>
+            <span><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Estimation gratuite</span>
+          </div>
         </form>
       </div>
 

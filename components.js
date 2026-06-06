@@ -32,6 +32,7 @@
         <div class="footer-brand">
           ${LOGO_IMG}
         </div>
+        <p class="footer-slogan">« Louez l'esprit léger »</p>
         <p class="footer-tagline">Nous simplifions la gestion de vos biens et maximisons vos revenus grâce à notre expertise. Basée en Île-de-France.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/madysconciergerie" target="_blank" rel="noopener" class="social-link" title="Instagram" aria-label="Instagram">
@@ -129,6 +130,34 @@
       ? 'rgba(15,17,23,0.98)'
       : 'rgba(15,17,23,0.92)';
   });
+
+  // Scroll reveal animations
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const revealSelectors = [
+      '.section-header', '.why-image-wrap', '.why-list li', '.process-card',
+      '.avantage-card', '.stats-grid > div', '.contact-card', '.contact-info-title',
+      '.faq-item', '.cta-band-inner', '.step-card', '.service-card', '.legal-inner h2',
+      '.contact-form-wrap', '.avantages-img'
+    ];
+    const els = document.querySelectorAll(revealSelectors.join(','));
+    els.forEach(el => {
+      el.classList.add('reveal');
+      // Stagger items inside the same parent (grids/lists)
+      const siblings = Array.from(el.parentElement ? el.parentElement.children : []);
+      const idx = siblings.indexOf(el);
+      if (idx > 0) el.style.transitionDelay = Math.min(idx * 0.08, 0.4) + 's';
+    });
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => observer.observe(el));
+  }
 
   // FAQ toggle
   document.querySelectorAll('.faq-question').forEach(btn => {

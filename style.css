@@ -1,5 +1,20 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
 /* WhatsApp floating button */
 .whatsapp-float {
   position: fixed;
@@ -306,6 +321,13 @@ footer {
 .footer-logo-text { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--white); letter-spacing: 0.04em; text-transform: uppercase; }
 .footer-logo-text span { color: var(--gold); }
 
+.footer-slogan {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--gold);
+  margin: 14px 0 10px;
+}
 .footer-tagline {
   color: rgba(255,255,255,0.4);
   font-size: 0.85rem;

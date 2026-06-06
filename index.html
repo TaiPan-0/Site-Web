@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MADYS Conciergerie — Gestion de location courte durée en Île-de-France</title>
+  <title>MADYS Conciergerie — Louez l'esprit léger</title>
   <meta name="description" content="MADYS Conciergerie gère votre location courte durée de A à Z en Île-de-France : annonce, ménage, accueil voyageurs, maintenance. Maximisez vos revenus sans effort." />
   <meta name="keywords" content="conciergerie, location courte durée, Airbnb, Île-de-France, gestion locative, conciergerie Airbnb, gestion Airbnb" />
   <meta name="author" content="MADYS Conciergerie" />
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="MADYS Conciergerie" />
   <meta property="og:locale" content="fr_FR" />
-  <meta property="og:title" content="MADYS Conciergerie — Gestion de location courte durée en Île-de-France" />
+  <meta property="og:title" content="MADYS Conciergerie — Louez l'esprit léger" />
   <meta property="og:description" content="On s'occupe de tout, de l'annonce à la remise des clés. Vous encaissez, nous gérons. Estimation gratuite de vos revenus en Île-de-France." />
   <meta property="og:url" content="https://madysconciergerie.com/index.html" />
   <meta property="og:image" content="https://madysconciergerie.com/og-image.png" />
@@ -66,6 +66,13 @@
       text-shadow: 0 2px 24px rgba(0,0,0,0.4);
     }
     .hero-title em { font-style: normal; color: var(--gold); }
+    .hero-slogan {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
     .hero-subtitle { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.82); margin-bottom: 38px; max-width: 480px; margin-left: auto; margin-right: auto; }
     .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .hero-scroll {
@@ -109,6 +116,38 @@
       .why-inner { grid-template-columns: 1fr; gap: 48px; }
       .why-section { padding: 72px 24px; }
     }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background: var(--white); padding: 90px 56px; }
+    .testimonials-inner { max-width: 1200px; margin: 0 auto; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 56px;
+    }
+    .testimonial-card {
+      background: var(--off-white);
+      border: 1px solid var(--grey-light);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,17,23,0.08); }
+    .testimonial-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 16px; }
+    .testimonial-text { font-size: 0.95rem; color: var(--dark); line-height: 1.8; font-style: italic; margin-bottom: 24px; flex-grow: 1; }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .testimonial-avatar {
+      width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--white); font-weight: 700; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .testimonial-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
+    .testimonial-role { font-size: 0.8rem; color: var(--grey); margin-top: 2px; }
+    @media (max-width: 900px) {
+      .testimonials-section { padding: 72px 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -122,6 +161,7 @@
       <h1 class="hero-title">
         Maximisez vos revenus<br><em>sans effort</em>
       </h1>
+      <p class="hero-slogan">« Louez l'esprit léger »</p>
       <p class="hero-subtitle">
         MADYS s'occupe de tout — de l'annonce à la remise des clés. Vous encaissez, nous gérons.
       </p>
@@ -204,6 +244,55 @@
         <div style="margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap;">
           <a href="services.html" class="btn-primary">Voir nos services</a>
           <a href="contact.html" class="btn-secondary">Prendre RDV</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="testimonials-inner">
+      <div class="section-header">
+        <span class="section-label">Ils nous font confiance</span>
+        <h2 class="section-title">Ce que disent nos propriétaires</h2>
+        <p class="section-subtitle">Des propriétaires sereins, des revenus optimisés. Découvrez leurs retours d'expérience.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Je ne m'occupe plus de rien et mes revenus ont nettement augmenté. L'équipe MADYS est réactive et sérieuse, mon appartement est toujours impeccable après chaque séjour."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SL</div>
+            <div>
+              <p class="testimonial-name">Sophie L.</p>
+              <p class="testimonial-role">Propriétaire à Boulogne-Billancourt</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Madys gère mes 2 appartements en LCD à malakoff depuis 18 mois maintenant.
+
+Ils sont très réactifs et pros.
+Je recommande"</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">WG</div>
+            <div>
+              <p class="testimonial-name">Walid G.</p>
+              <p class="testimonial-role">Propriétaire à Malakoff</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Enfin une conciergerie de confiance ! Communication transparente, rapports réguliers et zéro souci de mon côté. Mon bien n'a jamais été aussi rentable."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">CD</div>
+            <div>
+              <p class="testimonial-name">Claire D.</p>
+              <p class="testimonial-role">Propriétaire à Saint-Maur-des-Fossés</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

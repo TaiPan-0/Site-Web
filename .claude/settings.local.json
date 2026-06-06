@@ -13,7 +13,8 @@
       "WebFetch(domain:rimconciergerie.fr)",
       "Bash(python -c \"from PIL import Image; im=Image.open\\('Logo MADYS final blanc.png'\\); print\\(im.size, im.mode\\)\")",
       "PowerShell(Get-ChildItem \"$env:USERPROFILE\\\\Downloads\" -File | Sort-Object LastWriteTime -Descending | Select-Object -First 15 Name, LastWriteTime, Length | Format-Table -AutoSize)",
-      "PowerShell(Copy-Item \"$env:USERPROFILE\\\\Downloads\\\\pngegg.png\" \"C:\\\\Users\\\\admrd\\\\Documents\\\\MADYS\\\\Site Web\\\\abritel.png\" -Force; Add-Type -AssemblyName System.Drawing; $i=[System.Drawing.Image]::FromFile\\(\"C:\\\\Users\\\\admrd\\\\Documents\\\\MADYS\\\\Site Web\\\\abritel.png\"\\); \"$\\($i.Width\\)x$\\($i.Height\\)\"; $i.Dispose\\(\\))"
+      "PowerShell(Copy-Item \"$env:USERPROFILE\\\\Downloads\\\\pngegg.png\" \"C:\\\\Users\\\\admrd\\\\Documents\\\\MADYS\\\\Site Web\\\\abritel.png\" -Force; Add-Type -AssemblyName System.Drawing; $i=[System.Drawing.Image]::FromFile\\(\"C:\\\\Users\\\\admrd\\\\Documents\\\\MADYS\\\\Site Web\\\\abritel.png\"\\); \"$\\($i.Width\\)x$\\($i.Height\\)\"; $i.Dispose\\(\\))",
+      "PowerShell(Get-ChildItem \"$env:USERPROFILE\\\\Downloads\" -File | Where-Object { $_.Extension -match '\\\\.\\(png|jpg|jpeg|webp|avif\\)$' } | Sort-Object LastWriteTime -Descending | Select-Object -First 6 Name, LastWriteTime, Length | Format-Table -AutoSize)"
     ]
   }
 }

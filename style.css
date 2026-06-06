@@ -538,6 +538,19 @@ footer {
   section, .page-hero, .ratings-bar, footer, .cta-band { padding-left: 24px; padding-right: 24px; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .rating-divider { display: none; }
+  .ratings-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 16px;
+    padding: 28px 24px;
+  }
+  .rating-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+  .rating-score { font-size: 1.15rem; }
+  .rating-logo { height: 22px; }
 }
 @media (max-width: 600px) {
   .footer-grid { grid-template-columns: 1fr; }

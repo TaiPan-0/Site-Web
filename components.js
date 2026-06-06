@@ -57,9 +57,8 @@
       <div>
         <p class="footer-col-title">Légal</p>
         <ul class="footer-links">
-          <li><a href="#">Mentions Légales</a></li>
-          <li><a href="#">Politique de Confidentialité</a></li>
-          <li><a href="#">Conditions Générales</a></li>
+          <li><a href="mentions-legales.html">Mentions Légales</a></li>
+          <li><a href="confidentialite.html">Politique de Confidentialité</a></li>
         </ul>
       </div>
       <div>
@@ -81,9 +80,8 @@
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 Madys Conciergerie. Tous droits réservés.</p>
       <div class="footer-legal">
-        <a href="#">Mentions Légales</a>
-        <a href="#">Confidentialité</a>
-        <a href="#">CGU</a>
+        <a href="mentions-legales.html">Mentions Légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
       </div>
     </div>
   </footer>`;

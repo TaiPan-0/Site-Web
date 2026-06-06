@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comment ça marche — MADYS Conciergerie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .steps-section { background: var(--off-white); padding: 90px 56px; }
+    .steps-inner { max-width: 1100px; margin: 0 auto; }
+
+    .step-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      padding: 64px 0; border-bottom: 1px solid var(--grey-light);
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-row.reverse { direction: rtl; }
+    .step-row.reverse > * { direction: ltr; }
+
+    .step-img { width: 100%; height: 340px; object-fit: cover; border-radius: 16px; display: block; }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem; font-weight: 700; color: var(--gold);
+      opacity: 0.15; line-height: 1; margin-bottom: 12px;
+    }
+    .step-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--dark); margin-bottom: 14px; }
+    .step-desc { color: var(--grey); font-size: 0.95rem; line-height: 1.8; margin-bottom: 22px; }
+    .step-details { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .step-details li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--dark); }
+    .step-details li::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+    .faq-section { background: var(--white); padding: 90px 56px; }
+    .faq-inner { max-width: 760px; margin: 0 auto; }
+
+    @media (max-width: 900px) {
+      .steps-section, .faq-section { padding: 72px 24px; }
+      .step-row { grid-template-columns: 1fr; gap: 32px; direction: ltr !important; }
+      .step-row.reverse > * { direction: ltr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="section-label">Comment ça marche</span>
+      <h1 class="section-title">Démarrez en<br>3 étapes simples</h1>
+      <p class="section-subtitle">Prenez rendez-vous en un clic et laissez-nous prendre en charge l'intégralité de la gestion de votre bien.</p>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <section class="steps-section">
+    <div class="steps-inner">
+
+      <div class="step-row">
+        <img
+          src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=800&q=85"
+          alt="Prise de rendez-vous"
+          class="step-img"
+        />
+        <div>
+          <div class="step-num">01</div>
+          <h2 class="step-title">Prendre rendez-vous</h2>
+          <p class="step-desc">Un premier échange téléphonique ou en visioconférence pour répondre à toutes vos questions et présenter nos services. Nous planifions ensuite une première visite de votre bien.</p>
+          <ul class="step-details">
+            <li>Réponse sous 24h garantie</li>
+            <li>Appel ou visio selon votre préférence</li>
+            <li>Estimation de rentabilité offerte</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-row reverse">
+        <img
+          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=85"
+          alt="Visite du logement"
+          class="step-img"
+        />
+        <div>
+          <div class="step-num">02</div>
+          <h2 class="step-title">Visite du logement</h2>
+          <p class="step-desc">Notre équipe visite votre bien, évalue son potentiel et vous propose un plan d'action personnalisé. Nous discutons ensemble de vos objectifs et des améliorations à apporter.</p>
+          <ul class="step-details">
+            <li>Évaluation complète du bien</li>
+            <li>Conseils d'aménagement et de mise en valeur</li>
+            <li>Plan tarifaire personnalisé</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-row">
+        <img
+          src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85"
+          alt="Lancement des services"
+          class="step-img"
+        />
+        <div>
+          <div class="step-num">03</div>
+          <h2 class="step-title">Lancement des services</h2>
+          <p class="step-desc">Après la signature du contrat et la remise des clés, nous prenons en charge toute la gestion. Shooting photo, publication des annonces, accueil des premiers voyageurs — tout est géré.</p>
+          <ul class="step-details">
+            <li>Shooting photo professionnel dès J+3</li>
+            <li>Annonces en ligne sous 7 jours</li>
+            <li>Tableau de bord propriétaire en temps réel</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align: center; margin-top: 56px;">
+      <a href="contact.html" class="btn-primary">
+        Prendre Rendez-vous
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="section-header centered">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Questions fréquentes</h2>
+        <p class="section-subtitle">Tout ce que vous devez savoir avant de confier votre bien à MADYS Conciergerie.</p>
+      </div>
+      <div>
+        <div class="faq-item open">
+          <button class="faq-question">
+            Pourquoi choisir Madys Conciergerie ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Nous offrons une gestion complète et transparente, des tarifs compétitifs, et une expertise locale en Île-de-France. Nos équipes sont dédiées à maximiser vos revenus tout en assurant la sécurité de votre bien.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Comment fonctionne le processus de mise en gestion ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>C'est simple : prenez rendez-vous, nous visitons votre bien pour l'évaluer, et après signature, nous nous occupons de tout : shooting photo professionnel, création des annonces, gestion des voyageurs, ménage et blanchisserie.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Sélectionnez-vous les voyageurs ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Oui, nous filtrons rigoureusement les voyageurs. Nous vérifions les profils, les avis précédents et les identités sur les plateformes pour garantir la sécurité et le respect de votre logement.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Puis-je bloquer des dates pour mon usage personnel ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Absolument. Vous restez propriétaire et pouvez bloquer des dates à tout moment via notre interface ou en nous contactant. Votre calendrier personnel est toujours prioritaire.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Comment sont reversés mes revenus ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Vos revenus vous sont versés chaque mois, accompagnés d'un rapport détaillé de toutes les réservations et des frais de gestion déduits. Tout est transparent et accessible dans votre espace propriétaire.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="cta-band-inner">
+      <h2 class="cta-band-title">Des questions ?<br><span>Parlons-en.</span></h2>
+      <p class="cta-band-subtitle">Notre équipe est disponible pour répondre à toutes vos interrogations.</p>
+      <div class="cta-band-buttons">
+        <a href="contact.html" class="btn-primary">Nous contacter</a>
+        <a href="services.html" class="btn-secondary-light">Voir nos services</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="components.js"></script>
+</body>
+</html>

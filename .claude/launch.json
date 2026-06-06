@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "madys-site",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-NoProfile", "-Command", "$listener = New-Object System.Net.HttpListener; $listener.Prefixes.Add('http://localhost:3000/'); $listener.Start(); while ($listener.IsListening) { $ctx = $listener.GetContext(); $path = Join-Path 'C:\\Users\\admrd\\Documents\\MADYS\\Site Web' ($ctx.Request.Url.LocalPath.TrimStart('/').Replace('/','\\')); if ($path -eq 'C:\\Users\\admrd\\Documents\\MADYS\\Site Web\\') { $path = 'C:\\Users\\admrd\\Documents\\MADYS\\Site Web\\index.html' }; if (Test-Path $path) { $bytes = [System.IO.File]::ReadAllBytes($path); $ctx.Response.ContentLength64 = $bytes.Length; $ctx.Response.OutputStream.Write($bytes, 0, $bytes.Length) }; $ctx.Response.Close() }"],
+      "port": 3000
+    }
+  ]
+}

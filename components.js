@@ -91,8 +91,8 @@
   // Favicon (icône de l'onglet)
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
-  favicon.type = 'image/svg+xml';
-  favicon.href = 'favicon.svg';
+  favicon.type = 'image/png';
+  favicon.href = 'favicon.png';
   document.head.appendChild(favicon);
 
   document.body.insertAdjacentHTML('afterbegin', navHTML);

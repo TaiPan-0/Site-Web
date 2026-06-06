@@ -10,7 +10,8 @@
       "PowerShell(Get-Command py -ErrorAction SilentlyContinue)",
       "Bash(powershell -Command \"\\(Get-Content index.html\\) -replace 'family=Playfair\\\\+Display:wght@400;600;700&family=Inter', 'family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter' | Set-Content index.html; \\(Get-Content services.html\\) -replace 'family=Playfair\\\\+Display:wght@400;600;700&family=Inter', 'family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter' | Set-Content services.html; \\(Get-Content gestion.html\\) -replace 'family=Playfair\\\\+Display:wght@400;600;700&family=Inter', 'family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter' | Set-Content gestion.html; \\(Get-Content investir.html\\) -replace 'family=Playfair\\\\+Display:wght@400;600;700&family=Inter', 'family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter' | Set-Content investir.html; \\(Get-Content contact.html\\) -replace 'family=Playfair\\\\+Display:wght@400;600;700&family=Inter', 'family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter' | Set-Content contact.html\")",
       "WebFetch(domain:unsplash.com)",
-      "WebFetch(domain:rimconciergerie.fr)"
+      "WebFetch(domain:rimconciergerie.fr)",
+      "Bash(python -c \"from PIL import Image; im=Image.open\\('Logo MADYS final blanc.png'\\); print\\(im.size, im.mode\\)\")"
     ]
   }
 }

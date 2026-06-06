@@ -159,6 +159,31 @@
     els.forEach(el => observer.observe(el));
   }
 
+  // Revenue simulator
+  const simGo = document.getElementById('sim-go');
+  if (simGo) {
+    const nightlyBase = { studio: 95, t2: 135, t3: 185, t4: 255 };
+    const rentBase = { studio: 820, t2: 1120, t3: 1520, t4: 2050 };
+    const zoneNight = { paris: 1.40, petite: 1.00, grande: 0.78 };
+    const zoneRent = { paris: 1.45, petite: 1.00, grande: 0.82 };
+    const occupancy = 0.85;
+    const nightsPerMonth = 30 * occupancy;
+    const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(n / 10) * 10);
+    simGo.addEventListener('click', () => {
+      const zone = document.getElementById('sim-zone').value;
+      const type = document.getElementById('sim-type').value;
+      const standing = parseFloat(document.getElementById('sim-standing').value);
+      const nightly = nightlyBase[type] * zoneNight[zone] * standing;
+      const lcd = nightly * nightsPerMonth;
+      const rent = rentBase[type] * zoneRent[zone];
+      const uplift = Math.round((lcd / rent - 1) * 100);
+      document.getElementById('sim-value').textContent = fmt(lcd * 0.9) + ' – ' + fmt(lcd * 1.1) + ' € / mois';
+      const upliftEl = document.getElementById('sim-uplift');
+      upliftEl.textContent = uplift > 0 ? 'Soit environ +' + uplift + ' % vs une location classique' : '';
+      document.getElementById('sim-result').hidden = false;
+    });
+  }
+
   // FAQ toggle
   document.querySelectorAll('.faq-question').forEach(btn => {
     btn.addEventListener('click', () => {

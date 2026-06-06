@@ -25,6 +25,58 @@
   .platform-logo { height: 38px; }
 }
 
+/* REVENUE SIMULATOR */
+.simulator-section { background: var(--dark-2); padding: 90px 56px; }
+.simulator-inner { max-width: 760px; margin: 0 auto; }
+.simulator-section .section-title { color: var(--white); }
+.simulator-section .section-subtitle { color: rgba(255,255,255,0.6); }
+.sim-card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 38px 36px;
+  margin-top: 40px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+}
+.sim-fields { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.sim-field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.sim-field label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--grey); }
+.sim-field select {
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  font-family: 'Inter', sans-serif; font-size: 0.92rem; color: var(--dark);
+  background: var(--off-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
+  border: 1px solid var(--grey-light); border-radius: 10px;
+  padding: 13px 38px 13px 14px; cursor: pointer; width: 100%;
+  transition: border-color 0.2s ease;
+}
+.sim-field select:focus { outline: none; border-color: var(--gold); }
+.sim-btn {
+  margin-top: 26px; width: 100%;
+  font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.95rem;
+  color: var(--dark); background: var(--gold);
+  border: none; border-radius: 10px; padding: 16px; cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.sim-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+.sim-result {
+  margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--grey-light);
+  display: flex; flex-direction: column; align-items: center;
+  animation: simFade 0.4s ease;
+}
+@keyframes simFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.sim-result-main { text-align: center; }
+.sim-result-label { display: block; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey); }
+.sim-result-value { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--dark); margin: 8px 0 4px; }
+.sim-result-sub { display: block; font-size: 0.9rem; font-weight: 600; color: var(--gold-dark); }
+.sim-disclaimer { font-size: 0.78rem; color: var(--grey); line-height: 1.6; text-align: center; margin: 20px 0; }
+.sim-disclaimer a { color: var(--gold-dark); }
+.sim-cta { display: inline-flex; }
+@media (max-width: 700px) {
+  .simulator-section { padding: 64px 22px; }
+  .sim-card { padding: 28px 22px; }
+  .sim-fields { grid-template-columns: 1fr; }
+  .sim-result-value { font-size: 1.6rem; }
+}
+
 /* Scroll reveal animations */
 .reveal {
   opacity: 0;

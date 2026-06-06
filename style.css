@@ -250,6 +250,7 @@ section { padding: 90px 56px; }
 
 .rating-item { display: flex; align-items: center; gap: 12px; }
 .rating-platform { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.rating-logo { height: 24px; width: auto; display: block; object-fit: contain; }
 .rating-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; }
 .rating-score { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); }
 .rating-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.1); }

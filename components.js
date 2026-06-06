@@ -88,6 +88,13 @@
     </div>
   </footer>`;
 
+  // Favicon (icône de l'onglet)
+  const favicon = document.createElement('link');
+  favicon.rel = 'icon';
+  favicon.type = 'image/svg+xml';
+  favicon.href = 'favicon.svg';
+  document.head.appendChild(favicon);
+
   document.body.insertAdjacentHTML('afterbegin', navHTML);
   document.body.insertAdjacentHTML('beforeend', footerHTML);
 

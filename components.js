@@ -92,7 +92,7 @@
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
   favicon.type = 'image/png';
-  favicon.href = 'favicon.png';
+  favicon.href = 'favicon.png?v=2';
   document.head.appendChild(favicon);
 
   document.body.insertAdjacentHTML('afterbegin', navHTML);

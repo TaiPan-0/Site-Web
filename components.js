@@ -180,22 +180,45 @@
     });
   }
 
-  // Navbar scroll effect
+  // Navbar scroll effect (throttled via requestAnimationFrame)
   const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.background = window.scrollY > 60
-      ? 'rgba(15,17,23,0.98)'
-      : 'rgba(15,17,23,0.92)';
-  });
+  if (nav) {
+    let navTicking = false;
+    const updateNav = () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      navTicking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!navTicking) { window.requestAnimationFrame(updateNav); navTicking = true; }
+    }, { passive: true });
+    updateNav();
+  }
 
   // Scroll reveal animations
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero parallax (desktop only, respects reduced-motion)
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg && !reduceMotion && window.matchMedia('(min-width: 768px)').matches) {
+    let parallaxTicking = false;
+    const updateParallax = () => {
+      const offset = Math.min(window.scrollY, window.innerHeight) * 0.25;
+      heroBg.style.transform = 'scale(1.12) translateY(' + offset + 'px)';
+      parallaxTicking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!parallaxTicking) { window.requestAnimationFrame(updateParallax); parallaxTicking = true; }
+    }, { passive: true });
+    updateParallax();
+  }
+
   if (!reduceMotion && 'IntersectionObserver' in window) {
     const revealSelectors = [
       '.section-header', '.why-image-wrap', '.why-list li', '.process-card',
       '.avantage-card', '.stats-grid > div', '.contact-card', '.contact-info-title',
       '.faq-item', '.cta-band-inner', '.step-card', '.service-card', '.legal-inner h2',
-      '.contact-form-wrap', '.avantages-img'
+      '.contact-form-wrap', '.avantages-img', '.sim-card', '.platforms-inner',
+      '.testimonial-card', '.step-row'
     ];
     const els = document.querySelectorAll(revealSelectors.join(','));
     els.forEach(el => {
@@ -203,7 +226,9 @@
       // Stagger items inside the same parent (grids/lists)
       const siblings = Array.from(el.parentElement ? el.parentElement.children : []);
       const idx = siblings.indexOf(el);
-      if (idx > 0) el.style.transitionDelay = Math.min(idx * 0.08, 0.4) + 's';
+      if (idx > 0) el.style.transitionDelay = Math.min(idx * 0.09, 0.45) + 's';
+      // Free the GPU layer once the entrance animation finishes
+      el.addEventListener('transitionend', () => el.classList.add('reveal-done'), { once: true });
     });
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -212,7 +237,7 @@
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     els.forEach(el => observer.observe(el));
   }
 

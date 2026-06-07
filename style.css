@@ -123,6 +123,44 @@
   .whatsapp-float { width: 52px; height: 52px; right: 16px; bottom: 16px; }
 }
 
+/* COOKIE CONSENT BANNER */
+.cookie-banner {
+  position: fixed;
+  left: 24px; bottom: 24px;
+  max-width: 420px;
+  background: #181C26;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.cookie-banner.visible { opacity: 1; transform: none; }
+.cookie-text { font-size: 0.85rem; line-height: 1.65; margin: 0 0 16px; }
+.cookie-text a { color: #E8C96A; text-decoration: underline; }
+.cookie-actions { display: flex; gap: 12px; justify-content: flex-end; }
+.cookie-btn {
+  font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.82rem;
+  border: none; border-radius: 9px; padding: 11px 22px; cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.cookie-refuse {
+  background: transparent; color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+.cookie-refuse:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+.cookie-accept { background: #C9A84C; color: #0F1117; }
+.cookie-accept:hover { background: #E8C96A; transform: translateY(-2px); }
+@media (max-width: 600px) {
+  .cookie-banner { left: 12px; right: 12px; bottom: 12px; max-width: none; padding: 18px 18px; }
+  .cookie-actions { justify-content: stretch; }
+  .cookie-btn { flex: 1; }
+}
+
 :root {
   --gold: #C9A84C;
   --gold-light: #E8C96A;

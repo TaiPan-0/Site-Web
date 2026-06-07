@@ -250,9 +250,10 @@
     // 2. Crée un Service Gmail et copie le Service ID ci-dessous
     // 3. Crée un Template et copie le Template ID ci-dessous
     // 4. Copie ta Public Key (Account > General) ci-dessous
-    const EMAILJS_SERVICE_ID  = 'service_tixo3zr';
-    const EMAILJS_TEMPLATE_ID = 'template_16ezy2v';
-    const EMAILJS_PUBLIC_KEY  = 'giwBixZ-2FvWnVZL6';
+    const EMAILJS_SERVICE_ID   = 'service_tixo3zr';
+    const EMAILJS_TEMPLATE_ID  = 'template_16ezy2v';   // notification reçue par MADYS
+    const EMAILJS_CONFIRM_ID   = 'template_79z0hel'; // confirmation envoyée au client
+    const EMAILJS_PUBLIC_KEY   = 'giwBixZ-2FvWnVZL6';
     // ──────────────────────────────────────────────────────────────────────
 
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
@@ -265,9 +266,8 @@
       btn.textContent = 'Envoi en cours…';
       btn.disabled = true;
 
-      // Les noms des variables du template EmailJS doivent correspondre
-      // aux IDs des champs du formulaire (from_prenom, from_nom, etc.)
-      const templateParams = {
+      // 1) Notification envoyée à MADYS
+      const notifParams = {
         from_prenom : form.prenom.value,
         from_nom    : form.nom.value,
         from_email  : form.email.value,
@@ -277,7 +277,17 @@
         to_email    : 'madys.conciergerie@gmail.com',
       };
 
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+      // 2) Confirmation envoyée au client (to_email = email du client)
+      const confirmParams = {
+        from_prenom : form.prenom.value,
+        from_nom    : form.nom.value,
+        sujet       : form.sujet.value,
+        message     : form.message.value,
+        to_email    : form.email.value,
+      };
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, notifParams)
+        .then(() => emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONFIRM_ID, confirmParams))
         .then(() => {
           btn.textContent = 'Message envoyé ✓';
           btn.style.background = '#2d7a4f';

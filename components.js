@@ -1,5 +1,19 @@
 // Shared nav and footer injected on every page
 (function() {
+  // --- Google Analytics (GA4) ---
+  (function() {
+    const GA_ID = 'G-ET2TX9SKB0';
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  })();
+
   const LOGO_IMG = `<img src="logo.png" alt="MADYS Conciergerie" style="height:54px;width:auto;display:block;">`;
 
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';

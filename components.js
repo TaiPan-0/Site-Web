@@ -96,6 +96,10 @@
           <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           Île-de-France
         </div>
+        <a href="https://g.page/r/CbkULGfgs1-1EBM/review" target="_blank" rel="noopener" class="footer-review-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.787 1.401 8.168L12 18.896l-7.335 3.869 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
+          Laisser un avis Google
+        </a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -111,7 +115,7 @@
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
   favicon.type = 'image/png';
-  favicon.href = 'favicon.png?v=4';
+  favicon.href = 'favicon.png?v=5';
   document.head.appendChild(favicon);
 
   const whatsappHTML = `
@@ -251,6 +255,20 @@
     const occupancy = 0.85;
     const nightsPerMonth = 30 * occupancy;
     const fmt = n => new Intl.NumberFormat('fr-FR').format(Math.round(n / 10) * 10);
+    const noAnim = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Animated count-up between two numbers
+    function countUp(el, low, high, suffix) {
+      if (noAnim) { el.textContent = fmt(low) + ' – ' + fmt(high) + suffix; return; }
+      const duration = 900, start = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3); // easeOutCubic
+      function frame(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const e = ease(p);
+        el.textContent = fmt(low * e) + ' – ' + fmt(high * e) + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
     simGo.addEventListener('click', () => {
       const zone = document.getElementById('sim-zone').value;
       const type = document.getElementById('sim-type').value;
@@ -259,10 +277,11 @@
       const lcd = nightly * nightsPerMonth;
       const rent = rentBase[type] * zoneRent[zone];
       const uplift = Math.round((lcd / rent - 1) * 100);
-      document.getElementById('sim-value').textContent = fmt(lcd * 0.9) + ' – ' + fmt(lcd * 1.1) + ' € / mois';
+      const result = document.getElementById('sim-result');
+      result.hidden = false;
+      countUp(document.getElementById('sim-value'), lcd * 0.9, lcd * 1.1, ' € / mois');
       const upliftEl = document.getElementById('sim-uplift');
       upliftEl.textContent = uplift > 0 ? 'Soit environ +' + uplift + ' % vs une location classique' : '';
-      document.getElementById('sim-result').hidden = false;
     });
   }
 

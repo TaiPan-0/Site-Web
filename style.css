@@ -120,8 +120,51 @@
 .form-control, .sim-field select {
   transition: border-color 0.2s ease, box-shadow 0.25s ease, background 0.2s ease;
 }
+.form-control:focus, .sim-field select:focus {
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.18);
+}
+
+/* Image zoom inside service cards on hover */
+.service-card { overflow: hidden; }
+.service-card-img { transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.service-card:hover .service-card-img { transform: scale(1.06); }
+
+/* Service card icon comes alive with the card */
+.service-card-icon { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease; }
+.service-card:hover .service-card-icon { transform: scale(1.1) rotate(-4deg); box-shadow: var(--shadow-gold); }
+
+/* Testimonial cards lift gently */
+.testimonial-card { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease; }
+.testimonial-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+
+/* Contact cards highlight on hover */
+.contact-card { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+.contact-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: rgba(201,168,76,0.35); }
+
+/* Rating items react to hover */
+.rating-item { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.rating-item:hover { transform: translateY(-3px) scale(1.03); }
+
+/* Social icons pop on hover */
+.social-link svg, .contact-social-btn svg { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+.social-link:hover svg, .contact-social-btn:hover svg { transform: scale(1.15); }
+
+/* Footer links slide slightly on hover */
+.footer-links a { display: inline-block; transition: color 0.2s ease, transform 0.2s ease; }
+.footer-links a:hover { transform: translateX(3px); }
+
+/* Simulator card lifts subtly */
+.sim-card { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; }
+.sim-card:hover { transform: translateY(-3px); box-shadow: 0 24px 60px rgba(0,0,0,0.12); }
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .service-card:hover .service-card-img,
+  .service-card:hover .service-card-icon,
+  .testimonial-card:hover, .contact-card:hover,
+  .rating-item:hover, .sim-card:hover,
+  .social-link:hover svg, .contact-social-btn:hover svg,
+  .footer-links a:hover { transform: none !important; }
 }
 
 /* WhatsApp floating button */

@@ -24,7 +24,7 @@
   <meta name="twitter:image" content="https://madysconciergerie.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
     .services-grid {
@@ -51,7 +51,7 @@
       box-shadow: var(--shadow-gold);
     }
     .service-card-icon svg { width: 20px; height: 20px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .service-card-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+    .service-card-title { font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
     .service-card-desc { font-size: 0.88rem; color: var(--grey); line-height: 1.75; }
     .service-card-features { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 7px; }
     .service-card-features li { font-size: 0.82rem; color: var(--grey); display: flex; align-items: center; gap: 8px; }
@@ -68,10 +68,10 @@
       margin-top: 48px;
       display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
     }
-    .tarif-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .tarif-title { font-family: 'Montserrat', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
     .tarif-desc { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.7; }
     .tarif-price { text-align: center; }
-    .tarif-amount { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .tarif-amount { font-family: 'Montserrat', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--gold); line-height: 1; }
     .tarif-period { font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
     .tarif-note { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 6px; }
 
@@ -236,6 +236,38 @@
             <li>Traitement des plaintes et réclamations</li>
             <li>Dossiers de dommages constitués</li>
             <li>Médiation avec les plateformes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=85" alt="Chambre préparée avec soin pour l'accueil des voyageurs" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+          </div>
+          <h3 class="service-card-title">Expérience Voyageur Premium</h3>
+          <p class="service-card-desc">Panier de bienvenue, guide local et petites attentions qui transforment un simple séjour en avis 5 étoiles.</p>
+          <ul class="service-card-features">
+            <li>Kit de bienvenue à l'arrivée</li>
+            <li>Livret d'accueil personnalisé</li>
+            <li>Recommandations locales (restos, transports…)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=85" alt="Tableau de bord de suivi des revenus locatifs" class="service-card-img" />
+        <div class="service-card-body">
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 3v18h18M9 17V9m4 8V5m4 12v-6"/></svg>
+          </div>
+          <h3 class="service-card-title">Reporting & Suivi des Revenus</h3>
+          <p class="service-card-desc">Un point mensuel clair et transparent sur les performances de votre bien : vous savez toujours où vous en êtes.</p>
+          <ul class="service-card-features">
+            <li>Rapport mensuel détaillé</li>
+            <li>Suivi du taux d'occupation</li>
+            <li>Recommandations d'optimisation</li>
           </ul>
         </div>
       </div>

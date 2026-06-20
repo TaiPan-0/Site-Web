@@ -18,7 +18,29 @@
       "Bash(where.exe cwebp *)",
       "Bash(where.exe magick *)",
       "Bash(where.exe ffmpeg *)",
-      "Bash(ls -la \"C:\\\\Users\\\\admrd\\\\Documents\\\\MADYS\\\\Site Web\\\\\" | grep -i \"favicon\\\\|logo\\\\|\\\\.png\\\\|\\\\.ico\")"
+      "Bash(ls -la \"C:\\\\Users\\\\admrd\\\\Documents\\\\MADYS\\\\Site Web\\\\\" | grep -i \"favicon\\\\|logo\\\\|\\\\.png\\\\|\\\\.ico\")",
+      "Read(//c/c/Users/admrd/Documents/MADYS/**)",
+      "Bash(sed -i 's|family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter:wght@300;400;500;600|family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600;700|' *.html)",
+      "Bash(sed -i \"s|'Playfair Display', serif|'Cormorant Garamond', serif|g; s|'Inter', sans-serif|'Jost', sans-serif|g; s|'Montserrat', sans-serif|'Jost', sans-serif|g\" *.html style.css components.js)",
+      "Bash(sed -i \"s|.legal-inner h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;|.legal-inner h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.65rem;|\" confidentialite.html mentions-legales.html)",
+      "Bash(sed -i \"s|.contact-info-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem;|.contact-info-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem;|; s|.form-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;|.form-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;|\" contact.html)",
+      "Bash(sed -i \"s|.step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem;|.step-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem;|\" gestion.html)",
+      "Bash(sed -i \"s|.why-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;|.why-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem;|\" index.html)",
+      "Bash(sed -i \"s|.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem;|.stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3.3rem;|; s|.process-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem;|.process-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;|\" investir.html)",
+      "Bash(sed -i \"s|font-size: clamp\\(1.9rem, 3.5vw, 2.8rem\\);|font-size: clamp\\(2.2rem, 4vw, 3.2rem\\);|; s|.cta-band-title { font-family: 'Cormorant Garamond', serif; font-size: clamp\\(1.8rem, 3.5vw, 2.8rem\\);|.cta-band-title { font-family: 'Cormorant Garamond', serif; font-size: clamp\\(2.1rem, 4vw, 3.2rem\\);|; s|font-size: 1.05rem; font-weight: 600; color: var\\(--dark\\);|font-size: 1.3rem; font-weight: 600; color: var\\(--dark\\);|\" style.css)",
+      "Bash(sed -i \"s|  font-size: clamp\\(2.6rem, 6vw, 4.8rem\\);|  font-size: clamp\\(3rem, 6.5vw, 5.4rem\\);|; s|font-size: clamp\\(1.2rem, 2.4vw, 1.7rem\\);|font-size: clamp\\(1.4rem, 2.6vw, 2rem\\);|\" index.html)",
+      "mcp__visualize__read_me",
+      "mcp__visualize__show_widget",
+      "Bash(sed -i 's|family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500\\\\&family=Jost:wght@300;400;500;600;700|family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500|' *.html)",
+      "Bash(sed -i \"s|'Cormorant Garamond', serif|'Montserrat', sans-serif|g; s|'Jost', sans-serif|'Montserrat', sans-serif|g\" *.html style.css components.js)",
+      "Bash(sed -i \"s|font-size: 1.65rem;|font-size: 1.4rem;|\" confidentialite.html mentions-legales.html)",
+      "Bash(sed -i \"s|.contact-info-title { font-family: 'Montserrat', sans-serif; font-size: 1.9rem;|.contact-info-title { font-family: 'Montserrat', sans-serif; font-size: 1.5rem;|; s|.form-title { font-family: 'Montserrat', sans-serif; font-size: 1.8rem;|.form-title { font-family: 'Montserrat', sans-serif; font-size: 1.4rem;|\" contact.html)",
+      "Bash(sed -i \"s|.step-title { font-family: 'Montserrat', sans-serif; font-size: 2rem;|.step-title { font-family: 'Montserrat', sans-serif; font-size: 1.6rem;|\" gestion.html)",
+      "Bash(sed -i \"s|.why-stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.6rem;|.why-stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.2rem;|\" index.html)",
+      "Bash(sed -i \"s|.stat-num { font-family: 'Montserrat', sans-serif; font-size: 3.3rem;|.stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.8rem;|; s|.process-card-title { font-family: 'Montserrat', sans-serif; font-size: 1.5rem;|.process-card-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem;|\" investir.html)",
+      "Bash(sed -i \"s|.section-title, .cta-band-title { letter-spacing: 0.01em; }|.section-title, .cta-band-title { letter-spacing: -0.015em; font-weight: 800; }|\" style.css)",
+      "Bash(sed -i \"s|  font-size: 1.3rem;$|  font-size: 1.05rem;|\" style.css)",
+      "Bash(sed -i \"s|font-weight: 700; color: var\\(--white\\); line-height: 1.1; margin-bottom: 22px;|font-weight: 800; color: var\\(--white\\); line-height: 1.15; margin-bottom: 22px;|\" index.html)"
     ]
   }
 }

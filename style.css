@@ -42,7 +42,7 @@
 .sim-field label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--grey); }
 .sim-field select {
   appearance: none; -webkit-appearance: none; -moz-appearance: none;
-  font-family: 'Inter', sans-serif; font-size: 0.92rem; color: var(--dark);
+  font-family: 'Montserrat', sans-serif; font-size: 0.92rem; color: var(--dark);
   background: var(--off-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
   border: 1px solid var(--grey-light); border-radius: 10px;
   padding: 13px 38px 13px 14px; cursor: pointer; width: 100%;
@@ -65,7 +65,7 @@
 @keyframes simFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 .sim-result-main { text-align: center; }
 .sim-result-label { display: block; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey); }
-.sim-result-value { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--dark); margin: 8px 0 4px; }
+.sim-result-value { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--dark); margin: 8px 0 4px; }
 .sim-result-sub { display: block; font-size: 0.9rem; font-weight: 600; color: var(--gold-dark); }
 .sim-disclaimer { font-size: 0.78rem; color: var(--grey); line-height: 1.6; text-align: center; margin: 20px 0; }
 .sim-disclaimer a { color: var(--gold-dark); }
@@ -165,6 +165,112 @@
   .rating-item:hover, .sim-card:hover,
   .social-link:hover svg, .contact-social-btn:hover svg,
   .footer-links a:hover { transform: none !important; }
+}
+
+/* ── PREMIUM TYPE ── */
+/* Boutons "couture" : majuscules finement espacées */
+.btn-primary, .btn-secondary, .btn-secondary-light,
+.sim-btn, .form-submit, .contact-review-btn, .footer-review-btn {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+/* Labels de section plus aérés */
+.section-label { letter-spacing: 0.32em; font-weight: 600; }
+/* Titres serif : interlettrage léger, plus racé */
+.section-title, .cta-band-title { letter-spacing: -0.015em; font-weight: 800; }
+
+/* ── DESIGN POLISH ── */
+/* Gold text selection */
+::selection { background: rgba(201,168,76,0.85); color: #0F1117; }
+
+/* Custom scrollbar (desktop) */
+@media (min-width: 901px) {
+  ::-webkit-scrollbar { width: 11px; }
+  ::-webkit-scrollbar-track { background: #0F1117; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #C9A84C, #A07830);
+    border-radius: 6px;
+    border: 2px solid #0F1117;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #E8C96A; }
+}
+
+/* Shine sweep on primary buttons */
+.btn-primary, .sim-btn, .contact-review-btn {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before, .sim-btn::before, .contact-review-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.btn-primary:hover::before, .sim-btn:hover::before, .contact-review-btn:hover::before { left: 130%; }
+
+/* Gold shimmer on CTA band highlighted word */
+.cta-band-title span {
+  background: linear-gradient(110deg, #C9A84C 25%, #F4E2A8 50%, #C9A84C 75%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 3.5s linear infinite;
+}
+@keyframes goldShimmer { to { background-position: -200% center; } }
+
+/* Breathing glow behind CTA band */
+.cta-band::before { animation: ctaGlow 6s ease-in-out infinite; }
+@keyframes ctaGlow {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+}
+
+/* Gold accent line revealed on top of service cards */
+.service-card { position: relative; }
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.service-card:hover::after { transform: scaleX(1); }
+
+/* Subtle gold hairline at the top of the footer */
+footer { position: relative; }
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.55) 50%, transparent 100%);
+}
+
+/* Ratings bar: faint gold separator on top */
+.ratings-bar { position: relative; }
+.ratings-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.35) 50%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-band-title span { animation: none; }
+  .cta-band::before { animation: none; }
+  .btn-primary::before, .sim-btn::before, .contact-review-btn::before { display: none; }
 }
 
 /* WhatsApp floating button */
@@ -268,7 +374,7 @@ body { animation: pageFadeIn 0.45s ease both; }
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background: var(--off-white);
   color: var(--dark);
   line-height: 1.6;
@@ -473,8 +579,8 @@ section { padding: 90px 56px; }
 }
 
 .section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   color: var(--dark);
@@ -507,7 +613,7 @@ section { padding: 90px 56px; }
 .rating-platform { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
 .rating-logo { height: 24px; width: auto; display: block; object-fit: contain; }
 .rating-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; }
-.rating-score { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); }
+.rating-score { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); }
 .rating-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.1); }
 
 /* ── FOOTER ── */
@@ -531,7 +637,7 @@ footer {
 .footer-logo-text span { color: var(--gold); }
 
 .footer-slogan {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Montserrat', sans-serif;
   font-style: italic;
   font-size: 1.05rem;
   color: var(--gold);
@@ -565,21 +671,26 @@ footer {
 }
 
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+.footer-links li { font-size: 0.85rem; line-height: 1.6; }
 .footer-links a { text-decoration: none; color: rgba(255,255,255,0.55); font-size: 0.85rem; transition: color 0.2s; }
 .footer-links a:hover { color: var(--gold); }
 
 .footer-contact-item {
   display: flex; align-items: flex-start; gap: 9px;
-  color: rgba(255,255,255,0.55); font-size: 0.85rem; margin-bottom: 9px;
+  color: rgba(255,255,255,0.55); font-size: 0.85rem; margin-bottom: 11px;
+  line-height: 1.6;
 }
+.footer-contact-item svg { margin-top: 4px; }
 .footer-contact-item a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
 .footer-contact-item a:hover { color: var(--gold); }
 
 .footer-review-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 6px; padding: 9px 16px;
+  display: inline-flex; align-items: center; gap: 6px;
+  white-space: nowrap; flex-shrink: 0;
+  margin-top: 6px; padding: 9px 12px;
   border: 1px solid rgba(201,168,76,0.4); border-radius: 8px;
-  color: var(--gold); font-size: 0.85rem; font-weight: 600;
+  color: var(--gold); font-size: 0.7rem !important; font-weight: 600;
+  letter-spacing: 0.04em !important;
   text-decoration: none;
   transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
 }
@@ -615,7 +726,7 @@ footer {
   pointer-events: none;
 }
 .cta-band-inner { position: relative; max-width: 600px; margin: 0 auto; }
-.cta-band-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--white); margin-bottom: 14px; }
+.cta-band-title { font-family: 'Montserrat', sans-serif; font-size: clamp(1.7rem, 3.2vw, 2.6rem); font-weight: 700; color: var(--white); margin-bottom: 14px; }
 .cta-band-title span { color: var(--gold); }
 .cta-band-subtitle { color: rgba(255,255,255,0.55); font-size: 1rem; margin-bottom: 36px; }
 .cta-band-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
@@ -627,8 +738,8 @@ footer {
   padding: 22px 0;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   cursor: pointer; text-align: left;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.05rem; font-weight: 600; color: var(--dark);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.02rem; font-weight: 600; color: var(--dark);
   transition: color 0.2s;
 }
 .faq-question:hover { color: var(--gold); }

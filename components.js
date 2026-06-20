@@ -245,6 +245,38 @@
     els.forEach(el => observer.observe(el));
   }
 
+  // 3D tilt on cards (desktop with mouse only)
+  if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const tiltCards = document.querySelectorAll(
+      '.service-card, .testimonial-card, .process-card, .avantage-card, .tarif-card, .contact-card, .sim-card, .step-card'
+    );
+    tiltCards.forEach(card => {
+      let raf = null;
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s ease';
+      });
+      card.addEventListener('mousemove', e => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width - 0.5;
+          const py = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform =
+            'perspective(900px) rotateX(' + (-py * 5).toFixed(2) + 'deg)' +
+            ' rotateY(' + (px * 7).toFixed(2) + 'deg)' +
+            ' translateY(-4px) scale(1.015)';
+          raf = null;
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        card.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease';
+        card.style.transform = '';
+        setTimeout(() => { card.style.transition = ''; }, 600);
+      });
+    });
+  }
+
   // Revenue simulator
   const simGo = document.getElementById('sim-go');
   if (simGo) {

@@ -26,7 +26,7 @@
   <meta name="twitter:image" content="https://madysconciergerie.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@400;500;600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <!-- Données structurées (SEO local) -->
   <script type="application/ld+json">
@@ -110,7 +110,7 @@
       position: absolute; inset: 0;
       background: linear-gradient(to bottom, rgba(8,10,18,0.6) 0%, rgba(8,10,18,0.42) 50%, rgba(8,10,18,0.75) 100%);
     }
-    .hero-content { position: relative; z-index: 2; max-width: 720px; padding: 0 24px; }
+    .hero-content { position: relative; z-index: 2; max-width: 720px; padding: 100px 24px 86px; }
     .hero-eyebrow {
       display: inline-block;
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
@@ -122,24 +122,54 @@
       background: rgba(201,168,76,0.08);
     }
     .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 6vw, 4.8rem);
-      font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 22px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.1rem, 4vw, 3.4rem);
+      font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 22px;
       text-shadow: 0 2px 24px rgba(0,0,0,0.4);
     }
-    .hero-title em { font-style: normal; color: var(--gold); }
+    .hero-title em {
+      font-style: normal;
+      background: linear-gradient(110deg, #C9A84C 25%, #F4E2A8 50%, #C9A84C 75%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 3.5s linear infinite;
+    }
+
+    /* Entrée en cascade des éléments du hero */
+    .hero-eyebrow, .hero-title, .hero-slogan, .hero-subtitle, .hero-buttons, .trust-badges {
+      opacity: 0;
+      transform: translateY(26px);
+      animation: heroRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-eyebrow { animation-delay: 0.15s; }
+    .hero-title { animation-delay: 0.28s; }
+    .hero-slogan { animation-delay: 0.42s; }
+    .hero-subtitle { animation-delay: 0.54s; }
+    .hero-buttons { animation-delay: 0.66s; }
+    .trust-badges { animation-delay: 0.8s; }
+    @keyframes heroRise {
+      to { opacity: 1; transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-eyebrow, .hero-title, .hero-slogan, .hero-subtitle, .hero-buttons, .trust-badges {
+        opacity: 1; transform: none; animation: none;
+      }
+      .hero-title em { animation: none; }
+    }
     .hero-slogan {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Montserrat', sans-serif;
       font-style: italic;
-      font-size: clamp(1.2rem, 2.4vw, 1.7rem);
+      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
       color: var(--gold);
       margin-bottom: 22px;
     }
-    .hero-subtitle { font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.82); margin-bottom: 38px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .hero-subtitle { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.82); margin-bottom: 30px; max-width: 480px; margin-left: auto; margin-right: auto; }
     .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .trust-badges {
       display: flex; justify-content: center; flex-wrap: wrap;
-      gap: 12px 24px; margin-top: 30px;
+      gap: 12px 24px; margin-top: 24px;
     }
     .trust-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -175,10 +205,10 @@
       border-radius: var(--radius); font-weight: 700; text-align: center;
       box-shadow: var(--shadow-gold);
     }
-    .why-stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; display: block; line-height: 1; }
+    .why-stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; display: block; line-height: 1; }
     .why-stat-label { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85; }
     .why-list { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
-    .why-list li { display: flex; align-items: flex-start; gap: 14px; }
+    .why-list li { display: flex; align-items: center; gap: 14px; }
     .why-list-icon {
       width: 36px; height: 36px; flex-shrink: 0;
       background: rgba(201,168,76,0.1); border-radius: 8px;

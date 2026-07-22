@@ -56,7 +56,15 @@
       "Bash(sed -i 's#content=\"gestion locative, fonctionnement conciergerie, gestion Airbnb clé en main, location saisonnière, Île-de-France\"#content=\"conciergerie clé en main, fonctionnement conciergerie, conciergerie Airbnb, gestion locative saisonnière, conciergerie Île-de-France, conciergerie Paris\"#' gestion.html)",
       "Bash(sed -i 's#content=\"contact conciergerie, estimation revenus Airbnb, prendre rendez-vous, conciergerie Île-de-France, devis gratuit\"#content=\"contact conciergerie, devis conciergerie Airbnb, estimation revenus Airbnb, conciergerie Île-de-France, conciergerie Paris, devis gratuit\"#' contact.html)",
       "Bash(sed -i 's#content=\"services conciergerie, ménage Airbnb, blanchisserie, maintenance location, shooting photo immobilier, Île-de-France\"#content=\"services conciergerie, conciergerie Airbnb, ménage Airbnb, blanchisserie, maintenance location, shooting photo immobilier, conciergerie Île-de-France, conciergerie Paris\"#' services.html)",
-      "Bash(sed -i 's#content=\"investissement immobilier, location courte durée, rentabilité Airbnb, investir Île-de-France, conciergerie investisseur\"#content=\"investissement locatif, conciergerie investisseur, location courte durée, rentabilité Airbnb, investir Île-de-France, conciergerie Airbnb\"#' investir.html)"
+      "Bash(sed -i 's#content=\"investissement immobilier, location courte durée, rentabilité Airbnb, investir Île-de-France, conciergerie investisseur\"#content=\"investissement locatif, conciergerie investisseur, location courte durée, rentabilité Airbnb, investir Île-de-France, conciergerie Airbnb\"#' investir.html)",
+      "Bash(sed -i 's#alt=\"Prise de rendez-vous\"#alt=\"Premier rendez-vous avec la conciergerie MADYS pour estimer un bien\"#' gestion.html)",
+      "Bash(sed -i 's#alt=\"Visite du logement\"#alt=\"Visite d'\"'\"'un appartement par la conciergerie MADYS en Île-de-France\"#' gestion.html)",
+      "Bash(sed -i 's#alt=\"Lancement des services\"#alt=\"Mise en gestion Airbnb d'\"'\"'un appartement par MADYS Conciergerie\"#' gestion.html)",
+      "Bash(sed -i 's#alt=\"Bien immobilier premium\"#alt=\"Bien immobilier premium géré en location courte durée en Île-de-France\"#' investir.html)",
+      "Bash(sed -i 's#alt=\"Accueil des voyageurs\"#alt=\"Accueil des voyageurs Airbnb par la conciergerie MADYS\"#' services.html)",
+      "Bash(sed -i 's#class=\"service-card-img\" />#class=\"service-card-img\" loading=\"lazy\" />#g' services.html)",
+      "Bash(sed -i 's#class=\"step-img\"$#class=\"step-img\" loading=\"lazy\"#g' gestion.html)",
+      "Bash(sed -i 's#class=\"avantages-img\"$#class=\"avantages-img\" loading=\"lazy\"#g' investir.html)"
     ]
   }
 }

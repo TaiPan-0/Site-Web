@@ -191,6 +191,21 @@
       50% { transform: translateX(-50%) translateY(7px); }
     }
 
+    /* Ajustements hero mobile */
+    @media (max-width: 600px) {
+      .hero-content { padding: 90px 20px 36px; }
+      .hero-eyebrow { font-size: 0.6rem; padding: 6px 13px; margin-bottom: 16px; letter-spacing: 0.16em; }
+      .hero-title { font-size: 1.6rem; margin-bottom: 14px; }
+      .hero-title br { display: none; }
+      .hero-slogan { font-size: 1.05rem; margin-bottom: 14px; }
+      .hero-subtitle { font-size: 0.92rem; margin-bottom: 22px; }
+      .hero-buttons { gap: 10px; }
+      .hero-buttons .btn-primary,
+      .hero-buttons .btn-secondary-light { white-space: nowrap; padding: 13px 20px; font-size: 0.72rem; }
+      .trust-badges { margin-top: 18px; gap: 8px 16px; }
+      .hero-scroll { display: none; }
+    }
+
     /* ── WHY US ── */
     .why-section { background: var(--off-white); padding: 90px 56px; }
     .why-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
@@ -264,7 +279,7 @@
     <div class="hero-content">
       <span class="hero-eyebrow">Conciergerie Immobilière &bull; Île-de-France</span>
       <h1 class="hero-title">
-        La conciergerie qui maximise<br>vos revenus, <em>sans effort</em>
+        La conciergerie qui maximise <br>vos revenus, <em>sans effort</em>
       </h1>
       <p class="hero-slogan">« Louez l'esprit léger »</p>
       <p class="hero-subtitle">

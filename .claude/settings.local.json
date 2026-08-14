@@ -64,7 +64,11 @@
       "Bash(sed -i 's#alt=\"Accueil des voyageurs\"#alt=\"Accueil des voyageurs Airbnb par la conciergerie MADYS\"#' services.html)",
       "Bash(sed -i 's#class=\"service-card-img\" />#class=\"service-card-img\" loading=\"lazy\" />#g' services.html)",
       "Bash(sed -i 's#class=\"step-img\"$#class=\"step-img\" loading=\"lazy\"#g' gestion.html)",
-      "Bash(sed -i 's#class=\"avantages-img\"$#class=\"avantages-img\" loading=\"lazy\"#g' investir.html)"
+      "Bash(sed -i 's#class=\"avantages-img\"$#class=\"avantages-img\" loading=\"lazy\"#g' investir.html)",
+      "Bash(ls -t \"C:/Users/admrd/Downloads\" | head -10; ls -t \"C:/Users/admrd/Documents/MADYS\" 2>/dev/null | head -10; ls -t \"C:/Users/admrd/Pictures\" 2>/dev/null | head -10)",
+      "Bash(mv -f favicon-new.png favicon.png)",
+      "Bash(mv -f og-image-new.png og-image.png)",
+      "Bash(sed -i \"s|favicon.png?v=5|favicon.png?v=6|\" components.js)"
     ]
   }
 }

@@ -115,7 +115,7 @@
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
   favicon.type = 'image/png';
-  favicon.href = 'favicon.png?v=5';
+  favicon.href = 'favicon.png?v=6';
   document.head.appendChild(favicon);
 
   const whatsappHTML = `

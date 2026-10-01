@@ -26,6 +26,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://madysconciergerie.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://madysconciergerie.com/contact.html" }
+    ]
+  }
+  </script>
   <style>
     .contact-section { background: var(--off-white); padding: 90px 56px; }
     .contact-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: 72px; }
@@ -323,6 +333,7 @@
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, notifParams)
         .then(() => emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONFIRM_ID, confirmParams))
         .then(() => {
+          if (window.madysTrack) window.madysTrack('generate_lead', { form: 'contact' });
           btn.textContent = 'Message envoyé ✓';
           btn.style.background = '#2d7a4f';
           form.reset();

@@ -876,3 +876,127 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
   .faq-answer, .nav-links, .nav-links li { transition: none; }
   .nav-links li { opacity: 1; transform: none; }
 }
+
+/* ── FLUIDITÉ MOBILE ──
+   Sur téléphone, on retire ce qui coûte cher à chaque image affichée :
+   flous d'arrière-plan, animations en boucle, grosses couches inutiles. */
+@media (max-width: 900px) {
+  /* Le flou derrière un élément fixe est recalculé à chaque pixel de défilement */
+  nav, nav.scrolled { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(15,17,23,0.98); }
+  .nav-links { backdrop-filter: none; -webkit-backdrop-filter: none; background: #0F1117; }
+  .btn-secondary-light, .hero-eyebrow { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .btn-secondary-light { background: rgba(255,255,255,0.14); }
+  .hero-eyebrow { background: rgba(15,17,23,0.45); }
+
+  /* Reflets dorés animés en continu : remplacés par un dégradé fixe */
+  .hero .hero-title em, .cta-band .cta-band-title span { animation: none; background-position: 50% center; }
+  .cta-band::before { animation: none; }
+
+  /* Apparitions plus courtes et plus légères (pas de mise à l'échelle) */
+  .reveal {
+    transform: translateY(16px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: auto;
+  }
+  .reveal.reveal-left { transform: translateY(16px); }
+
+  /* Ombres allégées sur les grands blocs */
+  .sim-card { box-shadow: 0 14px 34px rgba(0,0,0,0.28); }
+  .video-frame { box-shadow: 0 14px 34px rgba(0,0,0,0.4); }
+
+  /* Les sections hors écran ne sont calculées qu'à leur approche */
+  .testimonials-section, .simulator-section, .faq-section, .cta-band, footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 700px;
+  }
+}
+
+/* Lien vers les avis Google sous les témoignages */
+.testimonials-more { margin-top: 40px; display: flex; align-items: center; justify-content: center; gap: 22px; flex-wrap: wrap; }
+.testimonials-more-score { font-weight: 700; font-size: 0.95rem; color: var(--dark); }
+.testimonials-more-stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
+
+/* Secteurs d'intervention dans le footer */
+.footer-zones {
+  max-width: 1200px; margin: 0 auto; padding: 22px 0;
+  display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 10px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.footer-zones-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.footer-zones a { color: rgba(255,255,255,0.55); font-size: 0.85rem; text-decoration: none; transition: color 0.2s ease; }
+.footer-zones a:hover { color: var(--gold); }
+
+/* ── PAGES DE VILLE ── */
+.city-intro { background: var(--off-white); }
+.city-intro-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: center; }
+.city-intro p { color: var(--grey); font-size: 0.98rem; line-height: 1.85; margin-top: 18px; }
+.city-points { list-style: none; margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
+.city-points li {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--white); border: 1px solid var(--grey-light); border-radius: var(--radius);
+  padding: 15px 18px; font-size: 0.9rem; color: var(--dark); line-height: 1.6;
+}
+.city-points li::before { content: ''; flex-shrink: 0; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: var(--gold); }
+.city-intro-img { width: 100%; height: 440px; object-fit: cover; border-radius: 16px; display: block; box-shadow: var(--shadow); }
+.city-services { background: var(--white); }
+.city-services-inner { max-width: 1200px; margin: 0 auto; }
+.city-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.city-card {
+  background: var(--off-white); border: 1px solid var(--grey-light); border-radius: var(--radius);
+  padding: 24px; transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.city-card:hover { border-color: rgba(201,168,76,0.5); box-shadow: var(--shadow); transform: translateY(-3px); }
+.city-card h3 { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+.city-card p { font-size: 0.86rem; color: var(--grey); line-height: 1.7; }
+.city-services-cta { text-align: center; margin-top: 40px; }
+.city-faq { background: var(--off-white); }
+.city-faq-inner { max-width: 760px; margin: 0 auto; }
+.city-others { background: var(--white); padding-top: 56px; padding-bottom: 56px; text-align: center; }
+.city-others-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.city-others-links a {
+  padding: 10px 20px; border: 1px solid var(--grey-light); border-radius: 100px;
+  font-size: 0.85rem; font-weight: 600; color: var(--dark); text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.city-others-links a:hover { border-color: var(--gold); color: var(--gold-dark); }
+@media (max-width: 900px) {
+  .city-intro-inner { grid-template-columns: 1fr; gap: 32px; }
+  .city-intro-img { height: 230px; }
+  .city-grid { grid-template-columns: 1fr; gap: 12px; }
+  .city-card { padding: 18px; }
+}
+@media (hover: none) { .city-card:hover { transform: none; } }
+
+/* ── PAGE 404 ── */
+.notfound { min-height: 100vh; min-height: 100svh; background: var(--dark); display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 24px 80px; }
+.notfound-code {
+  font-size: clamp(5rem, 18vw, 9rem); font-weight: 800; line-height: 1;
+  background: linear-gradient(110deg, #C9A84C 25%, #F4E2A8 50%, #C9A84C 75%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.notfound h1 { color: var(--white); font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; margin: 14px 0 12px; }
+.notfound p { color: rgba(255,255,255,0.6); max-width: 440px; margin: 0 auto 30px; line-height: 1.7; }
+.notfound-links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ── FAQ ET ZONES (accueil) ── */
+.home-faq { background: var(--off-white); }
+.home-faq-inner { max-width: 760px; margin: 0 auto; }
+.zones-section { background: var(--white); }
+.zones-inner { max-width: 1100px; margin: 0 auto; }
+.zones-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.zones-list a {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 15px 18px; border: 1px solid var(--grey-light); border-radius: var(--radius);
+  background: var(--off-white); color: var(--dark); text-decoration: none;
+  font-size: 0.88rem; font-weight: 600;
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.zones-list a::after { content: '→'; color: var(--gold); transition: transform 0.25s ease; }
+.zones-list a:hover { border-color: var(--gold); color: var(--gold-dark); box-shadow: var(--shadow); transform: translateY(-2px); }
+.zones-list a:hover::after { transform: translateX(4px); }
+@media (max-width: 900px) {
+  .zones-list { grid-template-columns: 1fr; gap: 9px; }
+  .zones-list a { padding: 13px 16px; }
+  .home-faq, .zones-section { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+}
+@media (hover: none) { .zones-list a:hover { transform: none; } }

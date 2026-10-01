@@ -19,6 +19,11 @@
   if (localStorage.getItem('madys-cookie-consent') === 'accepted') {
     loadGoogleAnalytics();
   }
+  // Conversion events: sent only when Analytics is loaded, i.e. after consent
+  function track(name, params) {
+    if (gaLoaded && typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  }
+  window.madysTrack = track;
 
   const LOGO_IMG = `<img src="logo.png?v=2" alt="MADYS Conciergerie" style="height:54px;width:auto;display:block;">`;
 
@@ -101,6 +106,23 @@
           Laisser un avis Google
         </a>
       </div>
+    </div>
+    <div class="footer-zones" role="navigation" aria-label="Nos secteurs d'intervention">
+      <span class="footer-zones-title">Nos secteurs</span>
+      <a href="conciergerie-airbnb-paris.html">Paris</a>
+      <a href="conciergerie-airbnb-malakoff.html">Malakoff</a>
+      <a href="conciergerie-airbnb-vanves.html">Vanves</a>
+      <a href="conciergerie-airbnb-chatillon.html">Châtillon</a>
+      <a href="conciergerie-airbnb-bagneux.html">Bagneux</a>
+      <a href="conciergerie-airbnb-issy-les-moulineaux.html">Issy-les-Moulineaux</a>
+      <a href="conciergerie-airbnb-clamart.html">Clamart</a>
+      <a href="conciergerie-airbnb-boulogne-billancourt.html">Boulogne-Billancourt</a>
+      <a href="conciergerie-airbnb-rueil-malmaison.html">Rueil-Malmaison</a>
+      <a href="conciergerie-airbnb-arcueil.html">Arcueil</a>
+      <a href="conciergerie-airbnb-cachan.html">Cachan</a>
+      <a href="conciergerie-airbnb-gentilly.html">Gentilly</a>
+      <a href="conciergerie-airbnb-ivry-sur-seine.html">Ivry-sur-Seine</a>
+      <a href="conciergerie-airbnb-versailles.html">Versailles</a>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 Madys Conciergerie. Tous droits réservés.</p>
@@ -216,7 +238,7 @@
       '.avantage-card', '.stats-grid > div', '.contact-card', '.contact-info-title',
       '.faq-item', '.cta-band-inner', '.step-card', '.service-card', '.legal-inner h2',
       '.contact-form-wrap', '.avantages-img', '.sim-card', '.platforms-inner',
-      '.testimonial-card', '.step-row', '.video-frame', '.contact-reviews', '.tarif-card'
+      '.testimonial-card', '.step-row', '.video-frame', '.contact-reviews', '.tarif-card', '.city-points li', '.city-card', '.city-intro-img', '.zones-list li'
     ];
     // Cards that slide horizontally inside a pinned track are animated by the track itself
     const pinCapable = window.matchMedia('(min-width: 901px) and (min-height: 680px)').matches;
@@ -450,6 +472,25 @@
       upliftEl.textContent = uplift > 0 ? 'Soit environ +' + uplift + ' % vs une location classique' : '';
     });
   }
+
+  // Let the browser decode images off the main thread
+  document.querySelectorAll('img').forEach(img => { img.decoding = 'async'; });
+
+  // Conversion tracking (one delegated listener for all clicks)
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a, button');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    const page = currentPage;
+    if (a.classList.contains('whatsapp-float') || href.indexOf('wa.me') !== -1) track('whatsapp_click', { page });
+    else if (href.indexOf('g.page/r/') !== -1) track('google_reviews_click', { page, kind: href.indexOf('/review') !== -1 ? 'write' : 'read' });
+    else if (href.indexOf('tel:') === 0) track('phone_click', { page });
+    else if (href.indexOf('mailto:') === 0) track('email_click', { page });
+    else if (href.indexOf('contact.html') !== -1) track('cta_rdv_click', { page, label: a.textContent.trim().slice(0, 40) });
+    else if (a.id === 'sim-go') track('simulator_used', { page });
+  });
+  const promo = document.querySelector('.video-frame video');
+  if (promo) promo.addEventListener('play', () => track('video_play', { page: currentPage }), { once: true });
 
   // FAQ toggle
   document.querySelectorAll('.faq-question').forEach(btn => {

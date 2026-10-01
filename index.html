@@ -25,7 +25,8 @@
   <meta name="twitter:description" content="On s'occupe de tout, de l'annonce à la remise des clés. Maximisez vos revenus sans effort." />
   <meta name="twitter:image" content="https://madysconciergerie.com/og-image.png" />
   <link rel="preconnect" href="https://images.unsplash.com" />
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85" />
+  <link rel="preload" as="image" media="(min-width: 768px)" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85" />
+  <link rel="preload" as="image" media="(max-width: 767px)" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=75" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
@@ -90,6 +91,33 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://madysconciergerie.com/#website",
+    "url": "https://madysconciergerie.com/",
+    "name": "MADYS Conciergerie",
+    "inLanguage": "fr-FR",
+    "publisher": { "@id": "https://madysconciergerie.com/#business" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Qu'est-ce qu'une conciergerie Airbnb ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Une conciergerie Airbnb gère votre location courte durée à votre place : création et optimisation de l'annonce, communication avec les voyageurs, arrivées et départs, ménage, blanchisserie et maintenance. Vous restez propriétaire et percevez vos revenus, sans vous occuper du quotidien." } },
+      { "@type": "Question", "name": "Combien coûte la conciergerie MADYS ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nous prenons une commission sur les revenus générés : vous ne payez que si vous gagnez. Il n'y a ni frais cachés ni frais fixe mensuel, et le taux est établi sur devis selon votre bien." } },
+      { "@type": "Question", "name": "Sur quelles plateformes mon logement est-il diffusé ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Nous diffusons votre bien sur Airbnb, Booking.com et Abritel, avec des annonces rédigées et optimisées pour chaque plateforme." } },
+      { "@type": "Question", "name": "Dans quelles villes intervenez-vous ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "MADYS Conciergerie intervient dans toute l'Île-de-France : Paris, les Hauts-de-Seine, le Val-de-Marne, les Yvelines et les départements voisins, notamment à Malakoff, Vanves, Châtillon, Bagneux, Issy-les-Moulineaux, Clamart, Boulogne-Billancourt, Rueil-Malmaison, Arcueil, Cachan, Gentilly, Ivry-sur-Seine et Versailles." } }
+    ]
+  }
+  </script>
   <style>
     /* ── HERO ── */
     .hero {
@@ -107,6 +135,13 @@
       background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85') center/cover no-repeat;
       transform: scale(1.12);
       will-change: transform;
+    }
+    /* Téléphone : photo plus légère, sans agrandissement ni couche dédiée (pas de parallaxe) */
+    @media (max-width: 767px) {
+      .hero-bg {
+        background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=75');
+        transform: none; will-change: auto;
+      }
     }
     .hero-overlay {
       position: absolute; inset: 0;
@@ -470,9 +505,9 @@
         <p class="section-subtitle">Découvrez comment nous gérons votre location courte durée, de l'annonce à la remise des clés.</p>
       </div>
       <div class="video-frame">
-        <video controls playsinline preload="metadata" width="1920" height="1080"
+        <video controls playsinline preload="none" poster="madys-promo-poster.jpg" width="1280" height="720"
                aria-label="Vidéo de présentation de MADYS Conciergerie">
-          <source src="madys-promo.mp4#t=0.1" type="video/mp4" />
+          <source src="madys-promo.mp4" type="video/mp4" />
           Votre navigateur ne peut pas lire cette vidéo.
         </video>
       </div>
@@ -589,6 +624,77 @@ Je recommande"</p>
           </div>
         </div>
       </div>
+      <div class="testimonials-more">
+        <span class="testimonials-more-score"><span class="testimonials-more-stars">★★★★★</span> 5,0 / 5 sur Google</span>
+        <a href="https://g.page/r/CbkULGfgs1-1EBM" target="_blank" rel="noopener" class="btn-secondary">Voir tous nos avis Google</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ ACCUEIL -->
+  <section class="home-faq">
+    <div class="home-faq-inner">
+      <div class="section-header centered">
+        <span class="section-label">Questions fréquentes</span>
+        <h2 class="section-title">Tout savoir sur notre conciergerie Airbnb</h2>
+      </div>
+      <div>
+        <div class="faq-item open">
+          <button class="faq-question">
+            Qu'est-ce qu'une conciergerie Airbnb ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Une conciergerie Airbnb gère votre location courte durée à votre place : création et optimisation de l'annonce, communication avec les voyageurs, arrivées et départs, ménage, blanchisserie et maintenance. Vous restez propriétaire et percevez vos revenus, sans vous occuper du quotidien.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Combien coûte la conciergerie MADYS ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Nous prenons une commission sur les revenus générés : vous ne payez que si vous gagnez. Il n'y a ni frais cachés ni frais fixe mensuel, et le taux est établi sur devis selon votre bien. <a href="contact.html" style="color: var(--gold-dark);">Demander un devis gratuit</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Sur quelles plateformes mon logement est-il diffusé ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Nous diffusons votre bien sur Airbnb, Booking.com et Abritel, avec des annonces rédigées et optimisées pour chaque plateforme. <a href="services.html" style="color: var(--gold-dark);">Voir tous nos services</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Dans quelles villes intervenez-vous ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>MADYS Conciergerie intervient dans toute l'Île-de-France : Paris, les Hauts-de-Seine, le Val-de-Marne, les Yvelines et les départements voisins. Retrouvez ci-dessous nos principaux secteurs.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONES D'INTERVENTION -->
+  <section class="zones-section" id="zones">
+    <div class="zones-inner">
+      <div class="section-header centered">
+        <span class="section-label">Zones d'intervention</span>
+        <h2 class="section-title">Votre conciergerie Airbnb en Île-de-France</h2>
+        <p class="section-subtitle">Basée à Malakoff, MADYS gère des locations courte durée à Paris et dans toute la région. Choisissez votre ville.</p>
+      </div>
+      <ul class="zones-list">
+        <li><a href="conciergerie-airbnb-paris.html">Conciergerie Airbnb Paris</a></li>
+        <li><a href="conciergerie-airbnb-malakoff.html">Conciergerie Airbnb Malakoff</a></li>
+        <li><a href="conciergerie-airbnb-vanves.html">Conciergerie Airbnb Vanves</a></li>
+        <li><a href="conciergerie-airbnb-chatillon.html">Conciergerie Airbnb Châtillon</a></li>
+        <li><a href="conciergerie-airbnb-bagneux.html">Conciergerie Airbnb Bagneux</a></li>
+        <li><a href="conciergerie-airbnb-issy-les-moulineaux.html">Conciergerie Airbnb Issy-les-Moulineaux</a></li>
+        <li><a href="conciergerie-airbnb-clamart.html">Conciergerie Airbnb Clamart</a></li>
+        <li><a href="conciergerie-airbnb-boulogne-billancourt.html">Conciergerie Airbnb Boulogne-Billancourt</a></li>
+        <li><a href="conciergerie-airbnb-rueil-malmaison.html">Conciergerie Airbnb Rueil-Malmaison</a></li>
+        <li><a href="conciergerie-airbnb-arcueil.html">Conciergerie Airbnb Arcueil</a></li>
+        <li><a href="conciergerie-airbnb-cachan.html">Conciergerie Airbnb Cachan</a></li>
+        <li><a href="conciergerie-airbnb-gentilly.html">Conciergerie Airbnb Gentilly</a></li>
+        <li><a href="conciergerie-airbnb-ivry-sur-seine.html">Conciergerie Airbnb Ivry-sur-Seine</a></li>
+        <li><a href="conciergerie-airbnb-versailles.html">Conciergerie Airbnb Versailles</a></li>
+      </ul>
     </div>
   </section>
 

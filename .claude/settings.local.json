@@ -73,7 +73,14 @@
       "Bash(where ffmpeg *)",
       "Read(//c//**)",
       "Bash(powershell -NoProfile -Command \"Get-Command ffmpeg -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\")",
-      "Bash(awk '{print $5}')"
+      "Bash(awk '{print $5}')",
+      "Bash(sed -i 's|<link rel=\"preconnect\" href=\"https://images.unsplash.com\" crossorigin />|<link rel=\"preconnect\" href=\"https://images.unsplash.com\" />|' index.html)",
+      "Bash(node -e \"require\\('fs'\\).readFileSync\\('components.js','utf8'\\); new Function\\(require\\('fs'\\).readFileSync\\('components.js','utf8'\\)\\); console.log\\('JS syntax OK'\\)\")",
+      "Bash(sed -i 's|<section class=\"why-section\">|<section class=\"why-section\" data-scrolly>|' index.html)",
+      "Bash(sed -i '/<ul class=\"why-list\">/,/<\\\\/ul>/ s|^          <li>$|          <li data-scrolly-step>|' index.html)",
+      "Bash(sed -i '/<div class=\"why-image-wrap\">/,/<div class=\"why-stat-badge\">/ { s|^        <img$|        <div class=\"why-image-clip\"><img|; s|^        />$|        /></div>| }' index.html)",
+      "Bash(sed -i 's|^        <ul class=\"why-list\">|        <div class=\"why-progress\" aria-hidden=\"true\"><span></span></div>\\\\n        <ul class=\"why-list\">|' index.html)",
+      "Bash(sed -n '/<!-- WHY US -->/,/<ul class=\"why-list\">/p' index.html)"
     ]
   }
 }

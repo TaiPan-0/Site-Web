@@ -75,6 +75,49 @@
     .tarif-period { font-size: 0.78rem; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
     .tarif-note { font-size: 0.8rem; color: rgba(255,255,255,0.35); margin-top: 6px; }
 
+    /* Manifeste : les mots s'allument au fil du défilement */
+    .manifesto { background: var(--dark); padding: 90px 56px; }
+    .manifesto-text {
+      max-width: 980px; margin: 0 auto; text-align: center;
+      font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: clamp(1.5rem, 3.4vw, 2.7rem); line-height: 1.3; letter-spacing: -0.015em;
+      color: var(--white);
+    }
+    .manifesto-text.wr-ready span { color: rgba(255,255,255,0.16); transition: color 0.35s ease; }
+    .manifesto-text.wr-ready span.on { color: var(--white); }
+    .manifesto-text.wr-ready span.on:nth-last-child(-n+4) { color: var(--gold-light); }
+
+    /* Services : grille classique par défaut, défilement horizontal épinglé sur grand écran */
+    .services-scrolly { background: var(--off-white); }
+    .services-pin-head { display: none; }
+    .services-scrolly.is-pinned { padding: 0; }
+    .services-scrolly.is-pinned .services-pin {
+      position: sticky; top: 72px; height: calc(100vh - 72px);
+      display: flex; flex-direction: column; justify-content: center; gap: 14px;
+      overflow: hidden;
+    }
+    .services-scrolly.is-pinned .services-pin-head {
+      display: flex; align-items: center; gap: 20px; padding: 0 56px;
+    }
+    .services-count { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.95rem; color: var(--dark); font-variant-numeric: tabular-nums; }
+    .services-bar { flex: 1; height: 2px; background: var(--grey-light); border-radius: 2px; overflow: hidden; }
+    .services-bar span {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+      transform: scaleX(var(--p, 0)); transform-origin: left;
+    }
+    .services-scrolly.is-pinned .services-viewport { overflow: hidden; padding: 8px 0 18px; }
+    .services-scrolly.is-pinned .services-grid {
+      display: flex; gap: 24px; align-items: stretch;
+      max-width: none; margin: 0; padding: 0 56px;
+      width: max-content; will-change: transform;
+    }
+    .services-scrolly.is-pinned .service-card { flex: 0 0 380px; width: 380px; }
+    .services-scrolly.is-pinned .service-card-img { height: min(200px, 20vh); }
+    .services-scrolly.is-pinned .service-card-body { padding: 22px 26px 24px; }
+    @media (max-width: 900px) {
+      .manifesto { padding: 64px 24px; }
+    }
     @media (max-width: 900px) {
       .tarif-section { padding: 72px 24px; }
       .tarif-card { grid-template-columns: 1fr; }
@@ -91,10 +134,21 @@
     </div>
   </div>
 
-  <section style="background: var(--off-white);">
-    <div class="services-grid">
+  <section class="manifesto">
+    <p class="manifesto-text" data-word-reveal>De l'annonce à la remise des clés, nous prenons en charge chaque détail. Vous encaissez, nous gérons.</p>
+  </section>
 
-      <div class="service-card">
+  <section class="services-scrolly" data-scrolly>
+    <div class="services-pin">
+      <div class="services-pin-head">
+        <span class="section-label" style="margin:0">Nos services</span>
+        <div class="services-bar" aria-hidden="true"><span></span></div>
+        <span class="services-count" data-scrolly-count aria-hidden="true">01 / 09</span>
+      </div>
+      <div class="services-viewport">
+      <div class="services-grid" data-scrolly-track>
+
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=700&q=85" alt="Annonce Airbnb optimisée sur ordinateur" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -110,7 +164,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=700&q=85" alt="Appareil photo sur trépied dans un appartement" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -126,7 +180,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=700&q=85" alt="Ménage professionnel et blanchisserie pour location Airbnb" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -142,7 +196,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=85" alt="Accueil des voyageurs Airbnb par la conciergerie MADYS" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -158,7 +212,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=700&q=85" alt="Électricien ou plombier en intervention dans un appartement" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -174,7 +228,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <!-- Graphique SVG tarification dynamique -->
         <div class="service-card-img" style="background:#0F1117; display:flex; align-items:center; justify-content:center; padding:24px;">
           <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;">
@@ -224,7 +278,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=700&q=85" alt="Gestion des litiges et réclamations d'une location courte durée" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -240,7 +294,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=85" alt="Chambre préparée avec soin pour l'accueil des voyageurs" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -256,7 +310,7 @@
         </div>
       </div>
 
-      <div class="service-card">
+      <div class="service-card" data-scrolly-step>
         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=85" alt="Tableau de bord de suivi des revenus locatifs" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
@@ -272,6 +326,8 @@
         </div>
       </div>
 
+      </div>
+      </div>
     </div>
   </section>
 

@@ -289,16 +289,24 @@ footer::before {
   justify-content: center;
   box-shadow: 0 6px 22px rgba(37,211,102,0.45);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  animation: wa-pulse 2.6s infinite;
 }
 .whatsapp-float:hover {
   transform: scale(1.08);
   box-shadow: 0 8px 28px rgba(37,211,102,0.6);
 }
+/* Pulse ring drawn on a pseudo-element: only transform and opacity animate,
+   so it runs on the compositor instead of repainting a box-shadow every frame. */
+.whatsapp-float::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: rgba(37,211,102,0.5);
+  z-index: -1;
+  animation: wa-pulse 2.6s ease-out infinite;
+}
 @keyframes wa-pulse {
-  0% { box-shadow: 0 6px 22px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.5); }
-  70% { box-shadow: 0 6px 22px rgba(37,211,102,0.45), 0 0 0 16px rgba(37,211,102,0); }
-  100% { box-shadow: 0 6px 22px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0); }
+  0% { transform: scale(1); opacity: 0.7; }
+  70%, 100% { transform: scale(1.6); opacity: 0; }
 }
 @media (max-width: 600px) {
   .whatsapp-float { width: 52px; height: 52px; right: 16px; bottom: 16px; }
@@ -810,4 +818,61 @@ footer {
 }
 @media (max-width: 600px) {
   .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ── FLUIDITÉ ── */
+/* Réponse tactile immédiate, sans flash gris au tap */
+a, button, select, input, textarea { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+/* Barre de progression de lecture */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 200;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  transform: scaleX(0); transform-origin: left;
+  pointer-events: none;
+}
+
+/* Apparition latérale pour la grande photo */
+.reveal.reveal-left { transform: translateX(-36px); }
+.reveal.reveal-left.visible { transform: none; }
+
+/* Fondu des images en chargement différé */
+@keyframes imgIn { from { opacity: 0; } to { opacity: 1; } }
+img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
+
+/* FAQ : ouverture à la hauteur réelle du contenu (plus de saccade en fin d'animation) */
+.faq-answer {
+  display: grid; grid-template-rows: 0fr; max-height: none;
+  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1), padding 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.faq-answer > p { min-height: 0; overflow: hidden; }
+.faq-item.open .faq-answer { grid-template-rows: 1fr; max-height: none; }
+
+/* Menu mobile : ouverture plus souple, liens en cascade */
+@media (max-width: 900px) {
+  .nav-links { transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .nav-links li { opacity: 0; transform: translateY(-8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+  .nav-links.open li { opacity: 1; transform: none; }
+  .nav-links.open li:nth-child(2) { transition-delay: 0.04s; }
+  .nav-links.open li:nth-child(3) { transition-delay: 0.08s; }
+  .nav-links.open li:nth-child(4) { transition-delay: 0.12s; }
+  .nav-links.open li:nth-child(5) { transition-delay: 0.16s; }
+}
+
+/* Écrans tactiles : pas d'état « survol » qui reste collé après un tap */
+@media (hover: none) {
+  .service-card:hover, .testimonial-card:hover, .contact-card:hover, .sim-card:hover,
+  .rating-item:hover, .step-img:hover, .avantages-img:hover, .why-list li:hover,
+  .btn-primary:hover, .btn-secondary:hover, .btn-secondary-light:hover, .sim-btn:hover,
+  .platform-logo:hover, .footer-links a:hover, .footer-review-btn:hover { transform: none; }
+  .service-card:hover .service-card-img, .service-card:hover .service-card-icon { transform: none; }
+  .btn-primary:active, .btn-secondary:active, .btn-secondary-light:active, .sim-btn:active { transform: scale(0.97); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float::before { animation: none; opacity: 0; }
+  .scroll-progress { display: none; }
+  .faq-answer, .nav-links, .nav-links li { transition: none; }
+  .nav-links li { opacity: 1; transform: none; }
 }

@@ -184,79 +184,120 @@
     });
   }
 
-  // Navbar scroll effect (throttled via requestAnimationFrame)
-  const nav = document.querySelector('nav');
-  if (nav) {
-    let navTicking = false;
-    const updateNav = () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-      navTicking = false;
-    };
-    window.addEventListener('scroll', () => {
-      if (!navTicking) { window.requestAnimationFrame(updateNav); navTicking = true; }
-    }, { passive: true });
-    updateNav();
-  }
-
-  // Scroll reveal animations
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Hero parallax (desktop only, respects reduced-motion)
+  // Single scroll loop: navbar state, reading progress bar and hero parallax
+  // all share one requestAnimationFrame per frame.
+  const nav = document.querySelector('nav');
   const heroBg = document.querySelector('.hero-bg');
-  if (heroBg && !reduceMotion && window.matchMedia('(min-width: 768px)').matches) {
-    let parallaxTicking = false;
-    const updateParallax = () => {
-      const offset = Math.min(window.scrollY, window.innerHeight) * 0.25;
-      heroBg.style.transform = 'scale(1.12) translateY(' + offset + 'px)';
-      parallaxTicking = false;
-    };
-    window.addEventListener('scroll', () => {
-      if (!parallaxTicking) { window.requestAnimationFrame(updateParallax); parallaxTicking = true; }
-    }, { passive: true });
-    updateParallax();
-  }
+  const parallaxOn = heroBg && !reduceMotion && window.matchMedia('(min-width: 768px)').matches;
+  document.body.insertAdjacentHTML('beforeend', '<div class="scroll-progress" aria-hidden="true"></div>');
+  const progressBar = document.querySelector('.scroll-progress');
+  let scrollTicking = false;
+  const onScrollFrame = () => {
+    const y = window.scrollY;
+    if (nav) nav.classList.toggle('scrolled', y > 60);
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+    if (parallaxOn && y <= window.innerHeight) {
+      heroBg.style.transform = 'scale(1.12) translate3d(0,' + (y * 0.25).toFixed(1) + 'px,0)';
+    }
+    scrollTicking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) { scrollTicking = true; window.requestAnimationFrame(onScrollFrame); }
+  }, { passive: true });
+  onScrollFrame();
 
+  // Scroll reveal animations
   if (!reduceMotion && 'IntersectionObserver' in window) {
     const revealSelectors = [
-      '.section-header', '.why-image-wrap', '.why-list li', '.process-card',
+      '.section-header', '.why-image-wrap', '.why-list li', '.why-actions', '.process-card',
       '.avantage-card', '.stats-grid > div', '.contact-card', '.contact-info-title',
       '.faq-item', '.cta-band-inner', '.step-card', '.service-card', '.legal-inner h2',
       '.contact-form-wrap', '.avantages-img', '.sim-card', '.platforms-inner',
-      '.testimonial-card', '.step-row'
+      '.testimonial-card', '.step-row', '.video-frame', '.contact-reviews', '.tarif-card'
     ];
-    const els = document.querySelectorAll(revealSelectors.join(','));
+    // Cards that slide horizontally inside a pinned track are animated by the track itself
+    const pinCapable = window.matchMedia('(min-width: 901px) and (min-height: 680px)').matches;
+    const els = Array.from(document.querySelectorAll(revealSelectors.join(',')))
+      .filter(el => !(pinCapable && el.closest('[data-scrolly-track]')));
+    // Once revealed, strip every reveal artefact so the element's own hover
+    // transitions run without the stagger delay or the slow reveal timing.
+    const settle = el => {
+      if (!el.classList.contains('reveal')) return;
+      el.classList.remove('reveal', 'reveal-left', 'visible');
+      el.style.transitionDelay = '';
+    };
     els.forEach(el => {
       el.classList.add('reveal');
+      if (el.matches('.why-image-wrap')) el.classList.add('reveal-left');
       // Stagger items inside the same parent (grids/lists)
       const siblings = Array.from(el.parentElement ? el.parentElement.children : []);
       const idx = siblings.indexOf(el);
-      if (idx > 0) el.style.transitionDelay = Math.min(idx * 0.09, 0.45) + 's';
-      // Free the GPU layer once the entrance animation finishes
-      el.addEventListener('transitionend', () => el.classList.add('reveal-done'), { once: true });
+      if (idx > 0) el.style.transitionDelay = Math.min(idx * 0.08, 0.4) + 's';
+      el.addEventListener('transitionend', e => {
+        if (e.target === el && e.propertyName === 'opacity') settle(el);
+      });
     });
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           obs.unobserve(entry.target);
+          setTimeout(() => settle(entry.target), 1600);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     els.forEach(el => observer.observe(el));
+  }
+
+  // Count-up on key figures when they scroll into view (e.g. "+30%", "100%", "4.9★")
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const figures = document.querySelectorAll('.stat-num, .why-stat-num');
+    const countObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        obs.unobserve(entry.target);
+        const el = entry.target;
+        const m = el.textContent.trim().match(/^(\+?)(\d+(?:[.,]\d+)?)(%|★)$/);
+        if (!m) return;
+        const target = parseFloat(m[2].replace(',', '.'));
+        const decimals = (m[2].split(/[.,]/)[1] || '').length;
+        const start = performance.now(), duration = 1100;
+        const frame = now => {
+          const p = Math.min((now - start) / duration, 1);
+          const v = target * (1 - Math.pow(1 - p, 3));
+          el.textContent = m[1] + v.toFixed(decimals) + m[3];
+          if (p < 1) requestAnimationFrame(frame);
+        };
+        requestAnimationFrame(frame);
+      });
+    }, { threshold: 0.6 });
+    figures.forEach(el => countObserver.observe(el));
+  }
+
+  // Soft fade-in for lazy images as they finish loading
+  if (!reduceMotion) {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+      if (img.complete) return;
+      img.addEventListener('load', () => img.classList.add('img-in'), { once: true });
+    });
   }
 
   // 3D tilt on cards (desktop with mouse only)
   if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const tiltCards = document.querySelectorAll(
-      '.service-card, .testimonial-card, .process-card, .avantage-card, .tarif-card, .contact-card, .sim-card, .step-card'
+      '.service-card, .testimonial-card, .process-card, .avantage-card, .tarif-card, .step-card'
     );
     tiltCards.forEach(card => {
       let raf = null;
       card.addEventListener('mouseenter', () => {
+        if (card.classList.contains('reveal')) return;
         card.style.transition = 'transform 0.15s ease-out, box-shadow 0.3s ease';
       });
       card.addEventListener('mousemove', e => {
-        if (raf) return;
+        if (raf || card.classList.contains('reveal')) return;
         raf = requestAnimationFrame(() => {
           const r = card.getBoundingClientRect();
           const px = (e.clientX - r.left) / r.width - 0.5;
@@ -274,6 +315,99 @@
         card.style.transform = '';
         setTimeout(() => { card.style.transition = ''; }, 600);
       });
+    });
+  }
+
+  // Scrollytelling: sections marked [data-scrolly] are pinned on large screens and
+  // driven by scroll progress. Steps get .is-active / .is-past, the section gets a
+  // --p custom property (0 → 1), and an optional [data-scrolly-track] slides sideways.
+  // Small screens and reduced-motion keep the normal stacked layout.
+  (function () {
+    const sections = Array.from(document.querySelectorAll('[data-scrolly]'));
+    if (!sections.length) return;
+    const NAV_H = 72;
+    const wide = window.matchMedia('(min-width: 901px) and (min-height: 680px)');
+    const pad = n => String(n).padStart(2, '0');
+    const states = sections.map(section => ({
+      section,
+      steps: Array.from(section.querySelectorAll('[data-scrolly-step]')),
+      track: section.querySelector('[data-scrolly-track]'),
+      counter: section.querySelector('[data-scrolly-count]'),
+      current: -1,
+      shift: 0
+    }));
+    let pinned = false, ticking = false;
+
+    function update() {
+      ticking = false;
+      if (!pinned) return;
+      const vh = window.innerHeight;
+      states.forEach(st => {
+        const rect = st.section.getBoundingClientRect();
+        if (rect.bottom < -vh || rect.top > vh * 2) return;
+        const travel = rect.height - vh + NAV_H;
+        const p = travel > 0 ? Math.min(Math.max((NAV_H - rect.top) / travel, 0), 1) : 0;
+        st.section.style.setProperty('--p', p.toFixed(4));
+        if (st.track) st.track.style.transform = 'translate3d(' + (-p * st.shift).toFixed(1) + 'px,0,0)';
+        if (!st.steps.length) return;
+        const idx = Math.min(st.steps.length - 1, Math.floor(p * st.steps.length));
+        if (idx === st.current) return;
+        st.current = idx;
+        st.steps.forEach((s, i) => {
+          s.classList.toggle('is-active', i === idx);
+          s.classList.toggle('is-past', i < idx);
+        });
+        if (st.counter) st.counter.textContent = pad(idx + 1) + ' / ' + pad(st.steps.length);
+      });
+    }
+
+    function layout() {
+      pinned = wide.matches && !reduceMotion;
+      states.forEach(st => {
+        st.section.classList.toggle('is-pinned', pinned);
+        st.current = -1;
+        st.steps.forEach(s => s.classList.remove('is-active', 'is-past'));
+        if (!st.track) return;
+        st.track.style.transform = '';
+        st.section.style.height = '';
+        if (pinned) {
+          st.shift = Math.max(0, st.track.scrollWidth - st.track.parentElement.clientWidth);
+          st.section.style.height = Math.round(window.innerHeight + st.shift * 0.55) + 'px';
+        }
+      });
+      update();
+    }
+
+    const requestUpdate = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    let resizeTimer = null;
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 120); });
+    window.addEventListener('load', layout);
+    wide.addEventListener('change', layout);
+    layout();
+  })();
+
+  // Word-by-word text reveal linked to scroll (no pinning)
+  if (!reduceMotion) {
+    document.querySelectorAll('[data-word-reveal]').forEach(el => {
+      const words = el.textContent.trim().split(/\s+/);
+      el.setAttribute('aria-label', words.join(' '));
+      el.innerHTML = words.map(w => '<span aria-hidden="true">' + w + '</span>').join(' ');
+      el.classList.add('wr-ready');
+      const spans = Array.from(el.children);
+      let lit = -1, wrTicking = false;
+      const paint = () => {
+        wrTicking = false;
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const p = Math.min(Math.max((vh * 0.85 - rect.top) / (vh * 0.5), 0), 1);
+        const n = Math.round(p * spans.length);
+        if (n === lit) return;
+        lit = n;
+        spans.forEach((s, i) => s.classList.toggle('on', i < n));
+      };
+      window.addEventListener('scroll', () => { if (!wrTicking) { wrTicking = true; requestAnimationFrame(paint); } }, { passive: true });
+      paint();
     });
   }
 

@@ -24,6 +24,8 @@
   <meta name="twitter:title" content="Conciergerie Airbnb Île-de-France — MADYS" />
   <meta name="twitter:description" content="On s'occupe de tout, de l'annonce à la remise des clés. Maximisez vos revenus sans effort." />
   <meta name="twitter:image" content="https://madysconciergerie.com/og-image.png" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
@@ -92,7 +94,7 @@
     /* ── HERO ── */
     .hero {
       position: relative;
-      height: 100vh;
+      height: 100vh; height: 100svh;
       min-height: 640px;
       display: flex;
       align-items: center;
@@ -270,6 +272,40 @@
       .why-actions { flex-wrap: nowrap; gap: 10px; }
       .why-actions a { flex: 1; justify-content: center; padding: 13px 10px; font-size: 0.7rem; white-space: nowrap; }
     }
+    .why-image-clip { border-radius: 16px; overflow: hidden; }
+    .why-progress { display: none; }
+
+    /* Scène épinglée (grand écran) : la photo reste en place et zoome doucement
+       pendant que les trois arguments s'allument l'un après l'autre. */
+    .why-section.is-pinned { padding: 0 56px; height: 165vh; }
+    .why-section.is-pinned .why-inner { position: sticky; top: 72px; height: calc(100vh - 72px); }
+    .why-section.is-pinned .why-image {
+      height: min(480px, 58vh);
+      transform: scale(calc(1.02 + var(--p, 0) * 0.1));
+      will-change: transform;
+    }
+    .why-section.is-pinned .why-progress {
+      display: block; height: 2px; margin-top: 26px;
+      background: var(--grey-light); border-radius: 2px; overflow: hidden;
+    }
+    .why-section.is-pinned .why-progress span {
+      display: block; height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+      transform: scaleX(var(--p, 0)); transform-origin: left;
+    }
+    .why-section.is-pinned .why-list { margin-top: 20px; }
+    .why-section.is-pinned .why-list li {
+      opacity: 0.4;
+      transition: opacity 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .why-section.is-pinned .why-list li.is-past { opacity: 0.75; }
+    .why-section.is-pinned .why-list li.is-active {
+      opacity: 1; border-color: var(--gold);
+      box-shadow: 0 14px 40px rgba(201,168,76,0.22);
+      transform: translateX(10px);
+    }
+    .why-section.is-pinned .why-list-icon { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+    .why-section.is-pinned .why-list li.is-active .why-list-icon { transform: scale(1.12); }
 
     /* ── TESTIMONIALS ── */
     .testimonials-section { background: var(--white); padding: 90px 56px; }
@@ -375,15 +411,15 @@
   </div>
 
   <!-- WHY US -->
-  <section class="why-section">
+  <section class="why-section" data-scrolly>
     <div class="why-inner">
       <div class="why-image-wrap">
-        <img
+        <div class="why-image-clip"><img
           src="remise-cles.jpg"
           alt="Remise des clés à un voyageur par MADYS Conciergerie"
           width="704" height="384" loading="lazy"
           class="why-image"
-        />
+        /></div>
         <div class="why-stat-badge">
           <span class="why-stat-num">100%</span>
           <span class="why-stat-label">Gestion prise en charge</span>
@@ -393,22 +429,23 @@
         <span class="section-label">Pourquoi MADYS ?</span>
         <h2 class="section-title">Une conciergerie qui s'occupe de tout</h2>
         <p class="section-subtitle">De la création de votre annonce à l'entretien de votre bien, nous prenons en charge chaque détail pour vous.</p>
+        <div class="why-progress" aria-hidden="true"><span></span></div>
         <ul class="why-list">
-          <li>
+          <li data-scrolly-step>
             <div class="why-list-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg></div>
             <div>
               <p class="why-list-title">Expertise locale Île-de-France</p>
               <p class="why-list-desc">Nous connaissons le marché local et adaptons la stratégie de chaque bien.</p>
             </div>
           </li>
-          <li>
+          <li data-scrolly-step>
             <div class="why-list-icon"><svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg></div>
             <div>
               <p class="why-list-title">Revenus optimisés</p>
               <p class="why-list-desc">Tarification dynamique adaptée à la demande pour maximiser votre rentabilité.</p>
             </div>
           </li>
-          <li>
+          <li data-scrolly-step>
             <div class="why-list-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
             <div>
               <p class="why-list-title">Sécurité & tranquillité d'esprit</p>

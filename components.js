@@ -20,7 +20,7 @@
     loadGoogleAnalytics();
   }
 
-  const LOGO_IMG = `<img src="logo.png" alt="MADYS Conciergerie" style="height:54px;width:auto;display:block;">`;
+  const LOGO_IMG = `<img src="logo.png?v=2" alt="MADYS Conciergerie" style="height:54px;width:auto;display:block;">`;
 
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
@@ -115,7 +115,7 @@
   const favicon = document.createElement('link');
   favicon.rel = 'icon';
   favicon.type = 'image/png';
-  favicon.href = 'favicon.png?v=6';
+  favicon.href = 'favicon.png?v=7';
   document.head.appendChild(favicon);
 
   const whatsappHTML = `

@@ -68,7 +68,12 @@
       "Bash(ls -t \"C:/Users/admrd/Downloads\" | head -10; ls -t \"C:/Users/admrd/Documents/MADYS\" 2>/dev/null | head -10; ls -t \"C:/Users/admrd/Pictures\" 2>/dev/null | head -10)",
       "Bash(mv -f favicon-new.png favicon.png)",
       "Bash(mv -f og-image-new.png og-image.png)",
-      "Bash(sed -i \"s|favicon.png?v=5|favicon.png?v=6|\" components.js)"
+      "Bash(sed -i \"s|favicon.png?v=5|favicon.png?v=6|\" components.js)",
+      "Bash(awk '{print $5/1048576 \" MB\"}')",
+      "Bash(where ffmpeg *)",
+      "Read(//c//**)",
+      "Bash(powershell -NoProfile -Command \"Get-Command ffmpeg -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\")",
+      "Bash(awk '{print $5}')"
     ]
   }
 }

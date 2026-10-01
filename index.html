@@ -102,7 +102,7 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=85') center/cover no-repeat;
+      background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85') center/cover no-repeat;
       transform: scale(1.12);
       will-change: transform;
     }
@@ -206,6 +206,23 @@
       .hero-scroll { display: none; }
     }
 
+    /* ── VIDEO ── */
+    .video-section { background: var(--dark); padding: 90px 56px; }
+    .video-inner { max-width: 980px; margin: 0 auto; }
+    .video-section .section-title { color: var(--white); }
+    .video-section .section-subtitle { color: rgba(255,255,255,0.6); }
+    .video-frame {
+      border-radius: 18px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.3);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      background: #000;
+    }
+    .video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+    @media (max-width: 900px) {
+      .video-section { padding: 64px 20px; }
+      .video-frame { border-radius: 12px; }
+    }
+
     /* ── WHY US ── */
     .why-section { background: var(--off-white); padding: 90px 56px; }
     .why-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
@@ -222,19 +239,36 @@
     }
     .why-stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; display: block; line-height: 1; }
     .why-stat-label { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85; }
-    .why-list { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
-    .why-list li { display: flex; align-items: center; gap: 14px; }
+    .why-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+    .why-list li {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--white); border: 1px solid var(--grey-light);
+      border-radius: var(--radius); padding: 16px 18px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .why-list li:hover { border-color: rgba(201,168,76,0.5); box-shadow: var(--shadow); transform: translateX(4px); }
     .why-list-icon {
-      width: 36px; height: 36px; flex-shrink: 0;
-      background: rgba(201,168,76,0.1); border-radius: 8px;
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
     }
-    .why-list-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; }
-    .why-list-title { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
-    .why-list-desc { font-size: 0.85rem; color: var(--grey); margin-top: 2px; }
+    .why-list-icon svg { width: 19px; height: 19px; stroke: var(--white); fill: none; stroke-width: 2; stroke-linecap: round; }
+    .why-list-title { font-weight: 700; font-size: 0.92rem; color: var(--dark); }
+    .why-list-desc { font-size: 0.84rem; color: var(--grey); margin-top: 2px; line-height: 1.5; }
+    .why-actions { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
     @media (max-width: 900px) {
-      .why-inner { grid-template-columns: 1fr; gap: 48px; }
-      .why-section { padding: 72px 24px; }
+      .why-inner { grid-template-columns: 1fr; gap: 32px; }
+      .why-section { padding: 64px 20px; }
+      /* Sur mobile : le texte d'abord, la photo ensuite en bandeau */
+      .why-image-wrap { order: 2; }
+      .why-image { height: 220px; object-position: center 30%; }
+      .why-stat-badge { bottom: 12px; right: 12px; padding: 12px 16px; }
+      .why-stat-num { font-size: 1.4rem; }
+      .why-stat-label { font-size: 0.6rem; }
+      .why-list li { padding: 13px 14px; gap: 13px; }
+      .why-list li:hover { transform: none; }
+      .why-actions { flex-wrap: nowrap; gap: 10px; }
+      .why-actions a { flex: 1; justify-content: center; padding: 13px 10px; font-size: 0.7rem; white-space: nowrap; }
     }
 
     /* ── TESTIMONIALS ── */
@@ -382,10 +416,28 @@
             </div>
           </li>
         </ul>
-        <div style="margin-top: 36px; display: flex; gap: 14px; flex-wrap: wrap;">
+        <div class="why-actions">
           <a href="services.html" class="btn-primary">Voir nos services</a>
           <a href="contact.html" class="btn-secondary">Prendre RDV</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="video-section">
+    <div class="video-inner">
+      <div class="section-header centered">
+        <span class="section-label">En vidéo</span>
+        <h2 class="section-title">MADYS Conciergerie en 50 secondes</h2>
+        <p class="section-subtitle">Découvrez comment nous gérons votre location courte durée, de l'annonce à la remise des clés.</p>
+      </div>
+      <div class="video-frame">
+        <video controls playsinline preload="metadata" width="1920" height="1080"
+               aria-label="Vidéo de présentation de MADYS Conciergerie">
+          <source src="madys-promo.mp4#t=0.1" type="video/mp4" />
+          Votre navigateur ne peut pas lire cette vidéo.
+        </video>
       </div>
     </div>
   </section>

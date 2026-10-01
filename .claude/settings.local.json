@@ -81,7 +81,10 @@
       "Bash(sed -i '/<div class=\"why-image-wrap\">/,/<div class=\"why-stat-badge\">/ { s|^        <img$|        <div class=\"why-image-clip\"><img|; s|^        />$|        /></div>| }' index.html)",
       "Bash(sed -i 's|^        <ul class=\"why-list\">|        <div class=\"why-progress\" aria-hidden=\"true\"><span></span></div>\\\\n        <ul class=\"why-list\">|' index.html)",
       "Bash(sed -n '/<!-- WHY US -->/,/<ul class=\"why-list\">/p' index.html)",
-      "Bash(bash /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/apply_seo.sh)"
+      "Bash(bash /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/apply_seo.sh)",
+      "mcp__claude-in-chrome__tabs_context_mcp",
+      "mcp__claude-in-chrome__navigate",
+      "mcp__claude-in-chrome__computer"
     ]
   }
 }

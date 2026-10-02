@@ -111,17 +111,37 @@
       <span class="footer-zones-title">Nos secteurs</span>
       <a href="conciergerie-airbnb-paris.html">Paris</a>
       <a href="conciergerie-airbnb-malakoff.html">Malakoff</a>
+      <a href="conciergerie-airbnb-montrouge.html">Montrouge</a>
       <a href="conciergerie-airbnb-vanves.html">Vanves</a>
       <a href="conciergerie-airbnb-chatillon.html">Châtillon</a>
       <a href="conciergerie-airbnb-bagneux.html">Bagneux</a>
-      <a href="conciergerie-airbnb-issy-les-moulineaux.html">Issy-les-Moulineaux</a>
       <a href="conciergerie-airbnb-clamart.html">Clamart</a>
+      <a href="conciergerie-airbnb-issy-les-moulineaux.html">Issy-les-Moulineaux</a>
       <a href="conciergerie-airbnb-boulogne-billancourt.html">Boulogne-Billancourt</a>
+      <a href="conciergerie-airbnb-meudon.html">Meudon</a>
+      <a href="conciergerie-airbnb-sevres.html">Sèvres</a>
+      <a href="conciergerie-airbnb-chaville.html">Chaville</a>
+      <a href="conciergerie-airbnb-fontenay-aux-roses.html">Fontenay-aux-Roses</a>
+      <a href="conciergerie-airbnb-sceaux.html">Sceaux</a>
+      <a href="conciergerie-airbnb-bourg-la-reine.html">Bourg-la-Reine</a>
+      <a href="conciergerie-airbnb-le-plessis-robinson.html">Le Plessis-Robinson</a>
+      <a href="conciergerie-airbnb-chatenay-malabry.html">Châtenay-Malabry</a>
+      <a href="conciergerie-airbnb-antony.html">Antony</a>
       <a href="conciergerie-airbnb-rueil-malmaison.html">Rueil-Malmaison</a>
       <a href="conciergerie-airbnb-arcueil.html">Arcueil</a>
       <a href="conciergerie-airbnb-cachan.html">Cachan</a>
       <a href="conciergerie-airbnb-gentilly.html">Gentilly</a>
+      <a href="conciergerie-airbnb-le-kremlin-bicetre.html">Le Kremlin-Bicêtre</a>
       <a href="conciergerie-airbnb-ivry-sur-seine.html">Ivry-sur-Seine</a>
+      <a href="conciergerie-airbnb-villejuif.html">Villejuif</a>
+      <a href="conciergerie-airbnb-vitry-sur-seine.html">Vitry-sur-Seine</a>
+      <a href="conciergerie-airbnb-lhay-les-roses.html">L'Haÿ-les-Roses</a>
+      <a href="conciergerie-airbnb-chevilly-larue.html">Chevilly-Larue</a>
+      <a href="conciergerie-airbnb-fresnes.html">Fresnes</a>
+      <a href="conciergerie-airbnb-rungis.html">Rungis</a>
+      <a href="conciergerie-airbnb-thiais.html">Thiais</a>
+      <a href="conciergerie-airbnb-choisy-le-roi.html">Choisy-le-Roi</a>
+      <a href="conciergerie-airbnb-orly.html">Orly</a>
       <a href="conciergerie-airbnb-versailles.html">Versailles</a>
     </div>
     <div class="footer-bottom">
@@ -208,9 +228,18 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Pinned scrollytelling needs enough viewport height for a scene to fit: large
+  // screens, and phones tall enough in portrait. Decided from the width and the
+  // height at load, never re-evaluated on height alone, because a phone's address
+  // bar showing or hiding changes the height mid-scroll.
+  const PIN_QUERY = '(min-width: 901px) and (min-height: 680px), (max-width: 900px) and (min-height: 640px)';
+  const canPin = () => !reduceMotion && window.matchMedia(PIN_QUERY).matches;
+  window.madysCanPin = canPin;
+
   // Single scroll loop: navbar state, reading progress bar and hero parallax
   // all share one requestAnimationFrame per frame.
   const nav = document.querySelector('nav');
+  const hero = document.querySelector('.hero');
   const heroBg = document.querySelector('.hero-bg');
   const parallaxOn = heroBg && !reduceMotion && window.matchMedia('(min-width: 768px)').matches;
   document.body.insertAdjacentHTML('beforeend', '<div class="scroll-progress" aria-hidden="true"></div>');
@@ -223,6 +252,10 @@
     progressBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
     if (parallaxOn && y <= window.innerHeight) {
       heroBg.style.transform = 'scale(1.12) translate3d(0,' + (y * 0.25).toFixed(1) + 'px,0)';
+    }
+    // Hero content recedes as the page scrolls away (--hp goes 0 → 1)
+    if (hero && !reduceMotion && y <= window.innerHeight) {
+      hero.style.setProperty('--hp', Math.min(y / window.innerHeight, 1).toFixed(3));
     }
     scrollTicking = false;
   };
@@ -240,10 +273,10 @@
       '.contact-form-wrap', '.avantages-img', '.sim-card', '.platforms-inner',
       '.testimonial-card', '.step-row', '.video-frame', '.contact-reviews', '.tarif-card', '.city-points li', '.city-card', '.city-intro-img', '.zones-list li'
     ];
-    // Cards that slide horizontally inside a pinned track are animated by the track itself
-    const pinCapable = window.matchMedia('(min-width: 901px) and (min-height: 680px)').matches;
+    // Elements driven by a pinned scene (track cards, steps) are animated by the scene itself
+    const pinCapable = canPin();
     const els = Array.from(document.querySelectorAll(revealSelectors.join(',')))
-      .filter(el => !(pinCapable && el.closest('[data-scrolly-track]')));
+      .filter(el => !(pinCapable && (el.closest('[data-scrolly-track]') || el.matches('[data-scrolly-step]'))));
     // Once revealed, strip every reveal artefact so the element's own hover
     // transitions run without the stagger delay or the slow reveal timing.
     const settle = el => {
@@ -348,7 +381,6 @@
     const sections = Array.from(document.querySelectorAll('[data-scrolly]'));
     if (!sections.length) return;
     const NAV_H = 72;
-    const wide = window.matchMedia('(min-width: 901px) and (min-height: 680px)');
     const pad = n => String(n).padStart(2, '0');
     const states = sections.map(section => ({
       section,
@@ -384,7 +416,8 @@
     }
 
     function layout() {
-      pinned = wide.matches && !reduceMotion;
+      pinned = canPin();
+      lastWidth = window.innerWidth;
       states.forEach(st => {
         st.section.classList.toggle('is-pinned', pinned);
         st.current = -1;
@@ -401,11 +434,15 @@
     }
 
     const requestUpdate = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    let resizeTimer = null;
+    let resizeTimer = null, lastWidth = window.innerWidth;
     window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 120); });
+    // Re-layout only when the width changes (rotation, window resize). Height-only
+    // changes come from the mobile address bar and must not reset a running scene.
+    window.addEventListener('resize', () => {
+      if (window.innerWidth === lastWidth) { requestUpdate(); return; }
+      clearTimeout(resizeTimer); resizeTimer = setTimeout(layout, 120);
+    });
     window.addEventListener('load', layout);
-    wide.addEventListener('change', layout);
     layout();
   })();
 

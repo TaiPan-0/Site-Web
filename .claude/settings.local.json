@@ -84,7 +84,14 @@
       "Bash(bash /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/apply_seo.sh)",
       "mcp__claude-in-chrome__tabs_context_mcp",
       "mcp__claude-in-chrome__navigate",
-      "mcp__claude-in-chrome__computer"
+      "mcp__claude-in-chrome__computer",
+      "Bash(sed -i -f /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/index.sed index.html)",
+      "Bash(sed -i -f /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/services.sed services.html)",
+      "Bash(sed -i \"s|.city-others-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 18px; }|.city-others-lead { color: var\\(--grey\\); font-size: 0.92rem; max-width: 640px; margin: 10px auto 0; }\\\\n.city-others-lead a { color: var\\(--gold-dark\\); font-weight: 600; }\\\\n.city-others-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 22px; max-width: 1100px; margin-left: auto; margin-right: auto; }|\" style.css)",
+      "Bash(sed -i -f /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/idf.sed index.html)",
+      "Bash(bash /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/gen_cities.sh)",
+      "Bash(echo \"restants: $?\")",
+      "Bash(bash /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/apply_mobile.sh)"
     ]
   }
 }

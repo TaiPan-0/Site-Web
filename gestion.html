@@ -88,7 +88,7 @@
     .story-rail-fill {
       position: absolute; inset: 0; border-radius: 2px;
       background: linear-gradient(180deg, var(--gold-light), var(--gold), var(--gold-dark));
-      transform: scaleY(0); transform-origin: top; will-change: transform;
+      transform: scaleY(var(--fill, 0)); transform-origin: top; will-change: transform;
     }
     .story-dot { display: none; }
     .story-hint { display: none; }
@@ -179,6 +179,38 @@
 
     @media (max-width: 900px) {
       .faq-section { padding: 72px 24px; }
+    }
+
+    /* ── SCROLLYTELLING MOBILE : scène épinglée verticale, étapes qui glissent latéralement ── */
+    @media (max-width: 900px) {
+      .story--pinned { padding: 0 20px; height: 250vh; height: 250svh; }
+      .story--pinned .story-sticky {
+        height: calc(100vh - 72px); height: calc(100svh - 72px);
+        display: flex; flex-direction: column; align-items: stretch; padding: 16px 0 12px;
+      }
+      .story--pinned .story-rail { width: auto; height: 2px; margin: 18px 17px 28px; flex-shrink: 0; }
+      .story--pinned .story-rail-fill { transform: scaleX(var(--fill, 0)); transform-origin: left; }
+      .story--pinned .story-dot { width: 34px; height: 34px; margin: -17px 0 0 -17px; font-size: 0.66rem; }
+      .story--pinned .story-dot[data-step="0"] { top: 50%; left: 0; }
+      .story--pinned .story-dot[data-step="1"] { top: 50%; left: 50%; }
+      .story--pinned .story-dot[data-step="2"] { top: 50%; left: 100%; }
+      .story--pinned .story-stage { flex: 1; min-height: 0; height: auto; }
+      .story--pinned .story-step { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 18px; padding-bottom: 24px; }
+      .story--pinned .story-media { box-shadow: 0 14px 34px rgba(0,0,0,0.16); transform: translate3d(54px, 0, 0) scale(1.03); }
+      .story--pinned .story-copy { transform: translate3d(86px, 0, 0); }
+      .story--pinned .story-step.is-past .story-media { transform: translate3d(-54px, 0, 0) scale(1.03); }
+      .story--pinned .story-step.is-past .story-copy { transform: translate3d(-86px, 0, 0); }
+      .story--pinned .step-img { height: min(230px, 27vh); }
+      .story--pinned .step-num { display: none; }
+      .story--pinned .step-title { font-size: 1.28rem; margin-bottom: 8px; }
+      .story--pinned .step-desc { font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; }
+      .story--pinned .step-details { gap: 7px; }
+      .story--pinned .step-details li { font-size: 0.84rem; }
+      .story--pinned .story-hint { bottom: 4px; font-size: 0.62rem; }
+    }
+    @media (max-width: 900px) and (max-height: 720px) {
+      .story--pinned .step-img { height: 21vh; }
+      .story--pinned .story-hint { display: none; }
     }
   </style>
 </head>
@@ -344,16 +376,17 @@
     const hint = story.querySelector('.story-hint');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 901px) and (min-height: 620px)');
-    let pinned = false, current = -1, ticking = false, flowObserver = null;
+    let pinned = false, current = -1, ticking = false, flowObserver = null, lastWidth = window.innerWidth;
 
     function setMode() {
-      pinned = wide.matches && !reduce.matches;
+      pinned = window.madysCanPin ? window.madysCanPin() : (wide.matches && !reduce.matches);
+      lastWidth = window.innerWidth;
       story.classList.toggle('story--pinned', pinned);
       story.classList.toggle('story--flow', !pinned && !reduce.matches);
       current = -1;
       steps.forEach(s => s.classList.remove('is-active', 'is-past'));
       if (flowObserver) { flowObserver.disconnect(); flowObserver = null; }
-      if (reduce.matches) { fill.style.transform = 'scaleY(1)'; return; }
+      if (reduce.matches) { fill.style.setProperty('--fill', '1'); return; }
       if (!pinned && 'IntersectionObserver' in window) {
         flowObserver = new IntersectionObserver((entries, obs) => {
           entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); obs.unobserve(en.target); } });
@@ -374,7 +407,7 @@
         const travel = rect.height - vh;
         const p = travel > 0 ? Math.min(Math.max(-rect.top / travel, 0), 1) : 0;
         const idx = Math.min(steps.length - 1, Math.floor(p * steps.length));
-        fill.style.transform = 'scaleY(' + Math.min(1, p * 1.5).toFixed(4) + ')';
+        fill.style.setProperty('--fill', Math.min(1, p * 1.5).toFixed(4));
         if (hint) hint.classList.toggle('is-hidden', p > 0.04);
         if (idx !== current) {
           current = idx;
@@ -390,7 +423,7 @@
       } else {
         // Mode empilé : la ligne se remplit au fil de la lecture
         const p = Math.min(Math.max((vh * 0.6 - rect.top) / rect.height, 0), 1);
-        fill.style.transform = 'scaleY(' + p.toFixed(4) + ')';
+        fill.style.setProperty('--fill', p.toFixed(4));
       }
     }
 
@@ -400,7 +433,8 @@
     window.addEventListener('resize', () => {
       if (!ticking) { ticking = true; requestAnimationFrame(update); }
     });
-    wide.addEventListener('change', setMode);
+    // Re-evaluate the mode only when the width changes, never on address-bar height changes
+    window.addEventListener('resize', () => { if (window.innerWidth !== lastWidth) setMode(); });
     reduce.addEventListener('change', setMode);
 
     dots.forEach((dot, i) => {

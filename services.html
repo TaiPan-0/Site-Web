@@ -163,6 +163,29 @@
       .tarif-section { padding: 72px 24px; }
       .tarif-card { grid-template-columns: 1fr; }
     }
+
+    /* ── SCROLLYTELLING MOBILE : les cartes défilent latéralement pendant le scroll ── */
+    @media (max-width: 900px) {
+      .services-scrolly.is-pinned .services-pin {
+        height: calc(100vh - 72px); height: calc(100svh - 72px);
+        justify-content: flex-start; gap: 12px; padding-top: 18px;
+      }
+      .services-scrolly.is-pinned .services-pin-head { padding: 0 20px; }
+      .services-scrolly.is-pinned .services-viewport { padding: 4px 0 12px; }
+      .services-scrolly.is-pinned .services-grid { padding: 0 20px; gap: 14px; }
+      .services-scrolly.is-pinned .service-card { flex: 0 0 82vw; width: 82vw; }
+      .services-scrolly.is-pinned .service-card-img { height: min(150px, 19vh); }
+      .services-scrolly.is-pinned .service-card-body { padding: 16px 18px 18px; }
+      .services-scrolly.is-pinned .service-card-icon { margin-bottom: 12px; }
+      .services-scrolly.is-pinned .service-card-title { font-size: 1.02rem; margin-bottom: 7px; }
+      .services-scrolly.is-pinned .service-card-desc { font-size: 0.83rem; line-height: 1.6; }
+      .services-scrolly.is-pinned .service-card-features { margin-top: 11px; gap: 5px; }
+      .services-scrolly.is-pinned .service-card-features li { font-size: 0.78rem; }
+    }
+    @media (max-width: 900px) and (max-height: 740px) {
+      .services-scrolly.is-pinned .service-card-img { height: 16vh; }
+      .services-scrolly.is-pinned .service-card-icon { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -390,17 +413,17 @@
       <div class="section-header">
         <span class="section-label">Tarification</span>
         <h2 class="section-title">Simple et transparent</h2>
-        <p class="section-subtitle">Pas de frais cachés. Nous prenons une commission sur les revenus générés — vous ne payez que si vous gagnez.</p>
+        <p class="section-subtitle">Pas de frais cachés. Notre commission s'applique uniquement sur le bénéfice net, après déduction des frais de ménage et des frais de plateforme — vous ne payez que si vous gagnez.</p>
       </div>
       <div class="tarif-card">
         <div>
           <h3 class="tarif-title">Pack Gestion Complète</h3>
-          <p class="tarif-desc">Tous nos services inclus : annonces, photos, ménage, blanchisserie, accueil voyageurs, maintenance, stratégie tarifaire et gestion des litiges. Aucun frais fixe mensuel.</p>
+          <p class="tarif-desc">Tous nos services inclus : annonces, photos, ménage, blanchisserie, accueil voyageurs, maintenance, stratégie tarifaire et gestion des litiges. Aucun frais fixe mensuel. Le taux de commission dépend du nombre de logements que vous nous confiez.</p>
         </div>
         <div class="tarif-price">
           <div class="tarif-amount">Sur devis</div>
-          <div class="tarif-period">% des revenus</div>
-          <div class="tarif-note">Contactez-nous pour un devis personnalisé</div>
+          <div class="tarif-period">% du bénéfice net</div>
+          <div class="tarif-note">Après frais de ménage et de plateforme · taux selon le nombre de logements confiés</div>
         </div>
       </div>
       <div style="text-align: center; margin-top: 48px;">

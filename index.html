@@ -110,11 +110,11 @@
       { "@type": "Question", "name": "Qu'est-ce qu'une conciergerie Airbnb ?",
         "acceptedAnswer": { "@type": "Answer", "text": "Une conciergerie Airbnb gère votre location courte durée à votre place : création et optimisation de l'annonce, communication avec les voyageurs, arrivées et départs, ménage, blanchisserie et maintenance. Vous restez propriétaire et percevez vos revenus, sans vous occuper du quotidien." } },
       { "@type": "Question", "name": "Combien coûte la conciergerie MADYS ?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Nous prenons une commission sur les revenus générés : vous ne payez que si vous gagnez. Il n'y a ni frais cachés ni frais fixe mensuel, et le taux est établi sur devis selon votre bien." } },
+        "acceptedAnswer": { "@type": "Answer", "text": "Notre commission s'applique uniquement sur le bénéfice net, c'est-à-dire après déduction des frais de ménage et des frais de plateforme : vous ne payez que si vous gagnez. Son taux dépend du nombre de logements que vous nous confiez. Il n'y a ni frais cachés ni frais fixe mensuel." } },
       { "@type": "Question", "name": "Sur quelles plateformes mon logement est-il diffusé ?",
         "acceptedAnswer": { "@type": "Answer", "text": "Nous diffusons votre bien sur Airbnb, Booking.com et Abritel, avec des annonces rédigées et optimisées pour chaque plateforme." } },
       { "@type": "Question", "name": "Dans quelles villes intervenez-vous ?",
-        "acceptedAnswer": { "@type": "Answer", "text": "MADYS Conciergerie intervient dans toute l'Île-de-France : Paris, les Hauts-de-Seine, le Val-de-Marne, les Yvelines et les départements voisins, notamment à Malakoff, Vanves, Châtillon, Bagneux, Issy-les-Moulineaux, Clamart, Boulogne-Billancourt, Rueil-Malmaison, Arcueil, Cachan, Gentilly, Ivry-sur-Seine et Versailles." } }
+        "acceptedAnswer": { "@type": "Answer", "text": "Basée à Malakoff, MADYS Conciergerie gère des biens dans toute l'Île-de-France : Paris, les Hauts-de-Seine, le Val-de-Marne, les Yvelines et les autres départements de la région. Nous intervenons notamment à Montrouge, Vanves, Châtillon, Bagneux, Clamart, Issy-les-Moulineaux, Boulogne-Billancourt, Meudon, Sceaux, Antony, Arcueil, Cachan, Gentilly, Le Kremlin-Bicêtre, Ivry-sur-Seine, Villejuif, Vitry-sur-Seine, L'Haÿ-les-Roses, Orly et Versailles." } }
     ]
   }
   </script>
@@ -372,6 +372,55 @@
     @media (max-width: 900px) {
       .testimonials-section { padding: 72px 24px; }
       .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SCROLLYTELLING MOBILE ── */
+    /* Hero : le contenu recule et s'efface pendant que la photo avance (--hp de 0 à 1) */
+    .hero-content {
+      opacity: calc(1 - var(--hp, 0) * 1.6);
+      transform: translate3d(0, calc(var(--hp, 0) * -50px), 0) scale(calc(1 - var(--hp, 0) * 0.06));
+      will-change: opacity, transform;
+    }
+    @media (max-width: 767px) {
+      .hero-bg { transform: scale(calc(1 + var(--hp, 0) * 0.16)); will-change: transform; }
+    }
+
+    @media (max-width: 900px) {
+      /* « Pourquoi MADYS » : scène épinglée, un argument à la fois */
+      .why-section.is-pinned { padding: 0 20px; height: 240vh; height: 240svh; }
+      .why-section.is-pinned .why-inner {
+        top: 72px; height: calc(100vh - 72px); height: calc(100svh - 72px);
+        display: flex; flex-direction: column; justify-content: center; gap: 20px;
+      }
+      .why-section.is-pinned .section-subtitle { display: none; }
+      .why-section.is-pinned .section-title { font-size: 1.45rem; }
+      .why-section.is-pinned .why-progress { margin-top: 16px; }
+      .why-section.is-pinned .why-list { display: grid; margin-top: 16px; gap: 0; }
+      .why-section.is-pinned .why-list li {
+        grid-area: 1 / 1;
+        opacity: 0; visibility: hidden;
+        transform: translate3d(46px, 0, 0);
+        transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.4s;
+      }
+      .why-section.is-pinned .why-list li.is-past { opacity: 0; transform: translate3d(-46px, 0, 0); }
+      .why-section.is-pinned .why-list li.is-active {
+        opacity: 1; visibility: visible; transform: none;
+        transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+      }
+      .why-section.is-pinned .why-actions { margin-top: 16px; }
+      .why-section.is-pinned .why-image { height: min(210px, 26vh); }
+
+      /* Témoignages : les cartes s'empilent l'une sur l'autre au défilement */
+      .testimonials-section { content-visibility: visible; }
+      .testimonials-grid { display: block; }
+      .testimonial-card { position: sticky; top: 92px; margin-bottom: 22px; box-shadow: 0 -8px 28px rgba(15,17,23,0.07); }
+      .testimonial-card:nth-child(2) { top: 106px; }
+      .testimonial-card:nth-child(3) { top: 120px; }
+      .testimonial-card:last-child { margin-bottom: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-content, .hero-bg { opacity: 1; transform: none; }
+      .testimonial-card { position: static; }
     }
   </style>
 </head>
@@ -651,7 +700,7 @@ Je recommande"</p>
             Combien coûte la conciergerie MADYS ?
             <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
           </button>
-          <div class="faq-answer"><p>Nous prenons une commission sur les revenus générés : vous ne payez que si vous gagnez. Il n'y a ni frais cachés ni frais fixe mensuel, et le taux est établi sur devis selon votre bien. <a href="contact.html" style="color: var(--gold-dark);">Demander un devis gratuit</a>.</p></div>
+          <div class="faq-answer"><p>Notre commission s'applique uniquement sur le bénéfice net, c'est-à-dire après déduction des frais de ménage et des frais de plateforme : vous ne payez que si vous gagnez. Son taux dépend du nombre de logements que vous nous confiez. Il n'y a ni frais cachés ni frais fixe mensuel. <a href="contact.html" style="color: var(--gold-dark);">Demander un devis gratuit</a>.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question">
@@ -665,7 +714,7 @@ Je recommande"</p>
             Dans quelles villes intervenez-vous ?
             <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
           </button>
-          <div class="faq-answer"><p>MADYS Conciergerie intervient dans toute l'Île-de-France : Paris, les Hauts-de-Seine, le Val-de-Marne, les Yvelines et les départements voisins. Retrouvez ci-dessous nos principaux secteurs.</p></div>
+          <div class="faq-answer"><p>Basée à Malakoff, MADYS Conciergerie gère des biens dans toute l'Île-de-France : <a href="conciergerie-airbnb-paris.html" style="color: var(--gold-dark);">Paris</a>, les Hauts-de-Seine, le Val-de-Marne, les Yvelines et les autres départements de la région. Retrouvez ci-dessous nos principales communes.</p></div>
         </div>
       </div>
     </div>
@@ -677,22 +726,42 @@ Je recommande"</p>
       <div class="section-header centered">
         <span class="section-label">Zones d'intervention</span>
         <h2 class="section-title">Votre conciergerie Airbnb en Île-de-France</h2>
-        <p class="section-subtitle">Basée à Malakoff, MADYS gère des locations courte durée à Paris et dans toute la région. Choisissez votre ville.</p>
+        <p class="section-subtitle">Basée à Malakoff, MADYS gère des biens dans toute l'Île-de-France, de <a href="conciergerie-airbnb-paris.html" style="color: var(--gold-dark);">Paris</a> aux Hauts-de-Seine, au Val-de-Marne et aux Yvelines. Choisissez votre ville.</p>
       </div>
       <ul class="zones-list">
         <li><a href="conciergerie-airbnb-paris.html">Conciergerie Airbnb Paris</a></li>
         <li><a href="conciergerie-airbnb-malakoff.html">Conciergerie Airbnb Malakoff</a></li>
+        <li><a href="conciergerie-airbnb-montrouge.html">Conciergerie Airbnb Montrouge</a></li>
         <li><a href="conciergerie-airbnb-vanves.html">Conciergerie Airbnb Vanves</a></li>
         <li><a href="conciergerie-airbnb-chatillon.html">Conciergerie Airbnb Châtillon</a></li>
         <li><a href="conciergerie-airbnb-bagneux.html">Conciergerie Airbnb Bagneux</a></li>
-        <li><a href="conciergerie-airbnb-issy-les-moulineaux.html">Conciergerie Airbnb Issy-les-Moulineaux</a></li>
         <li><a href="conciergerie-airbnb-clamart.html">Conciergerie Airbnb Clamart</a></li>
+        <li><a href="conciergerie-airbnb-issy-les-moulineaux.html">Conciergerie Airbnb Issy-les-Moulineaux</a></li>
         <li><a href="conciergerie-airbnb-boulogne-billancourt.html">Conciergerie Airbnb Boulogne-Billancourt</a></li>
+        <li><a href="conciergerie-airbnb-meudon.html">Conciergerie Airbnb Meudon</a></li>
+        <li><a href="conciergerie-airbnb-sevres.html">Conciergerie Airbnb Sèvres</a></li>
+        <li><a href="conciergerie-airbnb-chaville.html">Conciergerie Airbnb Chaville</a></li>
+        <li><a href="conciergerie-airbnb-fontenay-aux-roses.html">Conciergerie Airbnb Fontenay-aux-Roses</a></li>
+        <li><a href="conciergerie-airbnb-sceaux.html">Conciergerie Airbnb Sceaux</a></li>
+        <li><a href="conciergerie-airbnb-bourg-la-reine.html">Conciergerie Airbnb Bourg-la-Reine</a></li>
+        <li><a href="conciergerie-airbnb-le-plessis-robinson.html">Conciergerie Airbnb Le Plessis-Robinson</a></li>
+        <li><a href="conciergerie-airbnb-chatenay-malabry.html">Conciergerie Airbnb Châtenay-Malabry</a></li>
+        <li><a href="conciergerie-airbnb-antony.html">Conciergerie Airbnb Antony</a></li>
         <li><a href="conciergerie-airbnb-rueil-malmaison.html">Conciergerie Airbnb Rueil-Malmaison</a></li>
         <li><a href="conciergerie-airbnb-arcueil.html">Conciergerie Airbnb Arcueil</a></li>
         <li><a href="conciergerie-airbnb-cachan.html">Conciergerie Airbnb Cachan</a></li>
         <li><a href="conciergerie-airbnb-gentilly.html">Conciergerie Airbnb Gentilly</a></li>
+        <li><a href="conciergerie-airbnb-le-kremlin-bicetre.html">Conciergerie Airbnb Le Kremlin-Bicêtre</a></li>
         <li><a href="conciergerie-airbnb-ivry-sur-seine.html">Conciergerie Airbnb Ivry-sur-Seine</a></li>
+        <li><a href="conciergerie-airbnb-villejuif.html">Conciergerie Airbnb Villejuif</a></li>
+        <li><a href="conciergerie-airbnb-vitry-sur-seine.html">Conciergerie Airbnb Vitry-sur-Seine</a></li>
+        <li><a href="conciergerie-airbnb-lhay-les-roses.html">Conciergerie Airbnb L'Haÿ-les-Roses</a></li>
+        <li><a href="conciergerie-airbnb-chevilly-larue.html">Conciergerie Airbnb Chevilly-Larue</a></li>
+        <li><a href="conciergerie-airbnb-fresnes.html">Conciergerie Airbnb Fresnes</a></li>
+        <li><a href="conciergerie-airbnb-rungis.html">Conciergerie Airbnb Rungis</a></li>
+        <li><a href="conciergerie-airbnb-thiais.html">Conciergerie Airbnb Thiais</a></li>
+        <li><a href="conciergerie-airbnb-choisy-le-roi.html">Conciergerie Airbnb Choisy-le-Roi</a></li>
+        <li><a href="conciergerie-airbnb-orly.html">Conciergerie Airbnb Orly</a></li>
         <li><a href="conciergerie-airbnb-versailles.html">Conciergerie Airbnb Versailles</a></li>
       </ul>
     </div>

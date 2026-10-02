@@ -145,6 +145,7 @@
       <a href="conciergerie-airbnb-choisy-le-roi.html">Choisy-le-Roi</a>
       <a href="conciergerie-airbnb-orly.html">Orly</a>
       <a href="conciergerie-airbnb-versailles.html">Versailles</a>
+      <a href="conciergerie-airbnb-massy.html">Massy</a>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 Madys Conciergerie. Tous droits réservés.</p>

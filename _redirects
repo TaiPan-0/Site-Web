@@ -1,0 +1,4 @@
+# Netlify : l'adresse technique du site renvoie vers le vrai domaine,
+# pour que Google ne voie qu'une seule version de chaque page.
+https://peppy-stroopwafel-658bb6.netlify.app/*  https://madysconciergerie.com/:splat  301!
+http://www.madysconciergerie.com/*              https://madysconciergerie.com/:splat  301!

@@ -904,12 +904,6 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
   /* Ombres allégées sur les grands blocs */
   .sim-card { box-shadow: 0 14px 34px rgba(0,0,0,0.28); }
   .video-frame { box-shadow: 0 14px 34px rgba(0,0,0,0.4); }
-
-  /* Les sections hors écran ne sont calculées qu'à leur approche */
-  .testimonials-section, .simulator-section, .faq-section, .cta-band, footer {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 700px;
-  }
 }
 
 /* Lien vers les avis Google sous les témoignages */
@@ -1000,7 +994,6 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
 @media (max-width: 900px) {
   .zones-list { grid-template-columns: 1fr; gap: 9px; }
   .zones-list a { padding: 13px 16px; }
-  .home-faq, .zones-section { content-visibility: auto; contain-intrinsic-size: auto 600px; }
 }
 @media (hover: none) { .zones-list a:hover { transform: none; } }
 @media (max-width: 600px) {
@@ -1008,8 +1001,16 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
 }
 
 /* ── SCROLLYTELLING : points d'arrêt (un swipe = une étape sur téléphone) ── */
-html.has-scroll-snap { scroll-snap-type: y proximity; }
+/* Le défilement adouci est coupé quand les points d'arrêt sont actifs : les deux
+   mécanismes se disputent la position de la page et la font osciller. */
+html.has-scroll-snap { scroll-snap-type: y proximity; scroll-behavior: auto; }
 [data-scrolly].is-pinned, .story--pinned { position: relative; }
+/* Chaque scène épinglée a sa propre couche graphique : le téléphone la déplace
+   d'un bloc au lieu de la redessiner à chaque image. */
+[data-scrolly-sticky], .story--pinned .story-sticky {
+  -webkit-transform: translateZ(0); transform: translateZ(0);
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+}
 .scrolly-snap {
   position: absolute; left: 0; width: 1px; height: 1px;
   /* html a déjà scroll-padding-top: 88px ; -16px ramène le point d'arrêt sous la barre de 72px */
@@ -1018,12 +1019,21 @@ html.has-scroll-snap { scroll-snap-type: y proximity; }
 }
 
 /* ── Pas de défilement latéral parasite ──
-   Les éléments qui glissent hors champ pendant les scènes ne doivent jamais élargir
-   la page (sur iPhone, cela décale tout le contenu). `clip` coupe sans créer de zone
-   de défilement, donc les scènes épinglées continuent de fonctionner. */
+   Les cartes qui glissent hors champ pendant les scènes ne doivent pas élargir la page.
+   Le rognage est posé à l'intérieur de la scène, jamais sur la page ni sur un parent
+   de la scène épinglée : rogner un parent fait trembler l'épinglage sur téléphone. */
 @supports (overflow: clip) {
-  html, body { overflow-x: clip; }
-  .hero, .why-section, .story, .testimonials-section, .services-scrolly, .zones-section { overflow-x: clip; }
+  .why-section.is-pinned .why-list {
+    overflow-x: clip; margin-left: -14px; margin-right: -14px; padding-left: 14px; padding-right: 14px;
+  }
+  .story--pinned .story-stage { overflow-x: clip; }
+}
+/* Téléphone : pas d'effet recalculé à chaque image pendant le défilement dans les scènes */
+@media (max-width: 900px) {
+  html .why-section.is-pinned .why-image { transform: none; will-change: auto; }
+}
+@media (max-width: 767px) {
+  .hero .hero-bg { transform: none; will-change: auto; }
 }
 
 /* ── Recherche et repli de la liste des villes ── */

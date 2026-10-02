@@ -320,9 +320,20 @@
             <span class="sim-result-sub" id="sim-uplift"></span>
           </div>
           <p class="sim-disclaimer">Estimation indicative, hors charges, basée sur un taux d'occupation moyen de 85&nbsp;%. Pour une étude personnalisée et gratuite, <a href="contact.html">contactez-nous</a>.</p>
-          <a href="contact.html" class="btn-primary sim-cta">Obtenir mon estimation détaillée
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+          <form class="sim-lead" data-lead="simulateur" novalidate>
+            <p class="sim-lead-title">Recevez votre estimation détaillée, gratuite</p>
+            <p class="sim-lead-sub">Nous l'affinons selon votre adresse, vos équipements et la saisonnalité, et vous la renvoyons sous 24h.</p>
+            <div class="sim-lead-fields">
+              <label class="visually-hidden" for="sim-lead-prenom">Prénom</label>
+              <input id="sim-lead-prenom" name="prenom" type="text" placeholder="Prénom" autocomplete="given-name" required />
+              <label class="visually-hidden" for="sim-lead-contact">Téléphone ou e-mail</label>
+              <input id="sim-lead-contact" name="contact" type="text" placeholder="Téléphone ou e-mail" autocomplete="tel" required />
+            </div>
+            <button type="submit" class="sim-btn">Recevoir mon estimation détaillée</button>
+            <p class="lead-ok" hidden>Merci ! Nous vous recontactons sous 24h avec votre estimation détaillée.</p>
+            <p class="lead-error" hidden>L'envoi n'a pas abouti. Appelez-nous au <a href="tel:0603236807">06 03 23 68 07</a> ou réessayez.</p>
+            <p class="sim-lead-alt">Vous préférez en parler ? <a href="contact.html" data-calendly>Réservez un appel de 30 min</a></p>
+          </form>
         </div>
       </div>
     </div>

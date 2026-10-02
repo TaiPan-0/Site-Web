@@ -181,8 +181,30 @@
     </div>
   </div>`;
 
-  document.body.insertAdjacentHTML('afterbegin', navHTML);
-  document.body.insertAdjacentHTML('beforeend', footerHTML);
+  // Ad landing pages (<body data-landing>) get a stripped header and footer:
+  // no menu to wander off, only the logo and a call button.
+  const isLanding = document.body.hasAttribute('data-landing');
+  const landingNavHTML = `
+  <nav class="landing-nav">
+    <a href="index.html" class="nav-logo">${LOGO_IMG}</a>
+    <a href="tel:0603236807" class="landing-call" aria-label="Appeler MADYS Conciergerie">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      06 03 23 68 07
+    </a>
+  </nav>`;
+  const landingFooterHTML = `
+  <footer class="landing-footer">
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Madys Conciergerie · Malakoff, Île-de-France</p>
+      <div class="footer-legal">
+        <a href="mentions-legales.html">Mentions Légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+      </div>
+    </div>
+  </footer>`;
+
+  document.body.insertAdjacentHTML('afterbegin', isLanding ? landingNavHTML : navHTML);
+  document.body.insertAdjacentHTML('beforeend', isLanding ? landingFooterHTML : footerHTML);
   document.body.insertAdjacentHTML('beforeend', whatsappHTML);
   document.body.insertAdjacentHTML('beforeend', cookieBannerHTML);
 
@@ -586,6 +608,109 @@
     });
   })();
 
+  // ── Lead capture ──
+  // Forms marked [data-lead] send the owner's details to MADYS through EmailJS,
+  // with the same service and notification template as the contact form.
+  // The EmailJS script is only downloaded when a form is actually submitted.
+  const EMAILJS = { service: 'service_tixo3zr', template: 'template_16ezy2v', publicKey: 'giwBixZ-2FvWnVZL6' };
+  let emailjsLoading = null;
+  function loadEmailjs() {
+    if (window.emailjs) return Promise.resolve(window.emailjs);
+    if (emailjsLoading) return emailjsLoading;
+    emailjsLoading = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+      s.onload = () => { window.emailjs.init({ publicKey: EMAILJS.publicKey }); resolve(window.emailjs); };
+      s.onerror = () => { emailjsLoading = null; reject(new Error('emailjs')); };
+      document.head.appendChild(s);
+    });
+    return emailjsLoading;
+  }
+
+  document.querySelectorAll('form[data-lead]').forEach(form => {
+    const kind = form.getAttribute('data-lead');
+    const btn = form.querySelector('button[type="submit"]');
+    const ok = form.querySelector('.lead-ok');
+    const err = form.querySelector('.lead-error');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const get = name => (form.elements[name] ? form.elements[name].value.trim() : '');
+      const contact = get('contact');
+      const isEmail = contact.indexOf('@') !== -1;
+      const lines = [];
+      if (get('ville')) lines.push('Ville du logement : ' + get('ville'));
+      if (get('logement')) lines.push('Type de logement : ' + get('logement'));
+      if (kind === 'simulateur' && window.madysEstimate) {
+        const est = window.madysEstimate;
+        lines.push('Simulation : ' + est.zone + ' · ' + est.type + ' · ' + est.standing);
+        lines.push('Estimation affichée : ' + est.range);
+      }
+      lines.push('Page : ' + (document.title || location.pathname));
+      const params = {
+        from_prenom: get('prenom'),
+        from_nom: '',
+        from_email: isEmail ? contact : '',
+        from_tel: isEmail ? '' : contact,
+        sujet: kind === 'simulateur' ? 'Demande d\'estimation (simulateur)' : 'Demande d\'estimation (page publicité)',
+        message: lines.join('\n'),
+        to_email: 'madys.conciergerie@gmail.com'
+      };
+      const label = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours…';
+      if (err) err.hidden = true;
+      loadEmailjs()
+        .then(ejs => ejs.send(EMAILJS.service, EMAILJS.template, params))
+        .then(() => {
+          track('generate_lead', { form: kind });
+          form.classList.add('is-sent');
+          if (ok) ok.hidden = false;
+        })
+        .catch(() => {
+          btn.disabled = false;
+          btn.innerHTML = label;
+          if (err) err.hidden = false;
+        });
+    });
+  });
+
+  // ── Calendly ──
+  // Links marked [data-calendly] open the booking calendar in an overlay. Calendly's
+  // script (and its cookies) only loads once the visitor asks for it; if it cannot
+  // load, the link simply opens the booking page in a new tab.
+  const CALENDLY_URL = 'https://calendly.com/madys-conciergerie/30min';
+  let calendlyLoading = null;
+  function loadCalendly() {
+    if (window.Calendly) return Promise.resolve(window.Calendly);
+    if (calendlyLoading) return calendlyLoading;
+    calendlyLoading = new Promise((resolve, reject) => {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'https://assets.calendly.com/assets/external/widget.css';
+      document.head.appendChild(css);
+      const s = document.createElement('script');
+      s.src = 'https://assets.calendly.com/assets/external/widget.js';
+      s.onload = () => resolve(window.Calendly);
+      s.onerror = () => { calendlyLoading = null; reject(new Error('calendly')); };
+      document.head.appendChild(s);
+      setTimeout(() => reject(new Error('timeout')), 6000);
+    });
+    return calendlyLoading;
+  }
+  document.querySelectorAll('[data-calendly]').forEach(link => {
+    link.setAttribute('href', CALENDLY_URL);
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener');
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      track('calendly_open', { page: currentPage });
+      loadCalendly()
+        .then(c => c.initPopupWidget({ url: CALENDLY_URL + '?hide_gdpr_banner=1' }))
+        .catch(() => window.open(CALENDLY_URL, '_blank', 'noopener'));
+    });
+  });
+
   // Revenue simulator
   const simGo = document.getElementById('sim-go');
   if (simGo) {
@@ -623,6 +748,12 @@
       countUp(document.getElementById('sim-value'), lcd * 0.9, lcd * 1.1, ' € / mois');
       const upliftEl = document.getElementById('sim-uplift');
       upliftEl.textContent = uplift > 0 ? 'Soit environ +' + uplift + ' % vs une location classique' : '';
+      // Kept for the lead form under the result, so MADYS receives what the owner saw
+      const label = id => { const el = document.getElementById(id); return el.options[el.selectedIndex].text; };
+      window.madysEstimate = {
+        zone: label('sim-zone'), type: label('sim-type'), standing: label('sim-standing'),
+        range: fmt(lcd * 0.9) + ' – ' + fmt(lcd * 1.1) + ' € / mois'
+      };
     });
   }
 

@@ -30,46 +30,6 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Pourquoi choisir MADYS Conciergerie ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Nous offrons une gestion complète et transparente, des tarifs compétitifs, et une expertise locale en Île-de-France. Nos équipes sont dédiées à maximiser vos revenus tout en assurant la sécurité de votre bien."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Comment fonctionne le processus de mise en gestion ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "C'est simple : prenez rendez-vous, nous visitons votre bien pour l'évaluer, et après signature, nous nous occupons de tout : shooting photo professionnel, création des annonces, gestion des voyageurs, ménage et blanchisserie."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Sélectionnez-vous les voyageurs ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui, nous filtrons rigoureusement les voyageurs. Nous vérifions les profils, les avis précédents et les identités sur les plateformes pour garantir la sécurité et le respect de votre logement."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Puis-je bloquer des dates pour mon usage personnel ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Absolument. Vous restez propriétaire et pouvez bloquer des dates à tout moment via notre interface ou en nous contactant. Votre calendrier personnel est toujours prioritaire."
-        }
-      }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://madysconciergerie.com/" },
@@ -312,54 +272,13 @@
     </a>
   </div>
 
-  <!-- FAQ -->
-  <section class="faq-section">
-    <div class="faq-inner">
-      <div class="section-header centered">
-        <span class="section-label">FAQ</span>
-        <h2 class="section-title">Questions fréquentes</h2>
-        <p class="section-subtitle">Tout ce que vous devez savoir avant de confier votre bien à MADYS Conciergerie.</p>
-      </div>
-      <div>
-        <div class="faq-item open">
-          <button class="faq-question">
-            Pourquoi choisir Madys Conciergerie ?
-            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
-          </button>
-          <div class="faq-answer"><p>Nous offrons une gestion complète et transparente, des tarifs compétitifs, et une expertise locale en Île-de-France. Nos équipes sont dédiées à maximiser vos revenus tout en assurant la sécurité de votre bien.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">
-            Comment fonctionne le processus de mise en gestion ?
-            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
-          </button>
-          <div class="faq-answer"><p>C'est simple : prenez rendez-vous, nous visitons votre bien pour l'évaluer, et après signature, nous nous occupons de tout : shooting photo professionnel, création des annonces, gestion des voyageurs, ménage et blanchisserie.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">
-            Sélectionnez-vous les voyageurs ?
-            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
-          </button>
-          <div class="faq-answer"><p>Oui, nous filtrons rigoureusement les voyageurs. Nous vérifions les profils, les avis précédents et les identités sur les plateformes pour garantir la sécurité et le respect de votre logement.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">
-            Puis-je bloquer des dates pour mon usage personnel ?
-            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
-          </button>
-          <div class="faq-answer"><p>Absolument. Vous restez propriétaire et pouvez bloquer des dates à tout moment via notre interface ou en nous contactant. Votre calendrier personnel est toujours prioritaire.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div class="cta-band">
     <div class="cta-band-inner">
       <h2 class="cta-band-title">Des questions ?<br><span>Parlons-en.</span></h2>
       <p class="cta-band-subtitle">Notre équipe est disponible pour répondre à toutes vos interrogations.</p>
       <div class="cta-band-buttons">
         <a href="contact.html" class="btn-primary">Nous contacter</a>
-        <a href="services.html" class="btn-secondary-light">Voir nos services</a>
+        <a href="faq.html" class="btn-secondary-light">Consulter la FAQ</a>
       </div>
     </div>
   </div>
@@ -409,7 +328,8 @@
       if (snap) {
         stepLen = Math.round(window.innerHeight * 0.45);
         story.style.height = (sticky.offsetHeight + (steps.length - 1) * stepLen) + 'px';
-        steps.forEach((_, i) => {
+        // Pas de point d'arrêt sur la dernière étape : la page doit continuer librement
+        steps.slice(0, -1).forEach((_, i) => {
           const m = document.createElement('div');
           m.className = 'scrolly-snap';
           m.style.top = (i * stepLen) + 'px';

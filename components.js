@@ -46,6 +46,7 @@
       <li><a href="services.html" class="${isActive('services.html')}">Services</a></li>
       <li><a href="gestion.html" class="${isActive('gestion.html')}">Gestion</a></li>
       <li><a href="investir.html" class="${isActive('investir.html')}">Investir</a></li>
+      <li><a href="faq.html" class="${isActive('faq.html')}">FAQ</a></li>
       <li><a href="contact.html" class="nav-cta ${isActive('contact.html')}">Prendre RDV</a></li>
     </ul>
   </nav>`;
@@ -81,8 +82,9 @@
         </ul>
       </div>
       <div>
-        <p class="footer-col-title">Légal</p>
+        <p class="footer-col-title">Informations</p>
         <ul class="footer-links">
+          <li><a href="faq.html">Questions fréquentes</a></li>
           <li><a href="mentions-legales.html">Mentions Légales</a></li>
           <li><a href="confidentialite.html">Politique de Confidentialité</a></li>
         </ul>
@@ -346,7 +348,7 @@
   // 3D tilt on cards (desktop with mouse only)
   if (!reduceMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const tiltCards = document.querySelectorAll(
-      '.service-card, .testimonial-card, .process-card, .avantage-card, .tarif-card, .step-card'
+      '.service-card, .testimonial-card, .tarif-card, .step-card'
     );
     tiltCards.forEach(card => {
       let raf = null;
@@ -486,7 +488,8 @@
           const stepLen = Math.round(window.innerHeight * 0.45);
           st.travel = (n - 1) * stepLen;
           st.section.style.height = (st.sticky.offsetHeight + st.travel) + 'px';
-          for (let i = 0; i < n; i++) {
+          // No snap point on the last step: the page must flow on freely after it
+          for (let i = 0; i < n - 1; i++) {
             const m = document.createElement('div');
             m.className = 'scrolly-snap';
             m.style.top = (i * stepLen) + 'px';
@@ -537,6 +540,51 @@
       paint();
     });
   }
+
+  // City finder: the list is collapsed by default, a search field filters it
+  // (accents and case ignored), and a button reveals every city.
+  (function () {
+    const section = document.querySelector('.zones-section');
+    if (!section) return;
+    const list = section.querySelector('.zones-list');
+    const input = section.querySelector('.zones-search-input');
+    const toggle = section.querySelector('.zones-toggle');
+    const empty = section.querySelector('.zones-empty');
+    if (!list || !input || !toggle) return;
+    const items = Array.from(list.children);
+    const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const keys = items.map(li => norm(li.textContent.replace('Conciergerie Airbnb', '')));
+    const total = items.length;
+    list.classList.add('zones-collapsed');
+    toggle.hidden = false;
+
+    function setExpanded(open) {
+      list.classList.toggle('zones-collapsed', !open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? 'Réduire la liste' : 'Voir les ' + total + ' villes';
+    }
+    setExpanded(false);
+
+    toggle.addEventListener('click', () => {
+      const open = list.classList.contains('zones-collapsed');
+      setExpanded(open);
+      if (!open) section.scrollIntoView({ block: 'start' });
+    });
+
+    input.addEventListener('input', () => {
+      const q = norm(input.value);
+      const searching = q.length > 0;
+      list.classList.toggle('zones-searching', searching);
+      let shown = 0;
+      items.forEach((li, i) => {
+        const match = !searching || keys[i].indexOf(q) !== -1;
+        li.hidden = !match;
+        if (match) shown++;
+      });
+      toggle.hidden = searching;
+      if (empty) empty.hidden = !(searching && shown === 0);
+    });
+  })();
 
   // Revenue simulator
   const simGo = document.getElementById('sim-go');

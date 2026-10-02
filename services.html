@@ -173,14 +173,18 @@
       display: flex; align-items: stretch; gap: 14px;
       max-width: none; margin: 0; padding: 6px 20px 22px;
       overflow-x: auto; overflow-y: hidden;
-      scroll-snap-type: x mandatory; scroll-padding-left: 20px;
-      -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory; scroll-padding: 0 20px;
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
     .services-scrolly.is-swipe .services-grid::-webkit-scrollbar { display: none; }
     .services-scrolly.is-swipe .service-card {
       flex: 0 0 82vw; width: 82vw; max-width: 380px;
       scroll-snap-align: start;
+    }
+    /* La dernière carte se cale à droite : pas de résistance en bout de carrousel */
+    .services-scrolly.is-swipe .service-card:last-child {
+      scroll-snap-align: end;
     }
     .services-scrolly.is-swipe .service-card-img { height: 160px; }
     .services-scrolly.is-swipe .service-card-body { padding: 18px 18px 20px; }

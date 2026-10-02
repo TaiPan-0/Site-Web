@@ -276,7 +276,7 @@
       '.avantage-card', '.stats-grid > div', '.contact-card', '.contact-info-title',
       '.faq-item', '.cta-band-inner', '.step-card', '.service-card', '.legal-inner h2',
       '.contact-form-wrap', '.avantages-img', '.sim-card', '.platforms-inner',
-      '.testimonial-card', '.step-row', '.video-frame', '.contact-reviews', '.tarif-card', '.city-points li', '.city-card', '.city-intro-img', '.zones-list li'
+      '.testimonial-card', '.step-row', '.video-frame', '.contact-reviews', '.tarif-card', '.city-points li', '.city-card', '.city-intro-img', '.zones-list li', '.gift-card'
     ];
     // Elements driven by a pinned scene (track cards, steps) are animated by the scene itself
     const pinCapable = canPin();

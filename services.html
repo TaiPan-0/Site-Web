@@ -164,6 +164,28 @@
       .tarif-card { grid-template-columns: 1fr; }
     }
 
+    /* ── CARTES HOMOGÈNES ──
+       Même structure quelle que soit la longueur du texte : photo, pictogramme et
+       numéro, titre, description, puis les trois points toujours alignés en bas. */
+    .services-grid { counter-reset: svc; }
+    .service-card { display: flex; flex-direction: column; }
+    .service-card-img { flex-shrink: 0; object-position: center; }
+    .service-card-body { flex: 1; display: flex; flex-direction: column; position: relative; counter-increment: svc; }
+    .service-card-body::before {
+      content: counter(svc, decimal-leading-zero);
+      position: absolute; top: 30px; right: 28px;
+      font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.6rem; line-height: 1;
+      color: var(--gold); opacity: 0.3;
+    }
+    .service-card-desc { margin-bottom: 18px; }
+    .service-card-features { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--grey-light); }
+    .service-card-features li { align-items: flex-start; }
+    .service-card-features li::before { margin-top: 0.55em; }
+    .services-scrolly.is-pinned .service-card-body::before { top: 24px; right: 26px; }
+    .services-scrolly.is-swipe .service-card-body::before { top: 20px; right: 18px; font-size: 1.35rem; }
+    .services-scrolly.is-swipe .service-card-desc { margin-bottom: 14px; }
+    .services-scrolly.is-swipe .service-card-features { margin-top: auto; padding-top: 12px; }
+
     /* ── SCROLLYTELLING MOBILE : carrousel natif ──
        On glisse horizontalement pour passer d'un service à l'autre ;
        un geste vertical fait défiler la page normalement. */
@@ -191,7 +213,7 @@
     .services-scrolly.is-swipe .service-card-icon { margin-bottom: 12px; }
     .services-scrolly.is-swipe .service-card-title { font-size: 1.05rem; margin-bottom: 7px; }
     .services-scrolly.is-swipe .service-card-desc { font-size: 0.84rem; line-height: 1.6; }
-    .services-scrolly.is-swipe .service-card-features { margin-top: 12px; gap: 5px; }
+    .services-scrolly.is-swipe .service-card-features { gap: 5px; }
     .services-scrolly.is-swipe .service-card-features li { font-size: 0.79rem; }
     .services-swipe-hint { display: none; }
     .services-scrolly.is-swipe .services-swipe-hint {
@@ -231,11 +253,11 @@
             <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           </div>
           <h3 class="service-card-title">Création & Optimisation d'annonces</h3>
-          <p class="service-card-desc">Des annonces percutantes sur Airbnb, Booking et d'autres plateformes, rédigées et optimisées pour les algorithmes afin de maximiser votre visibilité et d'attirer les meilleurs voyageurs.</p>
+          <p class="service-card-desc">Des annonces percutantes sur Airbnb, Booking et Abritel, optimisées pour attirer les meilleurs voyageurs.</p>
           <ul class="service-card-features">
-            <li>Rédaction professionnelle en français et anglais</li>
-            <li>Optimisation orientée algorithme pour un meilleur classement</li>
-            <li>Mise à jour régulière et suivi des performances</li>
+            <li>Rédaction en français et en anglais</li>
+            <li>Optimisation pour un meilleur classement</li>
+            <li>Mise à jour et suivi des performances</li>
           </ul>
         </div>
       </div>
@@ -257,7 +279,7 @@
       </div>
 
       <div class="service-card" data-scrolly-step>
-        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=700&q=85" alt="Ménage professionnel et blanchisserie pour location Airbnb" class="service-card-img" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=700&q=85" alt="Nettoyage professionnel d'un logement entre deux séjours" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
             <svg viewBox="0 0 24 24"><path d="M3 22l3-3m0 0l7-7m-7 7l-3-3m10-4l6-6m0 0l3 3-9 9-3-3 9-9z"/></svg>
@@ -273,7 +295,7 @@
       </div>
 
       <div class="service-card" data-scrolly-step>
-        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=85" alt="Accueil des voyageurs Airbnb par la conciergerie MADYS" class="service-card-img" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=700&q=85" alt="Réponse aux messages des voyageurs depuis un téléphone" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
             <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
@@ -306,40 +328,7 @@
 
       <div class="service-card" data-scrolly-step>
         <!-- Graphique SVG tarification dynamique -->
-        <div class="service-card-img" style="background:#0F1117; display:flex; align-items:center; justify-content:center; padding:24px;">
-          <svg viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:300px;">
-            <!-- Axes -->
-            <line x1="32" y1="150" x2="305" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-            <line x1="32" y1="20"  x2="32"  y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-            <!-- Barres (tarifs variables) -->
-            <rect x="42"  y="110" width="22" height="40" rx="3" fill="#C9A84C" opacity="0.55"/>
-            <rect x="74"  y="90"  width="22" height="60" rx="3" fill="#C9A84C" opacity="0.65"/>
-            <rect x="106" y="120" width="22" height="30" rx="3" fill="#C9A84C" opacity="0.5"/>
-            <rect x="138" y="75"  width="22" height="75" rx="3" fill="#C9A84C" opacity="0.75"/>
-            <rect x="170" y="95"  width="22" height="55" rx="3" fill="#C9A84C" opacity="0.6"/>
-            <rect x="202" y="55"  width="22" height="95" rx="3" fill="#C9A84C" opacity="0.85"/>
-            <rect x="234" y="70"  width="22" height="80" rx="3" fill="#C9A84C" opacity="0.8"/>
-            <rect x="266" y="40"  width="22" height="110" rx="3" fill="#C9A84C"/>
-            <!-- Ligne de tendance (courbe montante) -->
-            <path d="M53 108 C85 85 117 115 150 72 C183 88 215 50 247 65 C265 42 277 36 288 34"
-              stroke="#F2D878" stroke-width="2.5" stroke-linecap="round" fill="none" stroke-dasharray="0"/>
-            <!-- Points sur la courbe -->
-            <circle cx="53"  cy="108" r="3.5" fill="#F2D878"/>
-            <circle cx="150" cy="72"  r="3.5" fill="#F2D878"/>
-            <circle cx="247" cy="65"  r="3.5" fill="#F2D878"/>
-            <circle cx="288" cy="34"  r="4"   fill="#F2D878"/>
-            <!-- Labels axe Y -->
-            <text x="24" y="154" fill="rgba(255,255,255,0.3)" font-size="9" text-anchor="end" font-family="Inter,sans-serif">0</text>
-            <text x="24" y="100" fill="rgba(255,255,255,0.3)" font-size="9" text-anchor="end" font-family="Inter,sans-serif">50€</text>
-            <text x="24" y="60"  fill="rgba(255,255,255,0.3)" font-size="9" text-anchor="end" font-family="Inter,sans-serif">100€</text>
-            <text x="24" y="28"  fill="rgba(255,255,255,0.3)" font-size="9" text-anchor="end" font-family="Inter,sans-serif">150€</text>
-            <!-- Label courbe -->
-            <text x="270" y="26" fill="#F2D878" font-size="9" font-family="Inter,sans-serif" font-weight="600">Tendance ↑</text>
-            <!-- Légende -->
-            <rect x="42" y="162" width="12" height="8" rx="2" fill="#C9A84C" opacity="0.75"/>
-            <text x="58" y="170" fill="rgba(255,255,255,0.5)" font-size="9" font-family="Inter,sans-serif">Prix/nuit (ajusté selon demande)</text>
-          </svg>
-        </div>
+        <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=700&q=85" alt="Courbe de prix tracée sur papier, pour illustrer la tarification dynamique" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
             <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
@@ -371,16 +360,16 @@
       </div>
 
       <div class="service-card" data-scrolly-step>
-        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=85" alt="Chambre préparée avec soin pour l'accueil des voyageurs" class="service-card-img" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=700&q=85" alt="Chambre soignée et accueillante préparée pour les voyageurs" class="service-card-img" loading="lazy" />
         <div class="service-card-body">
           <div class="service-card-icon">
             <svg viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
           </div>
           <h3 class="service-card-title">Expérience Voyageur Premium</h3>
-          <p class="service-card-desc">Panier de bienvenue, guide local et petites attentions qui transforment un simple séjour en avis 5 étoiles.</p>
+          <p class="service-card-desc">Fiche de bienvenue, livret d'accueil digital et petites attentions qui transforment un simple séjour en avis 5 étoiles.</p>
           <ul class="service-card-features">
-            <li>Kit de bienvenue à l'arrivée</li>
-            <li>Livret d'accueil personnalisé</li>
+            <li>Fiche de bienvenue sur mesure, offerte</li>
+            <li>Livret d'accueil digital offert, en 5 langues</li>
             <li>Recommandations locales (restos, transports…)</li>
           </ul>
         </div>
@@ -403,6 +392,49 @@
       </div>
 
       </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERT -->
+  <section class="gifts-section">
+    <div class="gifts-inner">
+      <div class="section-header centered">
+        <span class="section-label">Offert avec la gestion</span>
+        <h2 class="section-title">Deux outils d'accueil créés pour votre logement</h2>
+        <p class="section-subtitle">Nous les concevons sur mesure pour chaque bien, sans supplément. Vos voyageurs ont toutes les réponses sous la main, et vous recevez moins de questions.</p>
+      </div>
+      <div class="gifts-grid">
+        <article class="gift-card">
+          <span class="gift-badge">Offert</span>
+          <div class="gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+          </div>
+          <h3 class="gift-title">La fiche de bienvenue</h3>
+          <p class="gift-desc">Une fiche imprimée, en français et en anglais, posée dans le logement pour l'arrivée des voyageurs.</p>
+          <ul class="gift-list">
+            <li>Accès au Wi-Fi</li>
+            <li>Règles de la maison</li>
+            <li>Conseils de visite et bonnes adresses</li>
+            <li>Consignes de départ</li>
+            <li>Contact direct de la conciergerie</li>
+          </ul>
+        </article>
+        <article class="gift-card">
+          <span class="gift-badge">Offert</span>
+          <div class="gift-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10.5 18h3"/></svg>
+          </div>
+          <h3 class="gift-title">Le livret d'accueil digital</h3>
+          <p class="gift-desc">Un livret consultable sur téléphone, disponible en 5 langues : français, anglais, espagnol, allemand et italien.</p>
+          <ul class="gift-list">
+            <li>Horaires d'arrivée et de départ</li>
+            <li>Wi-Fi, équipements et règlement intérieur</li>
+            <li>Adresses et bonnes tables autour du logement</li>
+            <li>Signalement d'un problème en un geste</li>
+            <li>Invitation à laisser un avis après le séjour</li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
@@ -430,7 +462,7 @@
       <div class="tarif-card">
         <div>
           <h3 class="tarif-title">Pack Gestion Complète</h3>
-          <p class="tarif-desc">Tous nos services inclus : annonces, photos, ménage, blanchisserie, accueil voyageurs, maintenance, stratégie tarifaire et gestion des litiges. Aucun frais fixe mensuel. Le taux de commission dépend du nombre de logements que vous nous confiez.</p>
+          <p class="tarif-desc">Tous nos services inclus : annonces, photos, ménage, blanchisserie, accueil voyageurs, maintenance, stratégie tarifaire et gestion des litiges. La fiche de bienvenue et le livret d'accueil digital sont offerts. Aucun frais fixe mensuel. Le taux de commission dépend du nombre de logements que vous nous confiez.</p>
         </div>
         <div class="tarif-price">
           <div class="tarif-amount">Sur devis</div>

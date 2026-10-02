@@ -241,6 +241,8 @@
   const nav = document.querySelector('nav');
   const hero = document.querySelector('.hero');
   const heroBg = document.querySelector('.hero-bg');
+  const heroParts = hero ? Array.from(hero.querySelectorAll('.hero-bg, .hero-content')) : [];
+  let lastHp = '';
   const parallaxOn = heroBg && !reduceMotion && window.matchMedia('(min-width: 768px)').matches;
   document.body.insertAdjacentHTML('beforeend', '<div class="scroll-progress" aria-hidden="true"></div>');
   const progressBar = document.querySelector('.scroll-progress');
@@ -255,7 +257,8 @@
     }
     // Hero content recedes as the page scrolls away (--hp goes 0 → 1)
     if (hero && !reduceMotion && y <= window.innerHeight) {
-      hero.style.setProperty('--hp', Math.min(y / window.innerHeight, 1).toFixed(3));
+      const hp = Math.min(y / window.innerHeight, 1).toFixed(3);
+      if (hp !== lastHp) { lastHp = hp; heroParts.forEach(el => el.style.setProperty('--hp', hp)); }
     }
     scrollTicking = false;
   };
@@ -276,7 +279,7 @@
     // Elements driven by a pinned scene (track cards, steps) are animated by the scene itself
     const pinCapable = canPin();
     const els = Array.from(document.querySelectorAll(revealSelectors.join(',')))
-      .filter(el => !(pinCapable && (el.closest('[data-scrolly-track]') || el.matches('[data-scrolly-step]'))));
+      .filter(el => !(el.closest('[data-scrolly-track]') || (pinCapable && el.matches('[data-scrolly-step]'))));
     // Once revealed, strip every reveal artefact so the element's own hover
     // transitions run without the stagger delay or the slow reveal timing.
     const settle = el => {
@@ -373,68 +376,133 @@
     });
   }
 
-  // Scrollytelling: sections marked [data-scrolly] are pinned on large screens and
-  // driven by scroll progress. Steps get .is-active / .is-past, the section gets a
-  // --p custom property (0 → 1), and an optional [data-scrolly-track] slides sideways.
-  // Small screens and reduced-motion keep the normal stacked layout.
+  // Scrollytelling engine. A [data-scrolly] section runs in one of four modes:
+  //   pin   – large screens: the scene is pinned and scroll progress drives it
+  //   snap  – phones: pinned too, but with one snap point per step, so one swipe
+  //           moves exactly one step
+  //   swipe – phones, sections with a [data-scrolly-track]: no pinning; the track is
+  //           a native horizontal carousel and vertical swipes scroll the page
+  //   off   – reduced motion or very short screens: normal stacked layout
+  // Progress (0 → 1) is written as --p on the few [data-p] elements that use it,
+  // not on the section, so a scroll frame never restyles the whole subtree.
   (function () {
     const sections = Array.from(document.querySelectorAll('[data-scrolly]'));
     if (!sections.length) return;
     const NAV_H = 72;
     const pad = n => String(n).padStart(2, '0');
+    const clamp01 = v => Math.min(Math.max(v, 0), 1);
+    const mobileMq = window.matchMedia('(max-width: 900px)');
     const states = sections.map(section => ({
       section,
       steps: Array.from(section.querySelectorAll('[data-scrolly-step]')),
       track: section.querySelector('[data-scrolly-track]'),
       counter: section.querySelector('[data-scrolly-count]'),
-      current: -1,
-      shift: 0
+      sticky: section.querySelector('[data-scrolly-sticky]'),
+      targets: Array.from(section.querySelectorAll('[data-p]')),
+      markers: [],
+      mode: 'off', current: -1, shift: 0, travel: 0, lastP: -1, swipeBound: false
     }));
-    let pinned = false, ticking = false;
+    let ticking = false, lastWidth = window.innerWidth;
+
+    function setProgress(st, p) {
+      const v = p.toFixed(3);
+      if (v === st.lastP) return;
+      st.lastP = v;
+      st.targets.forEach(t => t.style.setProperty('--p', v));
+    }
+    function setStep(st, idx) {
+      if (idx === st.current) return;
+      st.current = idx;
+      st.steps.forEach((s, i) => {
+        s.classList.toggle('is-active', i === idx);
+        s.classList.toggle('is-past', i < idx);
+      });
+      if (st.counter) st.counter.textContent = pad(idx + 1) + ' / ' + pad(st.steps.length);
+    }
 
     function update() {
       ticking = false;
-      if (!pinned) return;
       const vh = window.innerHeight;
       states.forEach(st => {
+        if (st.mode !== 'pin' && st.mode !== 'snap') return;
         const rect = st.section.getBoundingClientRect();
         if (rect.bottom < -vh || rect.top > vh * 2) return;
-        const travel = rect.height - vh + NAV_H;
-        const p = travel > 0 ? Math.min(Math.max((NAV_H - rect.top) / travel, 0), 1) : 0;
-        st.section.style.setProperty('--p', p.toFixed(4));
+        const travel = st.travel || (rect.height - vh + NAV_H);
+        const p = travel > 0 ? clamp01((NAV_H - rect.top) / travel) : 0;
+        setProgress(st, p);
         if (st.track) st.track.style.transform = 'translate3d(' + (-p * st.shift).toFixed(1) + 'px,0,0)';
-        if (!st.steps.length) return;
-        const idx = Math.min(st.steps.length - 1, Math.floor(p * st.steps.length));
-        if (idx === st.current) return;
-        st.current = idx;
-        st.steps.forEach((s, i) => {
-          s.classList.toggle('is-active', i === idx);
-          s.classList.toggle('is-past', i < idx);
-        });
-        if (st.counter) st.counter.textContent = pad(idx + 1) + ' / ' + pad(st.steps.length);
+        const n = st.steps.length;
+        if (!n) return;
+        setStep(st, st.mode === 'snap' ? Math.round(p * (n - 1)) : Math.min(n - 1, Math.floor(p * n)));
       });
     }
 
+    // Carousel mode: the counter and the progress bar follow the horizontal scroll
+    function bindSwipe(st) {
+      if (st.swipeBound) return;
+      st.swipeBound = true;
+      let swipeTicking = false;
+      const onSwipe = () => {
+        swipeTicking = false;
+        if (st.mode !== 'swipe') return;
+        const max = st.track.scrollWidth - st.track.clientWidth;
+        const p = max > 0 ? clamp01(st.track.scrollLeft / max) : 0;
+        setProgress(st, p);
+        if (st.steps.length) setStep(st, Math.round(p * (st.steps.length - 1)));
+      };
+      st.track.addEventListener('scroll', () => {
+        if (!swipeTicking) { swipeTicking = true; requestAnimationFrame(onSwipe); }
+      }, { passive: true });
+      onSwipe();
+    }
+
     function layout() {
-      pinned = canPin();
       lastWidth = window.innerWidth;
+      const pinOk = canPin();
+      const mobile = mobileMq.matches;
+      let anySnap = false;
       states.forEach(st => {
-        st.section.classList.toggle('is-pinned', pinned);
-        st.current = -1;
+        st.markers.forEach(m => m.remove());
+        st.markers = [];
+        st.current = -1; st.travel = 0; st.lastP = -1;
         st.steps.forEach(s => s.classList.remove('is-active', 'is-past'));
-        if (!st.track) return;
-        st.track.style.transform = '';
         st.section.style.height = '';
-        if (pinned) {
+        if (st.track) st.track.style.transform = '';
+
+        if (st.track && mobile) st.mode = 'swipe';
+        else if (!pinOk) st.mode = 'off';
+        else if (mobile && st.sticky && st.steps.length > 1) st.mode = 'snap';
+        else st.mode = 'pin';
+        st.section.classList.toggle('is-pinned', st.mode === 'pin' || st.mode === 'snap');
+        st.section.classList.toggle('is-swipe', st.mode === 'swipe');
+
+        if (st.mode === 'pin' && st.track) {
           st.shift = Math.max(0, st.track.scrollWidth - st.track.parentElement.clientWidth);
           st.section.style.height = Math.round(window.innerHeight + st.shift * 0.55) + 'px';
         }
+        if (st.mode === 'snap') {
+          // One short stretch of scroll per step, with a snap point at each one
+          const n = st.steps.length;
+          const stepLen = Math.round(window.innerHeight * 0.45);
+          st.travel = (n - 1) * stepLen;
+          st.section.style.height = (st.sticky.offsetHeight + st.travel) + 'px';
+          for (let i = 0; i < n; i++) {
+            const m = document.createElement('div');
+            m.className = 'scrolly-snap';
+            m.style.top = (i * stepLen) + 'px';
+            st.section.appendChild(m);
+            st.markers.push(m);
+          }
+          anySnap = true;
+        }
+        if (st.mode === 'swipe') bindSwipe(st);
       });
+      document.documentElement.classList.toggle('has-scroll-snap', anySnap);
       update();
     }
 
     const requestUpdate = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    let resizeTimer = null, lastWidth = window.innerWidth;
+    let resizeTimer = null;
     window.addEventListener('scroll', requestUpdate, { passive: true });
     // Re-layout only when the width changes (rotation, window resize). Height-only
     // changes come from the mobile address bar and must not reset a running scene.

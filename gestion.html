@@ -366,27 +366,58 @@
 
   <script src="components.js"></script>
   <script>
-  // Scrollytelling des 3 étapes : scène épinglée sur grand écran, étapes empilées ailleurs.
+  // Scrollytelling des 3 étapes.
+  // Grand écran : scène épinglée pilotée par le défilement.
+  // Téléphone   : scène épinglée avec un point d'arrêt par étape (un swipe = une étape).
+  // Sinon       : étapes empilées.
   (function () {
     const story = document.getElementById('story');
     if (!story) return;
+    const NAV_H = 72;
+    const sticky = story.querySelector('.story-sticky');
     const steps = Array.from(story.querySelectorAll('.story-step'));
     const dots = Array.from(story.querySelectorAll('.story-dot'));
     const fill = story.querySelector('.story-rail-fill');
     const hint = story.querySelector('.story-hint');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 901px) and (min-height: 620px)');
-    let pinned = false, current = -1, ticking = false, flowObserver = null, lastWidth = window.innerWidth;
+    const mobileMq = window.matchMedia('(max-width: 900px)');
+    const clamp01 = v => Math.min(Math.max(v, 0), 1);
+    let pinned = false, snap = false, stepLen = 0, current = -1, ticking = false;
+    let flowObserver = null, markers = [], lastWidth = window.innerWidth, lastFill = '';
+
+    function setFill(v) {
+      const s = v.toFixed(3);
+      if (s === lastFill) return;
+      lastFill = s;
+      fill.style.setProperty('--fill', s);
+    }
 
     function setMode() {
-      pinned = window.madysCanPin ? window.madysCanPin() : (wide.matches && !reduce.matches);
       lastWidth = window.innerWidth;
+      pinned = window.madysCanPin ? window.madysCanPin() : (wide.matches && !reduce.matches);
+      snap = pinned && mobileMq.matches;
       story.classList.toggle('story--pinned', pinned);
       story.classList.toggle('story--flow', !pinned && !reduce.matches);
-      current = -1;
+      current = -1; lastFill = '';
       steps.forEach(s => s.classList.remove('is-active', 'is-past'));
+      markers.forEach(m => m.remove()); markers = [];
+      story.style.height = '';
       if (flowObserver) { flowObserver.disconnect(); flowObserver = null; }
       if (reduce.matches) { fill.style.setProperty('--fill', '1'); return; }
+
+      if (snap) {
+        stepLen = Math.round(window.innerHeight * 0.45);
+        story.style.height = (sticky.offsetHeight + (steps.length - 1) * stepLen) + 'px';
+        steps.forEach((_, i) => {
+          const m = document.createElement('div');
+          m.className = 'scrolly-snap';
+          m.style.top = (i * stepLen) + 'px';
+          story.appendChild(m);
+          markers.push(m);
+        });
+        document.documentElement.classList.add('has-scroll-snap');
+      }
       if (!pinned && 'IntersectionObserver' in window) {
         flowObserver = new IntersectionObserver((entries, obs) => {
           entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); obs.unobserve(en.target); } });
@@ -398,51 +429,59 @@
       update();
     }
 
+    function activate(idx) {
+      if (idx === current) return;
+      current = idx;
+      steps.forEach((s, i) => {
+        s.classList.toggle('is-active', i === idx);
+        s.classList.toggle('is-past', i < idx);
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-reached', i <= idx);
+        d.classList.toggle('is-current', i === idx);
+      });
+    }
+
     function update() {
       ticking = false;
       if (reduce.matches) return;
       const rect = story.getBoundingClientRect();
       const vh = window.innerHeight;
-      if (pinned) {
-        const travel = rect.height - vh;
-        const p = travel > 0 ? Math.min(Math.max(-rect.top / travel, 0), 1) : 0;
-        const idx = Math.min(steps.length - 1, Math.floor(p * steps.length));
-        fill.style.setProperty('--fill', Math.min(1, p * 1.5).toFixed(4));
+      const n = steps.length;
+      if (snap) {
+        const p = clamp01((NAV_H - rect.top) / ((n - 1) * stepLen));
+        setFill(p);
         if (hint) hint.classList.toggle('is-hidden', p > 0.04);
-        if (idx !== current) {
-          current = idx;
-          steps.forEach((s, i) => {
-            s.classList.toggle('is-active', i === idx);
-            s.classList.toggle('is-past', i < idx);
-          });
-          dots.forEach((d, i) => {
-            d.classList.toggle('is-reached', i <= idx);
-            d.classList.toggle('is-current', i === idx);
-          });
-        }
+        activate(Math.round(p * (n - 1)));
+      } else if (pinned) {
+        const travel = rect.height - vh;
+        const p = travel > 0 ? clamp01(-rect.top / travel) : 0;
+        setFill(Math.min(1, p * 1.5));
+        if (hint) hint.classList.toggle('is-hidden', p > 0.04);
+        activate(Math.min(n - 1, Math.floor(p * n)));
       } else {
         // Mode empilé : la ligne se remplit au fil de la lecture
-        const p = Math.min(Math.max((vh * 0.6 - rect.top) / rect.height, 0), 1);
-        fill.style.setProperty('--fill', p.toFixed(4));
+        setFill(clamp01((vh * 0.6 - rect.top) / rect.height));
       }
     }
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }, { passive: true });
+    const requestUpdate = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    // Le mode n'est réévalué que si la largeur change, jamais quand la barre d'adresse
+    // du téléphone apparaît ou disparaît.
     window.addEventListener('resize', () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      if (window.innerWidth !== lastWidth) setMode(); else requestUpdate();
     });
-    // Re-evaluate the mode only when the width changes, never on address-bar height changes
-    window.addEventListener('resize', () => { if (window.innerWidth !== lastWidth) setMode(); });
     reduce.addEventListener('change', setMode);
 
     dots.forEach((dot, i) => {
       dot.addEventListener('click', () => {
         if (!pinned) return;
         const top = story.getBoundingClientRect().top + window.scrollY;
-        const travel = story.offsetHeight - window.innerHeight;
-        window.scrollTo({ top: top + travel * ((i + 0.5) / steps.length), behavior: 'smooth' });
+        const target = snap
+          ? top + i * stepLen - NAV_H
+          : top + (story.offsetHeight - window.innerHeight) * ((i + 0.5) / steps.length);
+        window.scrollTo({ top: target, behavior: 'smooth' });
       });
     });
 

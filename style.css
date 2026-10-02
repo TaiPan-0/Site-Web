@@ -1005,3 +1005,13 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
 @media (max-width: 600px) {
   .testimonials-more .btn-secondary { white-space: nowrap; font-size: 0.7rem; padding: 13px 18px; justify-content: center; }
 }
+
+/* ── SCROLLYTELLING : points d'arrêt (un swipe = une étape sur téléphone) ── */
+html.has-scroll-snap { scroll-snap-type: y proximity; }
+[data-scrolly].is-pinned, .story--pinned { position: relative; }
+.scrolly-snap {
+  position: absolute; left: 0; width: 1px; height: 1px;
+  /* html a déjà scroll-padding-top: 88px ; -16px ramène le point d'arrêt sous la barre de 72px */
+  scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: -16px;
+  pointer-events: none;
+}

@@ -25,8 +25,6 @@
   <meta name="twitter:description" content="On s'occupe de tout, de l'annonce à la remise des clés. Maximisez vos revenus sans effort." />
   <meta name="twitter:image" content="https://madysconciergerie.com/og-image.png" />
   <link rel="preconnect" href="https://images.unsplash.com" />
-  <link rel="preload" as="image" media="(min-width: 768px)" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85" />
-  <link rel="preload" as="image" media="(max-width: 767px)" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=75" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet" />
@@ -103,471 +101,251 @@
   }
   </script>
   <style>
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      height: 100vh; height: 100svh;
-      min-height: 640px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=85') center/cover no-repeat;
-      transform: scale(1.12);
-      will-change: transform;
-    }
-    /* Téléphone : photo plus légère, sans agrandissement ni couche dédiée (pas de parallaxe) */
-    @media (max-width: 767px) {
-      .hero-bg {
-        background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=75');
-        transform: none; will-change: auto;
-      }
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(8,10,18,0.6) 0%, rgba(8,10,18,0.42) 50%, rgba(8,10,18,0.75) 100%);
-    }
-    .hero-content { position: relative; z-index: 2; max-width: 880px; padding: 100px 24px 86px; }
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 22px;
-      padding: 7px 18px;
-      border: 1px solid rgba(201,168,76,0.4);
-      border-radius: 100px;
-      backdrop-filter: blur(8px);
-      background: rgba(201,168,76,0.08);
-    }
-    .hero-title {
-      font-family: 'Montserrat', sans-serif;
-      font-size: clamp(1.9rem, 3.6vw, 3rem);
-      font-weight: 800; color: var(--white); line-height: 1.15; margin-bottom: 22px;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.4);
-    }
-    .hero-title em {
-      font-style: normal;
-      background: linear-gradient(110deg, #C9A84C 25%, #F4E2A8 50%, #C9A84C 75%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: goldShimmer 3.5s linear infinite;
+    /* ══════════ ACCUEIL — édition claire ══════════ */
+    .x-page { --cream: #FAF8F3; --line: #E9E5DA; --ink: #14161D; --muted: #6B6F7A; background: var(--cream); }
+    .x-wrap { max-width: 1180px; margin: 0 auto; }
+    .x-sec { padding: 120px 48px; }
+    .x-kicker { display: inline-flex; align-items: center; gap: 10px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); }
+    .x-kicker::before { content: ''; width: 22px; height: 2px; background: var(--gold); border-radius: 2px; }
+    .x-h2 { font-size: clamp(1.9rem, 3.4vw, 2.9rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); margin: 16px 0 0; }
+    .x-h2 em { font-style: normal; color: var(--gold-dark); }
+    .x-sub { font-size: 1.02rem; line-height: 1.75; color: var(--muted); margin-top: 18px; max-width: 560px; }
+    .x-head { margin-bottom: 60px; }
+    .x-head.center { text-align: center; }
+    .x-head.center .x-sub { margin-left: auto; margin-right: auto; }
+    .x-head.split { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+    .x-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.88rem; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 4px; }
+    .x-link:hover { color: var(--gold-dark); }
+
+    /* ── 1. Hero + simulateur ── */
+    .x-hero { padding: 150px 48px 100px; position: relative; overflow: hidden; }
+    .x-hero::before { content: ''; position: absolute; width: 760px; height: 760px; right: -220px; top: -260px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.18), rgba(201,168,76,0) 65%); pointer-events: none; }
+    .x-hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 72px; align-items: center; }
+    .x-badge { display: inline-flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: 100px; padding: 7px 16px 7px 8px; font-size: 0.8rem; font-weight: 600; color: var(--ink); text-decoration: none; }
+    .x-badge-g { width: 24px; height: 24px; border-radius: 50%; background: var(--ink); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+    .x-badge b { color: var(--gold-dark); }
+    .x-h1 { font-size: clamp(2.4rem, 4.2vw, 3.6rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.02; color: var(--ink); margin: 26px 0 24px; }
+    .x-h1 em { font-style: normal; background: linear-gradient(transparent 64%, rgba(201,168,76,0.45) 64%, rgba(201,168,76,0.45) 88%, transparent 88%); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .x-lead { font-size: 1.12rem; line-height: 1.7; color: var(--muted); max-width: 520px; }
+    .x-checks { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 30px 0 34px; }
+    .x-checks li { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+    .x-checks svg { width: 18px; height: 18px; stroke: var(--gold-dark); fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+    .x-hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .x-btn-dark { display: inline-flex; align-items: center; gap: 10px; background: var(--ink); color: #fff; text-decoration: none; font-weight: 600; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 26px; border-radius: 10px; transition: transform 0.25s ease, background 0.25s ease; }
+    .x-btn-dark:hover { background: #262a36; transform: translateY(-2px); }
+    .x-tel { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); text-decoration: none; font-size: 0.95rem; }
+    .x-tel svg { width: 18px; height: 18px; stroke: var(--gold-dark); fill: none; stroke-width: 2; }
+
+    .x-simcard { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 34px 32px; box-shadow: 0 40px 80px rgba(20,22,29,0.10), 0 2px 6px rgba(20,22,29,0.04); }
+    .x-simcard-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .x-simcard-title { font-size: 1.15rem; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; }
+    .x-simcard-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dark); background: rgba(201,168,76,0.14); padding: 6px 10px; border-radius: 100px; white-space: nowrap; }
+    .x-simcard .sim-fields { grid-template-columns: 1fr; gap: 14px; }
+    .x-simcard .sim-field select { background-color: var(--cream); }
+    .x-simcard .sim-btn { margin-top: 20px; }
+    .x-simcard .sim-result { margin-top: 24px; padding-top: 24px; }
+    .x-simcard .sim-lead { background: var(--cream); }
+    .x-simcard-foot { font-size: 0.76rem; color: var(--muted); text-align: center; margin-top: 14px; }
+
+    /* ── 2. Bande de confiance ── */
+    .x-proof { background: var(--ink); color: #fff; padding: 26px 48px; }
+    .x-proof-row { display: flex; justify-content: space-between; align-items: center; gap: 18px 32px; flex-wrap: wrap; }
+    .x-proof-item { display: flex; align-items: center; gap: 12px; font-size: 0.82rem; color: rgba(255,255,255,0.68); }
+    .x-proof-item strong { font-size: 1.25rem; font-weight: 800; color: #fff; }
+    .x-proof-item img, .x-proof-item svg { height: 26px; width: auto; }
+    .x-proof-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.14); }
+
+    /* ── 3. Services en mosaïque ── */
+    .x-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(210px, auto); gap: 18px; }
+    .x-tile { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; transition: transform 0.35s ease, box-shadow 0.35s ease; }
+    .x-tile:hover { transform: translateY(-4px); box-shadow: 0 24px 50px rgba(20,22,29,0.08); }
+    .x-tile h3 { font-size: 1.05rem; font-weight: 800; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 8px; }
+    .x-tile p { font-size: 0.88rem; line-height: 1.6; color: var(--muted); }
+    .x-ico { width: 46px; height: 46px; border-radius: 14px; background: var(--cream); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; margin-bottom: 26px; }
+    .x-ico svg { width: 21px; height: 21px; stroke: var(--gold-dark); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .x-tile--hero { grid-column: span 2; grid-row: span 2; padding: 0; border: 0; color: #fff; min-height: 440px; }
+    .x-tile--hero img, .x-tile--photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .x-tile--hero::after, .x-tile--photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,22,29,0) 30%, rgba(20,22,29,0.85) 100%); }
+    .x-tile-body { position: relative; z-index: 1; margin-top: auto; padding: 32px; }
+    .x-tile--hero h3, .x-tile--photo h3 { color: #fff; font-size: 1.5rem; }
+    .x-tile--hero p, .x-tile--photo p { color: rgba(255,255,255,0.8); max-width: 420px; }
+    .x-tile--photo { grid-column: span 2; padding: 0; border: 0; color: #fff; }
+    .x-tile--photo h3 { font-size: 1.2rem; }
+    .x-tile--photo .x-tile-body { padding: 26px 28px; }
+    .x-tile--gold { grid-column: span 2; background: linear-gradient(140deg, #D9BC66, var(--gold-dark)); border: 0; justify-content: flex-end; }
+    .x-tile--gold h3 { font-size: 1.3rem; }
+    .x-tile--gold h3, .x-tile--gold p { color: var(--ink); }
+    .x-tile--gold .x-ico { background: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.4); }
+    .x-tile--gold .x-ico svg { stroke: var(--ink); }
+    .x-bento-cta { display: flex; justify-content: center; margin-top: 44px; }
+
+    /* ── 4. Commission expliquée ── */
+    .x-money { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .x-money-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 72px; align-items: center; }
+    .x-flow { background: var(--cream); border: 1px solid var(--line); border-radius: 24px; padding: 30px; }
+    .x-flow-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 4px; border-bottom: 1px dashed var(--line); font-size: 0.95rem; color: var(--ink); }
+    .x-flow-row span:last-child { font-weight: 700; color: var(--muted); white-space: nowrap; }
+    .x-flow-row.minus span:first-child::before { content: '−'; display: inline-block; width: 22px; color: #B5523B; font-weight: 800; }
+    .x-flow-row.plus span:first-child::before { content: '+'; display: inline-block; width: 22px; color: #3E8E5E; font-weight: 800; }
+    .x-flow-total { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 16px; background: var(--ink); color: #fff; border-radius: 16px; padding: 18px 20px; }
+    .x-flow-total b { font-size: 1rem; }
+    .x-flow-total span { font-size: 0.8rem; color: var(--gold); font-weight: 700; text-align: right; }
+    .x-flow-note { font-size: 0.82rem; color: var(--muted); margin-top: 16px; line-height: 1.6; }
+    .x-promises { list-style: none; display: grid; gap: 14px; margin-top: 30px; }
+    .x-promises li { display: flex; gap: 14px; align-items: flex-start; font-size: 0.95rem; color: var(--ink); line-height: 1.55; }
+    .x-promises li b { display: block; }
+    .x-promises li span { color: var(--muted); font-size: 0.88rem; }
+    .x-promises svg { flex-shrink: 0; width: 22px; height: 22px; margin-top: 2px; stroke: var(--gold-dark); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── 5. Méthode ── */
+    .x-steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+    .x-step { padding: 36px 32px 0 0; }
+    .x-step + .x-step { padding-left: 32px; border-left: 1px solid var(--line); }
+    .x-step-n { font-size: 3.2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--gold); }
+    .x-step h3 { font-size: 1.15rem; font-weight: 800; color: var(--ink); margin: 22px 0 10px; }
+    .x-step p { font-size: 0.92rem; line-height: 1.7; color: var(--muted); }
+
+    /* ── 6. Vidéo + avis ── */
+    .x-voice { background: var(--ink); color: #fff; }
+    .x-voice .x-h2 { color: #fff; }
+    .x-voice .x-sub { color: rgba(255,255,255,0.62); }
+    .x-voice-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; margin-bottom: 72px; }
+    .x-voice .video-frame { border-radius: 22px; overflow: hidden; background: #000; border: 1px solid rgba(201,168,76,0.3); }
+    .x-voice .video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+    .x-reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .x-review { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 30px 28px; display: flex; flex-direction: column; gap: 20px; }
+    .x-review-stars { color: var(--gold); letter-spacing: 3px; font-size: 0.95rem; }
+    .x-review blockquote { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.9); flex-grow: 1; }
+    .x-review figcaption { font-size: 0.82rem; color: rgba(255,255,255,0.55); }
+    .x-review figcaption b { display: block; color: #fff; font-size: 0.9rem; margin-bottom: 2px; }
+    .x-reviews-foot { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 34px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .x-reviews-score { display: flex; align-items: center; gap: 14px; font-size: 0.86rem; color: rgba(255,255,255,0.65); }
+    .x-reviews-score strong { font-size: 2rem; font-weight: 800; color: #fff; }
+    .x-voice .x-link { color: #fff; }
+
+    /* ── 7. Villes (classes du moteur de recherche conservées) ── */
+    .x-page .zones-section { background: var(--cream); padding: 120px 48px; }
+    .x-page .zones-inner { max-width: 1180px; }
+    .x-page .zones-list a { background: #fff; }
+
+    /* ── 8. FAQ ── */
+    .x-faq { background: #fff; border-top: 1px solid var(--line); }
+    .x-faq-grid { display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 72px; align-items: start; }
+    .x-faq .faq-item { border: 1px solid var(--line); border-radius: 16px; padding: 0 22px; margin-bottom: 10px; background: var(--cream); }
+    .x-faq .faq-item:last-child { margin-bottom: 0; }
+
+    /* ── 9. Dernier appel ── */
+    .x-final { padding: 0 48px 120px; background: #fff; }
+    .x-final-box { position: relative; overflow: hidden; background: var(--ink); color: #fff; border-radius: 30px; padding: 72px 64px; display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 40px; align-items: center; }
+    .x-final-box::before { content: ''; position: absolute; width: 520px; height: 520px; right: -160px; bottom: -260px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.35), rgba(201,168,76,0) 65%); }
+    .x-final-box .x-h2 { color: #fff; position: relative; }
+    .x-final-box .x-sub { color: rgba(255,255,255,0.65); position: relative; }
+    .x-final-ctas { position: relative; display: flex; flex-direction: column; gap: 12px; }
+    .x-final-ctas a { justify-content: center; }
+
+    /* ══ Entrée du hero ══ */
+    .x-hero-copy > *, .x-simcard { animation: xRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .x-hero-copy > :nth-child(2) { animation-delay: 0.06s; } .x-hero-copy > :nth-child(3) { animation-delay: 0.12s; }
+    .x-hero-copy > :nth-child(4) { animation-delay: 0.18s; } .x-hero-copy > :nth-child(5) { animation-delay: 0.24s; }
+    .x-simcard { animation-delay: 0.15s; }
+    @keyframes xRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .x-hero-copy > *, .x-simcard { animation: none; } }
+
+    /* ══ Tablette ══ */
+    @media (max-width: 1080px) {
+      .x-hero-grid, .x-money-grid, .x-voice-grid, .x-faq-grid { gap: 44px; }
+      .x-bento { grid-template-columns: repeat(2, 1fr); }
+      .x-tile--hero { grid-column: span 2; grid-row: span 1; min-height: 380px; }
+      .x-final-box { padding: 56px 44px; }
     }
 
-    /* Entrée en cascade des éléments du hero */
-    .hero-eyebrow, .hero-title, .hero-slogan, .hero-subtitle, .hero-buttons, .trust-badges {
-      opacity: 0;
-      transform: translateY(26px);
-      animation: heroRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .hero-eyebrow { animation-delay: 0.15s; }
-    .hero-title { animation-delay: 0.28s; }
-    .hero-slogan { animation-delay: 0.42s; }
-    .hero-subtitle { animation-delay: 0.54s; }
-    .hero-buttons { animation-delay: 0.66s; }
-    .trust-badges { animation-delay: 0.8s; }
-    @keyframes heroRise {
-      to { opacity: 1; transform: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-eyebrow, .hero-title, .hero-slogan, .hero-subtitle, .hero-buttons, .trust-badges {
-        opacity: 1; transform: none; animation: none;
-      }
-      .hero-title em { animation: none; }
-    }
-    .hero-slogan {
-      font-family: 'Montserrat', sans-serif;
-      font-style: italic;
-      font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-      color: var(--gold);
-      margin-bottom: 22px;
-    }
-    .hero-subtitle { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.82); margin-bottom: 30px; max-width: 480px; margin-left: auto; margin-right: auto; }
-    .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .trust-badges {
-      display: flex; justify-content: center; flex-wrap: wrap;
-      gap: 12px 24px; margin-top: 24px;
-    }
-    .trust-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.85);
-    }
-    .trust-badge svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-    @media (max-width: 600px) {
-      .trust-badges { gap: 10px 18px; }
-      .trust-badge { font-size: 0.78rem; }
-    }
-    .hero-scroll {
-      position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 7px;
-      color: rgba(255,255,255,0.4); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-      animation: bounce 2.5s infinite;
-    }
-    @keyframes bounce {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(7px); }
-    }
-
-    /* Ajustements hero mobile */
-    @media (max-width: 600px) {
-      .hero-content { padding: 90px 20px 36px; }
-      .hero-eyebrow { font-size: 0.6rem; padding: 6px 13px; margin-bottom: 16px; letter-spacing: 0.16em; }
-      .hero-title { font-size: 1.6rem; margin-bottom: 14px; }
-      .hero-title br { display: none; }
-      .hero-slogan { font-size: 1.05rem; margin-bottom: 14px; }
-      .hero-subtitle { font-size: 0.92rem; margin-bottom: 22px; }
-      .hero-buttons { gap: 10px; }
-      .hero-buttons .btn-primary,
-      .hero-buttons .btn-secondary-light { white-space: nowrap; padding: 13px 20px; font-size: 0.72rem; }
-      .trust-badges { margin-top: 18px; gap: 8px 16px; }
-      .hero-scroll { display: none; }
-    }
-
-    /* ── VIDEO ── */
-    .video-section { background: var(--dark); padding: 90px 56px; }
-    .video-inner { max-width: 980px; margin: 0 auto; }
-    .video-section .section-title { color: var(--white); }
-    .video-section .section-subtitle { color: rgba(255,255,255,0.6); }
-    .video-frame {
-      border-radius: 18px; overflow: hidden;
-      border: 1px solid rgba(201,168,76,0.3);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-      background: #000;
-    }
-    .video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+    /* ══ Téléphone ══ */
     @media (max-width: 900px) {
-      .video-section { padding: 64px 20px; }
-      .video-frame { border-radius: 12px; }
-    }
+      .x-sec { padding: 76px 20px; }
+      .x-head { margin-bottom: 36px; }
+      .x-hero { padding: 108px 20px 64px; }
+      .x-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .x-h1 { font-size: clamp(2.3rem, 10.5vw, 3rem); margin: 20px 0 18px; }
+      .x-lead { font-size: 1rem; }
+      .x-checks { margin: 22px 0 26px; gap: 10px 18px; }
+      .x-checks li { font-size: 0.84rem; }
+      .x-hero-ctas .x-btn-dark { flex: 1 1 100%; justify-content: center; }
+      .x-hero-ctas .x-tel { flex: 1 1 100%; justify-content: center; }
+      .x-simcard { padding: 26px 20px; border-radius: 20px; }
 
-    /* ── WHY US ── */
-    .why-section { background: var(--off-white); padding: 90px 56px; }
-    .why-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .why-image-wrap { position: relative; }
-    .why-image {
-      width: 100%; height: 480px; object-fit: cover;
-      border-radius: 16px; display: block;
-    }
-    .why-stat-badge {
-      position: absolute; bottom: -20px; right: -20px;
-      background: var(--gold); color: var(--dark); padding: 22px 28px;
-      border-radius: var(--radius); font-weight: 700; text-align: center;
-      box-shadow: var(--shadow-gold);
-    }
-    .why-stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.2rem; display: block; line-height: 1; }
-    .why-stat-label { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.85; }
-    .why-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
-    .why-list li {
-      display: flex; align-items: center; gap: 16px;
-      background: var(--white); border: 1px solid var(--grey-light);
-      border-radius: var(--radius); padding: 16px 18px;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .why-list li:hover { border-color: rgba(201,168,76,0.5); box-shadow: var(--shadow); transform: translateX(4px); }
-    .why-list-icon {
-      width: 42px; height: 42px; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark)); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .why-list-icon svg { width: 19px; height: 19px; stroke: var(--white); fill: none; stroke-width: 2; stroke-linecap: round; }
-    .why-list-title { font-weight: 700; font-size: 0.92rem; color: var(--dark); }
-    .why-list-desc { font-size: 0.84rem; color: var(--grey); margin-top: 2px; line-height: 1.5; }
-    .why-actions { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; }
-    @media (max-width: 900px) {
-      .why-inner { grid-template-columns: 1fr; gap: 32px; }
-      .why-section { padding: 64px 20px; }
-      /* Sur mobile : le texte d'abord, la photo ensuite en bandeau */
-      .why-image-wrap { order: 2; }
-      .why-image { height: 220px; object-position: center 30%; }
-      .why-stat-badge { bottom: 12px; right: 12px; padding: 12px 16px; }
-      .why-stat-num { font-size: 1.4rem; }
-      .why-stat-label { font-size: 0.6rem; }
-      .why-list li { padding: 13px 14px; gap: 13px; }
-      .why-list li:hover { transform: none; }
-      .why-actions { flex-wrap: nowrap; gap: 10px; }
-      .why-actions a { flex: 1; justify-content: center; padding: 13px 10px; font-size: 0.7rem; white-space: nowrap; }
-    }
-    .why-image-clip { border-radius: 16px; overflow: hidden; }
-    .why-progress { display: none; }
+      .x-proof { padding: 22px 20px; }
+      .x-proof-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+      .x-proof-sep { display: none; }
+      .x-proof-item:last-child { grid-column: span 2; justify-content: center; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); }
+      .x-proof-item { gap: 10px; font-size: 0.74rem; }
+      .x-proof-item strong { font-size: 1.05rem; }
+      .x-proof-item img, .x-proof-item svg { height: 22px; }
 
-    /* Scène épinglée (grand écran) : la photo reste en place et zoome doucement
-       pendant que les trois arguments s'allument l'un après l'autre. */
-    .why-section.is-pinned { padding: 0 56px; height: 165vh; }
-    .why-section.is-pinned .why-inner { position: sticky; top: 72px; height: calc(100vh - 72px); }
-    .why-section.is-pinned .why-image {
-      height: min(480px, 58vh);
-      transform: scale(calc(1.02 + var(--p, 0) * 0.1));
-      will-change: transform;
-    }
-    .why-section.is-pinned .why-progress {
-      display: block; height: 2px; margin-top: 26px;
-      background: var(--grey-light); border-radius: 2px; overflow: hidden;
-    }
-    .why-section.is-pinned .why-progress span {
-      display: block; height: 100%;
-      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
-      transform: scaleX(var(--p, 0)); transform-origin: left;
-    }
-    .why-section.is-pinned .why-list { margin-top: 20px; }
-    .why-section.is-pinned .why-list li {
-      opacity: 0.4;
-      transition: opacity 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .why-section.is-pinned .why-list li.is-past { opacity: 0.75; }
-    .why-section.is-pinned .why-list li.is-active {
-      opacity: 1; border-color: var(--gold);
-      box-shadow: 0 14px 40px rgba(201,168,76,0.22);
-      transform: translateX(10px);
-    }
-    .why-section.is-pinned .why-list-icon { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
-    .why-section.is-pinned .why-list li.is-active .why-list-icon { transform: scale(1.12); }
+      .x-bento { grid-template-columns: 1fr 1fr; gap: 12px; grid-auto-rows: auto; }
+      .x-tile { padding: 20px 18px; border-radius: 18px; justify-content: flex-start; }
+      .x-tile:hover { transform: none; box-shadow: none; }
+      .x-ico { width: 40px; height: 40px; margin-bottom: 16px; border-radius: 12px; }
+      .x-tile h3 { font-size: 0.95rem; }
+      .x-tile p { font-size: 0.8rem; }
+      .x-tile--hero { min-height: 300px; padding: 0; }
+      .x-tile--photo { grid-column: span 2; min-height: 200px; padding: 0; }
+      .x-tile--hero h3 { font-size: 1.25rem; }
+      .x-tile-body, .x-tile--photo .x-tile-body { padding: 22px 20px; }
+      .x-tile--gold { grid-column: span 2; }
 
-    /* ── TESTIMONIALS ── */
-    .testimonials-section { background: var(--white); padding: 90px 56px; }
-    .testimonials-inner { max-width: 1200px; margin: 0 auto; }
-    .testimonials-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 24px; margin-top: 56px;
-    }
-    .testimonial-card {
-      background: var(--off-white);
-      border: 1px solid var(--grey-light);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      display: flex; flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .testimonial-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,17,23,0.08); }
-    .testimonial-stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 16px; }
-    .testimonial-text { font-size: 0.95rem; color: var(--dark); line-height: 1.8; font-style: italic; margin-bottom: 24px; flex-grow: 1; }
-    .testimonial-author { display: flex; align-items: center; gap: 14px; }
-    .testimonial-avatar {
-      width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      color: var(--white); font-weight: 700; font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .testimonial-name { font-weight: 600; font-size: 0.9rem; color: var(--dark); }
-    .testimonial-role { font-size: 0.8rem; color: var(--grey); margin-top: 2px; }
-    @media (max-width: 900px) {
-      .testimonials-section { padding: 72px 24px; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-    }
+      .x-money-grid { grid-template-columns: 1fr; }
+      .x-flow { padding: 20px 18px; border-radius: 20px; }
+      .x-flow-row { font-size: 0.88rem; padding: 13px 2px; }
+      .x-flow-total { flex-direction: column; align-items: flex-start; gap: 4px; }
+      .x-flow-total span { text-align: left; }
 
-    /* ── SCROLLYTELLING MOBILE ── */
-    /* Hero : le contenu recule et s'efface pendant que la photo avance (--hp de 0 à 1) */
-    .hero-content {
-      opacity: calc(1 - var(--hp, 0) * 1.6);
-      transform: translate3d(0, calc(var(--hp, 0) * -50px), 0) scale(calc(1 - var(--hp, 0) * 0.06));
-      will-change: opacity, transform;
-    }
-    @media (max-width: 767px) {
-      .hero-bg { transform: scale(calc(1 + var(--hp, 0) * 0.16)); will-change: transform; }
-    }
+      .x-steps { grid-template-columns: 1fr; border-top: 0; }
+      .x-step, .x-step + .x-step { padding: 26px 0; border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 64px 1fr; column-gap: 14px; }
+      .x-step-n { font-size: 2.4rem; grid-row: 1 / span 2; }
+      .x-step h3 { margin: 4px 0 6px; font-size: 1.05rem; }
 
-    @media (max-width: 900px) {
-      /* « Pourquoi MADYS » : scène épinglée, un argument à la fois */
-      .why-section.is-pinned { padding: 0 20px; height: 240vh; height: 240svh; }
-      .why-section.is-pinned .why-inner {
-        top: 72px; height: calc(100vh - 72px); height: calc(100svh - 72px);
-        display: flex; flex-direction: column; justify-content: center; gap: 20px;
-      }
-      .why-section.is-pinned .section-subtitle { display: none; }
-      .why-section.is-pinned .section-title { font-size: 1.45rem; }
-      .why-section.is-pinned .why-progress { margin-top: 16px; }
-      .why-section.is-pinned .why-list { display: grid; margin-top: 16px; gap: 0; }
-      .why-section.is-pinned .why-list li {
-        grid-area: 1 / 1;
-        opacity: 0; visibility: hidden;
-        transform: translate3d(46px, 0, 0);
-        transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.4s;
-      }
-      .why-section.is-pinned .why-list li.is-past { opacity: 0; transform: translate3d(-46px, 0, 0); }
-      .why-section.is-pinned .why-list li.is-active {
-        opacity: 1; visibility: visible; transform: none;
-        transition: opacity 0.4s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
-      }
-      .why-section.is-pinned .why-actions { margin-top: 16px; }
-      .why-section.is-pinned .why-image { height: min(210px, 26vh); }
+      .x-voice-grid { grid-template-columns: 1fr; margin-bottom: 48px; }
+      .x-voice-grid .video-frame { order: 2; }
+      .x-reviews { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin: 0 -20px; padding: 2px 20px 8px; scroll-padding: 0 20px; scrollbar-width: none; }
+      .x-reviews::-webkit-scrollbar { display: none; }
+      .x-review { flex: 0 0 85%; scroll-snap-align: start; padding: 24px 22px; }
 
-      /* Témoignages : les cartes s'empilent l'une sur l'autre au défilement */
-      .testimonials-section { content-visibility: visible; }
-      .testimonials-grid { display: block; }
-      .testimonial-card { position: sticky; top: 92px; margin-bottom: 22px; box-shadow: 0 -8px 28px rgba(15,17,23,0.07); }
-      .testimonial-card:nth-child(2) { top: 106px; }
-      .testimonial-card:nth-child(3) { top: 120px; }
-      .testimonial-card:last-child { margin-bottom: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-content, .hero-bg { opacity: 1; transform: none; }
-      .testimonial-card { position: static; }
+      .x-page .zones-section { padding: 76px 20px; }
+
+      .x-faq-grid { grid-template-columns: 1fr; gap: 28px; }
+      .x-faq .faq-item { padding: 0 18px; }
+
+      .x-final { padding: 0 16px 76px; }
+      .x-final-box { grid-template-columns: 1fr; padding: 44px 24px; border-radius: 24px; gap: 28px; }
     }
   </style>
 </head>
 <body>
+<main class="x-page">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-eyebrow">Conciergerie Immobilière &bull; Île-de-France</span>
-      <h1 class="hero-title">
-        La conciergerie qui maximise <br>vos revenus, <em>sans effort</em>
-      </h1>
-      <p class="hero-slogan">« Louez l'esprit léger »</p>
-      <p class="hero-subtitle">
-        Votre conciergerie Airbnb en Île-de-France : de l'annonce à la remise des clés, vous encaissez, nous gérons.
-      </p>
-      <div class="hero-buttons">
-        <a href="contact.html" class="btn-primary">
-          Prendre rendez-vous
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="gestion.html" class="btn-secondary-light">Comment ça marche</a>
-      </div>
-      <div class="trust-badges">
-        <span class="trust-badge">
-          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-          Sans engagement
-        </span>
-        <span class="trust-badge">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-          Réponse sous 24h
-        </span>
-        <span class="trust-badge">
-          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-          Estimation gratuite
-        </span>
-      </div>
-    </div>
-    <div class="hero-scroll">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      Découvrir
-    </div>
-  </section>
-
-  <!-- RATINGS BAR -->
-  <div class="ratings-bar">
-    <div class="rating-item">
-      <img src="airbnb.png" alt="Airbnb" class="rating-logo" />
-      <span class="rating-stars">★★★★★</span>
-      <span class="rating-score">4.9 / 5</span>
-    </div>
-    <div class="rating-divider"></div>
-    <div class="rating-item">
-      <svg class="rating-logo" viewBox="0 0 40 40" role="img" aria-label="Booking.com" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#003B95"/><path fill="#fff" d="M16.7 28.2h-4.9c-1 0-1.8-.8-1.8-1.8V13.6c0-1 .8-1.8 1.8-1.8h4.3c3.3 0 5.4 1.7 5.4 4.4 0 1.6-.8 2.7-1.7 3.3 1.5.5 2.5 1.8 2.5 3.6 0 3-2.3 5.1-5.6 5.1Zm-3.4-9.7h2.2c1.4 0 2.2-.7 2.2-1.9s-.8-1.8-2.3-1.8h-2.1v3.7Zm0 6.8h2.6c1.5 0 2.4-.8 2.4-2s-.9-2-2.5-2h-2.5v4Zm12.9 3.2a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4Z"/></svg>
-      <span class="rating-stars">★★★★★</span>
-      <span class="rating-score">4.9 / 5</span>
-    </div>
-    <div class="rating-divider"></div>
-    <div class="rating-item">
-      <svg class="rating-logo" viewBox="0 0 48 48" role="img" aria-label="Google" xmlns="http://www.w3.org/2000/svg"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
-      <span class="rating-stars">★★★★★</span>
-      <span class="rating-score">5.0 / 5</span>
-    </div>
-    <div class="rating-divider"></div>
-    <div class="rating-item">
-      <img src="abritel.png" alt="Abritel" class="rating-logo" />
-      <span class="rating-stars">★★★★★</span>
-      <span class="rating-score">4.9 / 5</span>
-    </div>
-  </div>
-
-  <!-- WHY US -->
-  <section class="why-section" data-scrolly>
-    <div class="why-inner" data-scrolly-sticky>
-      <div class="why-image-wrap">
-        <div class="why-image-clip"><img
-          src="remise-cles.jpg"
-          alt="Remise des clés à un voyageur par MADYS Conciergerie"
-          width="704" height="384" loading="lazy"
-          class="why-image" data-p
-        /></div>
-        <div class="why-stat-badge">
-          <span class="why-stat-num">100%</span>
-          <span class="why-stat-label">Gestion prise en charge</span>
-        </div>
-      </div>
-      <div>
-        <span class="section-label">Pourquoi MADYS ?</span>
-        <h2 class="section-title">Une conciergerie qui s'occupe de tout</h2>
-        <p class="section-subtitle">De la création de votre annonce à l'entretien de votre bien, nous prenons en charge chaque détail pour vous.</p>
-        <div class="why-progress" aria-hidden="true"><span data-p></span></div>
-        <ul class="why-list">
-          <li data-scrolly-step>
-            <div class="why-list-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg></div>
-            <div>
-              <p class="why-list-title">Expertise locale Île-de-France</p>
-              <p class="why-list-desc">Nous connaissons le marché local et adaptons la stratégie de chaque bien.</p>
-            </div>
-          </li>
-          <li data-scrolly-step>
-            <div class="why-list-icon"><svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg></div>
-            <div>
-              <p class="why-list-title">Revenus optimisés</p>
-              <p class="why-list-desc">Tarification dynamique adaptée à la demande pour maximiser votre rentabilité.</p>
-            </div>
-          </li>
-          <li data-scrolly-step>
-            <div class="why-list-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <div>
-              <p class="why-list-title">Sécurité & tranquillité d'esprit</p>
-              <p class="why-list-desc">Vérification rigoureuse des voyageurs, gestion des litiges incluse.</p>
-            </div>
-          </li>
+  <!-- 1. HERO + SIMULATEUR -->
+  <section class="x-hero">
+    <div class="x-wrap x-hero-grid">
+      <div class="x-hero-copy">
+        <a class="x-badge" href="https://g.page/r/CbkULGfgs1-1EBM" target="_blank" rel="noopener"><span class="x-badge-g">★</span><span><b>5,0/5</b> · avis Google de nos propriétaires</span></a>
+        <h1 class="x-h1"><span>La conciergerie Airbnb qui fait </span><em>travailler votre bien</em><span> à votre place.</span></h1>
+        <p class="x-lead">MADYS gère votre location courte durée de A à Z en Île-de-France : annonces, voyageurs, ménage, linge et maintenance. Vous encaissez, nous gérons.</p>
+        <ul class="x-checks">
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Commission sur le bénéfice net</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Aucun frais fixe</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Résiliable avec un mois de préavis</li>
         </ul>
-        <div class="why-actions">
-          <a href="services.html" class="btn-primary">Voir nos services</a>
-          <a href="contact.html" class="btn-secondary">Prendre RDV</a>
+        <div class="x-hero-ctas">
+          <a href="contact.html" class="x-btn-dark" data-calendly>Réserver un appel de 30 min</a>
+          <a href="tel:0603236807" class="x-tel"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>06 03 23 68 07</a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- VIDEO -->
-  <section class="video-section">
-    <div class="video-inner">
-      <div class="section-header centered">
-        <span class="section-label">En vidéo</span>
-        <h2 class="section-title">MADYS Conciergerie en 50 secondes</h2>
-        <p class="section-subtitle">Découvrez comment nous gérons votre location courte durée, de l'annonce à la remise des clés.</p>
-      </div>
-      <div class="video-frame">
-        <video controls playsinline preload="none" poster="madys-promo-poster.jpg" width="1280" height="720"
-               aria-label="Vidéo de présentation de MADYS Conciergerie">
-          <source src="madys-promo.mp4" type="video/mp4" />
-          Votre navigateur ne peut pas lire cette vidéo.
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <!-- PLATFORMS -->
-  <section class="platforms-band">
-    <div class="platforms-inner">
-      <p class="platforms-title">Nous diffusons votre bien sur les meilleures plateformes</p>
-      <div class="platforms-logos">
-        <img src="airbnb.png" alt="Airbnb" class="platform-logo" />
-        <img src="booking.png" alt="Booking.com" class="platform-logo" />
-        <img src="abritel.png" alt="Abritel" class="platform-logo" />
-      </div>
-    </div>
-  </section>
-
-  <!-- SIMULATEUR -->
-  <section class="simulator-section" id="simulateur">
-    <div class="simulator-inner">
-      <div class="section-header">
-        <span class="section-label">Estimation gratuite</span>
-        <h2 class="section-title">Combien votre bien peut-il<br>vous rapporter ?</h2>
-        <p class="section-subtitle">Estimez en quelques secondes vos revenus potentiels en location courte durée.</p>
-      </div>
-      <div class="sim-card">
+      <div class="x-simcard sim-card" id="simulateur">
+        <div class="x-simcard-top">
+          <span class="x-simcard-title">Combien peut rapporter votre bien&nbsp;?</span>
+          <span class="x-simcard-tag">Gratuit</span>
+        </div>
         <div class="sim-fields">
           <div class="sim-field">
             <label for="sim-zone">Zone</label>
@@ -618,70 +396,161 @@
             <p class="sim-lead-alt">Vous préférez en parler ? <a href="contact.html" data-calendly>Réservez un appel de 30 min</a></p>
           </form>
         </div>
+        <p class="x-simcard-foot">Résultat immédiat · sans inscription</p>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section class="testimonials-section">
-    <div class="testimonials-inner">
-      <div class="section-header">
-        <span class="section-label">Ils nous font confiance</span>
-        <h2 class="section-title">Ce que disent nos propriétaires</h2>
-        <p class="section-subtitle">Des propriétaires sereins, des revenus optimisés. Découvrez leurs retours d'expérience.</p>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Je ne m'occupe plus de rien et mes revenus ont nettement augmenté. L'équipe MADYS est réactive et sérieuse, mon appartement est toujours impeccable après chaque séjour."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">SL</div>
-            <div>
-              <p class="testimonial-name">Sophie L.</p>
-              <p class="testimonial-role">Propriétaire à Boulogne-Billancourt</p>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Madys gère mes 2 appartements en LCD à malakoff depuis 18 mois maintenant.
+  <!-- 2. CONFIANCE -->
+  <div class="x-proof">
+    <div class="x-wrap x-proof-row">
+      <div class="x-proof-item"><svg viewBox="0 0 48 48" role="img" aria-label="Google" xmlns="http://www.w3.org/2000/svg"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg><span><strong>5,0</strong> Google</span></div>
+      <span class="x-proof-sep"></span>
+      <div class="x-proof-item"><img src="airbnb.png" alt="Airbnb" width="26" height="26" /><span><strong>4,9</strong> Airbnb</span></div>
+      <span class="x-proof-sep"></span>
+      <div class="x-proof-item"><svg viewBox="0 0 40 40" role="img" aria-label="Booking.com" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#003B95"/><path fill="#fff" d="M16.7 28.2h-4.9c-1 0-1.8-.8-1.8-1.8V13.6c0-1 .8-1.8 1.8-1.8h4.3c3.3 0 5.4 1.7 5.4 4.4 0 1.6-.8 2.7-1.7 3.3 1.5.5 2.5 1.8 2.5 3.6 0 3-2.3 5.1-5.6 5.1Zm-3.4-9.7h2.2c1.4 0 2.2-.7 2.2-1.9s-.8-1.8-2.3-1.8h-2.1v3.7Zm0 6.8h2.6c1.5 0 2.4-.8 2.4-2s-.9-2-2.5-2h-2.5v4Zm12.9 3.2a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4Z"/></svg><span><strong>4,9</strong> Booking</span></div>
+      <span class="x-proof-sep"></span>
+      <div class="x-proof-item"><img src="abritel.png" alt="Abritel" width="26" height="26" /><span><strong>4,9</strong> Abritel</span></div>
+      <span class="x-proof-sep"></span>
+      <div class="x-proof-item"><span><strong>24h</strong> pour vous répondre</span></div>
+    </div>
+  </div>
 
-Ils sont très réactifs et pros.
-Je recommande"</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">WG</div>
-            <div>
-              <p class="testimonial-name">Walid G.</p>
-              <p class="testimonial-role">Propriétaire à Malakoff</p>
-            </div>
-          </div>
+  <!-- 3. SERVICES -->
+  <section class="x-sec">
+    <div class="x-wrap">
+      <div class="x-head split">
+        <div>
+          <span class="x-kicker">Gestion complète</span>
+          <h2 class="x-h2">Tout est pris en charge.<br><em>Vraiment tout.</em></h2>
         </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Enfin une conciergerie de confiance ! Communication transparente, rapports réguliers et zéro souci de mon côté. Mon bien n'a jamais été aussi rentable."</p>
-          <div class="testimonial-author">
-            <div class="testimonial-avatar">CD</div>
-            <div>
-              <p class="testimonial-name">Claire D.</p>
-              <p class="testimonial-role">Propriétaire à Saint-Maur-des-Fossés</p>
-            </div>
-          </div>
-        </div>
+        <p class="x-sub" style="margin-top: 0; max-width: 420px;">De la première photo à la dernière clé rendue, une seule équipe s'occupe de votre logement, 7 jours sur 7.</p>
       </div>
-      <div class="testimonials-more">
-        <span class="testimonials-more-score"><span class="testimonials-more-stars">★★★★★</span> 5,0 / 5 sur Google</span>
-        <a href="https://g.page/r/CbkULGfgs1-1EBM" target="_blank" rel="noopener" class="btn-secondary">Voir tous nos avis Google</a>
+      <div class="x-bento">
+        <article class="x-tile x-tile--hero">
+          <img src="https://images.unsplash.com/photo-1615874694520-474822394e73?w=1200&q=80" srcset="https://images.unsplash.com/photo-1615874694520-474822394e73?w=700&q=75 700w, https://images.unsplash.com/photo-1615874694520-474822394e73?w=1200&q=80 1200w" sizes="(max-width: 1080px) 100vw, 50vw" alt="Salon élégant d'un appartement en location courte durée" loading="lazy" width="1200" height="800" />
+          <div class="x-tile-body">
+            <h3>Des annonces qui donnent envie de réserver</h3>
+            <p>Shooting photo professionnel, textes soignés et diffusion sur Airbnb, Booking et Abritel.</p>
+          </div>
+        </article>
+        <article class="x-tile">
+          <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div><h3>Voyageurs 7j/7</h3><p>Messages, arrivées, départs : voyageurs vérifiés et accompagnés.</p></div>
+        </article>
+        <article class="x-tile">
+          <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+          <div><h3>Prix dynamiques</h3><p>Tarifs ajustés aux saisons, salons et événements.</p></div>
+        </article>
+        <article class="x-tile">
+          <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></div>
+          <div><h3>Maintenance</h3><p>Petits travaux et interventions rapides.</p></div>
+        </article>
+        <article class="x-tile">
+          <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l3-3 3 3 5-6"/></svg></div>
+          <div><h3>Suivi des revenus</h3><p>Un reporting clair de vos réservations et gains.</p></div>
+        </article>
+        <article class="x-tile x-tile--photo">
+          <img src="https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?w=1000&q=80" alt="Lit au linge blanc impeccable, préparé entre deux séjours" loading="lazy" width="1000" height="667" />
+          <div class="x-tile-body">
+            <h3>Ménage et linge hôtelier</h3>
+            <p>Un logement impeccable et des draps frais entre chaque séjour.</p>
+          </div>
+        </article>
+        <article class="x-tile x-tile--gold">
+          <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+          <div><h3>Offerts</h3><p>Fiche de bienvenue sur mesure et livret d'accueil digital.</p></div>
+        </article>
+      </div>
+      <div class="x-bento-cta"><a href="services.html" class="x-link">Voir le détail de nos services →</a></div>
+    </div>
+  </section>
+
+  <!-- 4. COMMISSION -->
+  <section class="x-sec x-money">
+    <div class="x-wrap x-money-grid">
+      <div>
+        <span class="x-kicker">Notre rémunération</span>
+        <h2 class="x-h2">Nous gagnons <em>quand vous gagnez.</em></h2>
+        <p class="x-sub">Notre commission est calculée uniquement sur votre bénéfice net. Son taux dépend du nombre de logements que vous nous confiez.</p>
+        <ul class="x-promises">
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Aucun frais fixe ni frais caché</b><span>Pas d'abonnement : tous nos services sont inclus.</span></div></li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Résiliable avec un mois de préavis</b><span>Vous restez libre, à tout moment.</span></div></li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Estimation gratuite sous 24h</b><span>Sans engagement.</span></div></li>
+        </ul>
+      </div>
+      <div class="x-flow" aria-label="Calcul de la commission">
+        <div class="x-flow-row plus"><span>Revenus des réservations</span><span>Vos nuitées</span></div>
+        <div class="x-flow-row minus"><span>Frais de ménage</span><span>déduits</span></div>
+        <div class="x-flow-row minus"><span>Frais de plateforme</span><span>déduits</span></div>
+        <div class="x-flow-total"><b>= Votre bénéfice net</b><span>Notre commission s'applique uniquement ici</span></div>
+        <p class="x-flow-note">Pas de réservation, pas de commission.</p>
       </div>
     </div>
   </section>
 
-  <!-- ZONES D'INTERVENTION -->
+  <!-- 5. MÉTHODE -->
+  <section class="x-sec">
+    <div class="x-wrap">
+      <div class="x-head">
+        <span class="x-kicker">Comment ça marche</span>
+        <h2 class="x-h2">Trois étapes, <em>et on s'occupe du reste.</em></h2>
+      </div>
+      <ol class="x-steps">
+        <li class="x-step"><span class="x-step-n">01</span><h3>Un premier échange</h3><p>Au téléphone, en visio ou sur place : nous répondons à vos questions et estimons vos revenus.</p></li>
+        <li class="x-step"><span class="x-step-n">02</span><h3>La visite du logement</h3><p>Nous évaluons son potentiel et vous proposons un plan d'action personnalisé.</p></li>
+        <li class="x-step"><span class="x-step-n">03</span><h3>Le lancement</h3><p>Shooting photo, annonces en ligne, premiers voyageurs accueillis : tout est géré.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 6. VIDÉO + AVIS -->
+  <section class="x-sec x-voice">
+    <div class="x-wrap">
+      <div class="x-voice-grid">
+        <div class="video-frame">
+          <video controls playsinline preload="none" poster="madys-promo-poster.jpg" width="1280" height="720" aria-label="Vidéo de présentation de MADYS Conciergerie">
+            <source src="madys-promo.mp4" type="video/mp4" />
+            Votre navigateur ne peut pas lire cette vidéo.
+          </video>
+        </div>
+        <div>
+          <span class="x-kicker">En vidéo</span>
+          <h2 class="x-h2">MADYS en 50 secondes</h2>
+          <p class="x-sub">Découvrez comment nous gérons votre location courte durée, de l'annonce à la remise des clés.</p>
+        </div>
+      </div>
+      <div class="x-reviews">
+        <figure class="x-review">
+          <div class="x-review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« Gestion impeccable de A à Z. La propreté est irréprochable et la communication est fluide, ce qui permet de louer son bien en toute sérénité. »</blockquote>
+          <figcaption><b>Propriétaire</b>Avis Google</figcaption>
+        </figure>
+        <figure class="x-review">
+          <div class="x-review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« Madys gère mes 2 appartements en LCD à Malakoff depuis 18 mois maintenant. Ils sont très réactifs et pros. Je recommande. »</blockquote>
+          <figcaption><b>Walid G.</b>Propriétaire à Malakoff · Avis Google</figcaption>
+        </figure>
+        <figure class="x-review">
+          <div class="x-review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
+          <blockquote>« Super gestion, équipe et prestataires très sérieux. Communication au top. Rien à redire. »</blockquote>
+          <figcaption><b>Propriétaire</b>Avis Google</figcaption>
+        </figure>
+      </div>
+      <div class="x-reviews-foot">
+        <div class="x-reviews-score"><strong>5,0</strong><span>★★★★★<br>Note moyenne sur Google</span></div>
+        <a href="https://g.page/r/CbkULGfgs1-1EBM" target="_blank" rel="noopener" class="x-link">Lire tous nos avis Google →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. VILLES -->
   <section class="zones-section" id="zones">
     <div class="zones-inner">
-      <div class="section-header centered">
-        <span class="section-label">Zones d'intervention</span>
-        <h2 class="section-title">Votre conciergerie Airbnb en Île-de-France</h2>
-        <p class="section-subtitle">Basée à Malakoff, MADYS gère des biens dans toute l'Île-de-France, de <a href="conciergerie-airbnb-paris.html" style="color: var(--gold-dark);">Paris</a> aux Hauts-de-Seine, au Val-de-Marne, aux Yvelines et à l'Essonne. Choisissez votre ville.</p>
+      <div class="x-head center">
+        <span class="x-kicker">Zones d'intervention</span>
+        <h2 class="x-h2">Votre conciergerie Airbnb <em>en Île-de-France</em></h2>
+        <p class="x-sub">Basée à Malakoff, MADYS gère des biens dans toute l'Île-de-France, de <a href="conciergerie-airbnb-paris.html" style="color: var(--gold-dark); font-weight: 600;">Paris</a> aux Hauts-de-Seine, au Val-de-Marne, aux Yvelines et à l'Essonne.</p>
       </div>
       <div class="zones-search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
@@ -689,6 +558,11 @@ Je recommande"</p>
       </div>
       <ul class="zones-list">
         <li><a href="conciergerie-airbnb-paris.html">Conciergerie Airbnb Paris</a></li>
+        <li><a href="conciergerie-airbnb-paris-12.html">Conciergerie Airbnb Paris 12e</a></li>
+        <li><a href="conciergerie-airbnb-paris-13.html">Conciergerie Airbnb Paris 13e</a></li>
+        <li><a href="conciergerie-airbnb-paris-14.html">Conciergerie Airbnb Paris 14e</a></li>
+        <li><a href="conciergerie-airbnb-paris-15.html">Conciergerie Airbnb Paris 15e</a></li>
+        <li><a href="conciergerie-airbnb-paris-16.html">Conciergerie Airbnb Paris 16e</a></li>
         <li><a href="conciergerie-airbnb-malakoff.html">Conciergerie Airbnb Malakoff</a></li>
         <li><a href="conciergerie-airbnb-montrouge.html">Conciergerie Airbnb Montrouge</a></li>
         <li><a href="conciergerie-airbnb-vanves.html">Conciergerie Airbnb Vanves</a></li>
@@ -707,6 +581,13 @@ Je recommande"</p>
         <li><a href="conciergerie-airbnb-chatenay-malabry.html">Conciergerie Airbnb Châtenay-Malabry</a></li>
         <li><a href="conciergerie-airbnb-antony.html">Conciergerie Airbnb Antony</a></li>
         <li><a href="conciergerie-airbnb-rueil-malmaison.html">Conciergerie Airbnb Rueil-Malmaison</a></li>
+        <li><a href="conciergerie-airbnb-puteaux.html">Conciergerie Airbnb Puteaux</a></li>
+        <li><a href="conciergerie-airbnb-courbevoie.html">Conciergerie Airbnb Courbevoie</a></li>
+        <li><a href="conciergerie-airbnb-nanterre.html">Conciergerie Airbnb Nanterre</a></li>
+        <li><a href="conciergerie-airbnb-suresnes.html">Conciergerie Airbnb Suresnes</a></li>
+        <li><a href="conciergerie-airbnb-saint-cloud.html">Conciergerie Airbnb Saint-Cloud</a></li>
+        <li><a href="conciergerie-airbnb-levallois-perret.html">Conciergerie Airbnb Levallois-Perret</a></li>
+        <li><a href="conciergerie-airbnb-neuilly-sur-seine.html">Conciergerie Airbnb Neuilly-sur-Seine</a></li>
         <li><a href="conciergerie-airbnb-arcueil.html">Conciergerie Airbnb Arcueil</a></li>
         <li><a href="conciergerie-airbnb-cachan.html">Conciergerie Airbnb Cachan</a></li>
         <li><a href="conciergerie-airbnb-gentilly.html">Conciergerie Airbnb Gentilly</a></li>
@@ -721,6 +602,11 @@ Je recommande"</p>
         <li><a href="conciergerie-airbnb-thiais.html">Conciergerie Airbnb Thiais</a></li>
         <li><a href="conciergerie-airbnb-choisy-le-roi.html">Conciergerie Airbnb Choisy-le-Roi</a></li>
         <li><a href="conciergerie-airbnb-orly.html">Conciergerie Airbnb Orly</a></li>
+        <li><a href="conciergerie-airbnb-vincennes.html">Conciergerie Airbnb Vincennes</a></li>
+        <li><a href="conciergerie-airbnb-saint-mande.html">Conciergerie Airbnb Saint-Mandé</a></li>
+        <li><a href="conciergerie-airbnb-charenton-le-pont.html">Conciergerie Airbnb Charenton-le-Pont</a></li>
+        <li><a href="conciergerie-airbnb-maisons-alfort.html">Conciergerie Airbnb Maisons-Alfort</a></li>
+        <li><a href="conciergerie-airbnb-creteil.html">Conciergerie Airbnb Créteil</a></li>
         <li><a href="conciergerie-airbnb-versailles.html">Conciergerie Airbnb Versailles</a></li>
         <li><a href="conciergerie-airbnb-massy.html">Conciergerie Airbnb Massy</a></li>
       </ul>
@@ -731,20 +617,137 @@ Je recommande"</p>
     </div>
   </section>
 
-  <!-- CTA -->
-  <div class="cta-band">
-    <div class="cta-band-inner">
-      <h2 class="cta-band-title">Prêt à transformer votre bien en <span>revenus</span> ?</h2>
-      <p class="cta-band-subtitle">Rejoignez les propriétaires qui nous font confiance en Île-de-France.</p>
-      <div class="cta-band-buttons">
-        <a href="contact.html" class="btn-primary">Prendre rendez-vous
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="gestion.html" class="btn-secondary-light">Comment ça marche</a>
+  <!-- 8. FAQ -->
+  <section class="x-sec x-faq">
+    <div class="x-wrap x-faq-grid">
+      <div>
+        <span class="x-kicker">Questions fréquentes</span>
+        <h2 class="x-h2">Les réponses, <em>simplement.</em></h2>
+        <p class="x-sub">Ce que nous demandent le plus souvent les propriétaires avant de nous confier leur logement.</p>
+        <p style="margin-top: 28px;"><a href="faq.html" class="x-link">Toutes les questions →</a></p>
+      </div>
+      <div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Combien coûte MADYS ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Une commission calculée uniquement sur le bénéfice net, après déduction des frais de ménage et des frais de plateforme. Son taux dépend du nombre de logements que vous nous confiez. Aucun frais fixe.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Suis-je engagé sur une longue durée ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Non. Le contrat de gestion est résiliable à tout moment avec un mois de préavis. Le premier échange et l'estimation sont gratuits et sans engagement.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Que comprend la gestion ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Annonces et photos professionnelles, accueil et communication avec les voyageurs, ménage et linge, maintenance, tarification dynamique et suivi de vos revenus. La fiche de bienvenue et le livret d'accueil digital sont offerts. <a href="services.html" style="color: var(--gold-dark);">Voir nos services</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Puis-je bloquer des dates pour mon usage personnel ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Absolument. Vous restez propriétaire et pouvez bloquer des dates à tout moment, via notre interface ou en nous contactant. Votre calendrier personnel est toujours prioritaire. <a href="faq.html" style="color: var(--gold-dark);">Voir la FAQ complète</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Dans quelles villes intervenez-vous ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Basés à Malakoff, nous gérons des biens dans toute l'Île-de-France, en particulier dans les Hauts-de-Seine, le Val-de-Marne et le sud de Paris. <a href="#zones" style="color: var(--gold-dark);">Trouvez votre ville</a>.</p></div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
+  <!-- 9. DERNIER APPEL -->
+  <section class="x-final">
+    <div class="x-wrap x-final-box">
+      <div>
+        <h2 class="x-h2">Prêt à louer <em>l'esprit léger&nbsp;?</em></h2>
+        <p class="x-sub">Estimation gratuite, sans engagement, réponse sous 24h.</p>
+      </div>
+      <div class="x-final-ctas">
+        <a href="#simulateur" class="btn-primary">Estimer mes revenus</a>
+        <a href="contact.html" class="btn-secondary-light" data-calendly>Réserver un appel</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+  <!-- NOSCRIPT:start -->
+  <noscript>
+    <nav class="noscript-nav" aria-label="Menu principal">
+      <a href="index.html"><strong>MADYS Conciergerie</strong></a>
+      <a href="gestion.html">Gestion</a> <a href="services.html">Services</a> <a href="investir.html">Investir</a> <a href="faq.html">FAQ</a> <a href="contact.html">Contact</a> <a href="tel:0603236807">06 03 23 68 07</a>
+    </nav>
+    <div class="noscript-footer">
+      <p><strong>MADYS Conciergerie</strong> · 27 Avenue Maurice Thorez, 92240 Malakoff · <a href="tel:0603236807">06 03 23 68 07</a> · <a href="mailto:madys.conciergerie@gmail.com">madys.conciergerie@gmail.com</a></p>
+      <p>Nos secteurs :
+        <a href="conciergerie-airbnb-paris.html">Paris</a>
+        <a href="conciergerie-airbnb-paris-12.html">Paris 12e</a>
+        <a href="conciergerie-airbnb-paris-13.html">Paris 13e</a>
+        <a href="conciergerie-airbnb-paris-14.html">Paris 14e</a>
+        <a href="conciergerie-airbnb-paris-15.html">Paris 15e</a>
+        <a href="conciergerie-airbnb-paris-16.html">Paris 16e</a>
+        <a href="conciergerie-airbnb-malakoff.html">Malakoff</a>
+        <a href="conciergerie-airbnb-montrouge.html">Montrouge</a>
+        <a href="conciergerie-airbnb-vanves.html">Vanves</a>
+        <a href="conciergerie-airbnb-chatillon.html">Châtillon</a>
+        <a href="conciergerie-airbnb-bagneux.html">Bagneux</a>
+        <a href="conciergerie-airbnb-clamart.html">Clamart</a>
+        <a href="conciergerie-airbnb-issy-les-moulineaux.html">Issy-les-Moulineaux</a>
+        <a href="conciergerie-airbnb-boulogne-billancourt.html">Boulogne-Billancourt</a>
+        <a href="conciergerie-airbnb-meudon.html">Meudon</a>
+        <a href="conciergerie-airbnb-sevres.html">Sèvres</a>
+        <a href="conciergerie-airbnb-chaville.html">Chaville</a>
+        <a href="conciergerie-airbnb-fontenay-aux-roses.html">Fontenay-aux-Roses</a>
+        <a href="conciergerie-airbnb-sceaux.html">Sceaux</a>
+        <a href="conciergerie-airbnb-bourg-la-reine.html">Bourg-la-Reine</a>
+        <a href="conciergerie-airbnb-le-plessis-robinson.html">Le Plessis-Robinson</a>
+        <a href="conciergerie-airbnb-chatenay-malabry.html">Châtenay-Malabry</a>
+        <a href="conciergerie-airbnb-antony.html">Antony</a>
+        <a href="conciergerie-airbnb-rueil-malmaison.html">Rueil-Malmaison</a>
+        <a href="conciergerie-airbnb-puteaux.html">Puteaux</a>
+        <a href="conciergerie-airbnb-courbevoie.html">Courbevoie</a>
+        <a href="conciergerie-airbnb-nanterre.html">Nanterre</a>
+        <a href="conciergerie-airbnb-suresnes.html">Suresnes</a>
+        <a href="conciergerie-airbnb-saint-cloud.html">Saint-Cloud</a>
+        <a href="conciergerie-airbnb-levallois-perret.html">Levallois-Perret</a>
+        <a href="conciergerie-airbnb-neuilly-sur-seine.html">Neuilly-sur-Seine</a>
+        <a href="conciergerie-airbnb-arcueil.html">Arcueil</a>
+        <a href="conciergerie-airbnb-cachan.html">Cachan</a>
+        <a href="conciergerie-airbnb-gentilly.html">Gentilly</a>
+        <a href="conciergerie-airbnb-le-kremlin-bicetre.html">Le Kremlin-Bicêtre</a>
+        <a href="conciergerie-airbnb-ivry-sur-seine.html">Ivry-sur-Seine</a>
+        <a href="conciergerie-airbnb-villejuif.html">Villejuif</a>
+        <a href="conciergerie-airbnb-vitry-sur-seine.html">Vitry-sur-Seine</a>
+        <a href="conciergerie-airbnb-lhay-les-roses.html">L'Haÿ-les-Roses</a>
+        <a href="conciergerie-airbnb-chevilly-larue.html">Chevilly-Larue</a>
+        <a href="conciergerie-airbnb-fresnes.html">Fresnes</a>
+        <a href="conciergerie-airbnb-rungis.html">Rungis</a>
+        <a href="conciergerie-airbnb-thiais.html">Thiais</a>
+        <a href="conciergerie-airbnb-choisy-le-roi.html">Choisy-le-Roi</a>
+        <a href="conciergerie-airbnb-orly.html">Orly</a>
+        <a href="conciergerie-airbnb-vincennes.html">Vincennes</a>
+        <a href="conciergerie-airbnb-saint-mande.html">Saint-Mandé</a>
+        <a href="conciergerie-airbnb-charenton-le-pont.html">Charenton-le-Pont</a>
+        <a href="conciergerie-airbnb-maisons-alfort.html">Maisons-Alfort</a>
+        <a href="conciergerie-airbnb-creteil.html">Créteil</a>
+        <a href="conciergerie-airbnb-versailles.html">Versailles</a>
+        <a href="conciergerie-airbnb-massy.html">Massy</a>
+      </p>
+      <p><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></p>
+    </div>
+  </noscript>
+  <!-- NOSCRIPT:end -->
   <script src="components.js"></script>
 </body>
 </html>

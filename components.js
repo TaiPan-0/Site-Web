@@ -85,6 +85,7 @@
         <p class="footer-col-title">Informations</p>
         <ul class="footer-links">
           <li><a href="faq.html">Questions fréquentes</a></li>
+          <li><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a></li>
           <li><a href="mentions-legales.html">Mentions Légales</a></li>
           <li><a href="confidentialite.html">Politique de Confidentialité</a></li>
         </ul>
@@ -112,6 +113,11 @@
     <div class="footer-zones" role="navigation" aria-label="Nos secteurs d'intervention">
       <span class="footer-zones-title">Nos secteurs</span>
       <a href="conciergerie-airbnb-paris.html">Paris</a>
+      <a href="conciergerie-airbnb-paris-12.html">Paris 12e</a>
+      <a href="conciergerie-airbnb-paris-13.html">Paris 13e</a>
+      <a href="conciergerie-airbnb-paris-14.html">Paris 14e</a>
+      <a href="conciergerie-airbnb-paris-15.html">Paris 15e</a>
+      <a href="conciergerie-airbnb-paris-16.html">Paris 16e</a>
       <a href="conciergerie-airbnb-malakoff.html">Malakoff</a>
       <a href="conciergerie-airbnb-montrouge.html">Montrouge</a>
       <a href="conciergerie-airbnb-vanves.html">Vanves</a>
@@ -130,6 +136,13 @@
       <a href="conciergerie-airbnb-chatenay-malabry.html">Châtenay-Malabry</a>
       <a href="conciergerie-airbnb-antony.html">Antony</a>
       <a href="conciergerie-airbnb-rueil-malmaison.html">Rueil-Malmaison</a>
+      <a href="conciergerie-airbnb-puteaux.html">Puteaux</a>
+      <a href="conciergerie-airbnb-courbevoie.html">Courbevoie</a>
+      <a href="conciergerie-airbnb-nanterre.html">Nanterre</a>
+      <a href="conciergerie-airbnb-suresnes.html">Suresnes</a>
+      <a href="conciergerie-airbnb-saint-cloud.html">Saint-Cloud</a>
+      <a href="conciergerie-airbnb-levallois-perret.html">Levallois-Perret</a>
+      <a href="conciergerie-airbnb-neuilly-sur-seine.html">Neuilly-sur-Seine</a>
       <a href="conciergerie-airbnb-arcueil.html">Arcueil</a>
       <a href="conciergerie-airbnb-cachan.html">Cachan</a>
       <a href="conciergerie-airbnb-gentilly.html">Gentilly</a>
@@ -144,6 +157,11 @@
       <a href="conciergerie-airbnb-thiais.html">Thiais</a>
       <a href="conciergerie-airbnb-choisy-le-roi.html">Choisy-le-Roi</a>
       <a href="conciergerie-airbnb-orly.html">Orly</a>
+      <a href="conciergerie-airbnb-vincennes.html">Vincennes</a>
+      <a href="conciergerie-airbnb-saint-mande.html">Saint-Mandé</a>
+      <a href="conciergerie-airbnb-charenton-le-pont.html">Charenton-le-Pont</a>
+      <a href="conciergerie-airbnb-maisons-alfort.html">Maisons-Alfort</a>
+      <a href="conciergerie-airbnb-creteil.html">Créteil</a>
       <a href="conciergerie-airbnb-versailles.html">Versailles</a>
       <a href="conciergerie-airbnb-massy.html">Massy</a>
     </div>

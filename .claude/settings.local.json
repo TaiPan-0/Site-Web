@@ -100,7 +100,16 @@
       "Bash(bash /c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad/apply_leads.sh)",
       "Bash([ -f \"$f\" ])",
       "Read(//c/Users/admrd/.claude/projects/C--Users-admrd-Documents-MADYS-Site-Web/memory/**)",
-      "Bash(cd \"/c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad\"; ls; grep -n -i 'versailles\\\\|antony' gen_cities.sh | head)"
+      "Bash(cd \"/c/Users/admrd/AppData/Local/Temp/claude/C--Users-admrd-Documents-MADYS-Site-Web/dcb2a9a2-fc0c-4fad-9373-8587dfd63ca5/scratchpad\"; ls; grep -n -i 'versailles\\\\|antony' gen_cities.sh | head)",
+      "WebFetch(domain:www.paris.fr)",
+      "WebSearch",
+      "WebFetch(domain:kohenavocats.fr)",
+      "Bash(rm -f d_*.jpg sheet.jpg sheet2.jpg)",
+      "Bash(cp gen_cities.sh gen_cities.bak)",
+      "Bash(sed -i 's/aux Hauts-de-Seine, au Val-de-Marne et aux Yvelines\\\\.</aux Hauts-de-Seine, au Val-de-Marne, aux Yvelines et à l\\\\x27Essonne.</; s/ainsi que dans les communes voisines : @@NEAR@@/ainsi que dans les secteurs voisins : @@NEAR@@/g' city_tpl.html)",
+      "Bash(bash gen_cities.sh)",
+      "mcp__f5570cbd-45d8-41dd-95d1-80f610786f18__search_threads",
+      "Bash(grep -n '^main\\\\|[ ,]main[ {,]' style.css)"
     ]
   }
 }

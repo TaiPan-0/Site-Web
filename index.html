@@ -251,6 +251,29 @@
     @keyframes xRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .x-hero-copy > *, .x-simcard { animation: none; } }
 
+    /* ══ Mise en scène au défilement ══ */
+    /* Surlignage doré du titre qui se trace après l'arrivée du texte */
+    .anim-ready .x-h1 em { background-size: 0% 100%; background-repeat: no-repeat; animation: xHighlight 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.75s forwards; }
+    @keyframes xHighlight { to { background-size: 100% 100%; } }
+    /* Photos de la mosaïque : léger recul de zoom quand la case apparaît */
+    .x-tile img { transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .anim-ready .x-tile:not(.in) img { transform: scale(1.14); }
+    /* Méthode : la ligne se trace de gauche à droite, puis chaque chiffre se remplit d'or */
+    .x-steps { position: relative; border-top: 0; }
+    .x-steps::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--gold), var(--line)); transform-origin: left; transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.1s; }
+    .anim-ready .x-steps:not(.in)::before { transform: scaleX(0); }
+    .x-step-n { transition: color 0.8s ease; transition-delay: calc(var(--d, 0s) + 0.5s); }
+    .anim-ready .x-step.in .x-step-n { color: var(--gold); }
+    /* Calcul de la commission : le total s'allume une fois les lignes posées */
+    .x-flow-total { transition: box-shadow 0.8s ease 0.8s; }
+    .anim-ready .x-flow-total.in { box-shadow: 0 18px 40px rgba(201,168,76,0.28); }
+    /* Encadré final : le halo doré monte doucement */
+    .x-final-box::before { transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s, opacity 1.6s ease 0.2s; }
+    .anim-ready .x-final-box:not(.in)::before { transform: translate3d(0, 80px, 0); opacity: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .x-h1 em { animation: none; background-size: 100% 100%; }
+    }
+
     /* ══ Tablette ══ */
     @media (max-width: 1080px) {
       .x-hero-grid, .x-money-grid, .x-voice-grid, .x-faq-grid { gap: 44px; }
@@ -403,73 +426,73 @@
 
   <!-- 2. CONFIANCE -->
   <div class="x-proof">
-    <div class="x-wrap x-proof-row">
-      <div class="x-proof-item"><svg viewBox="0 0 48 48" role="img" aria-label="Google" xmlns="http://www.w3.org/2000/svg"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg><span><strong>5,0</strong> Google</span></div>
+    <div class="x-wrap x-proof-row" data-stagger="0.08">
+      <div class="x-proof-item" data-anim="up"><svg viewBox="0 0 48 48" role="img" aria-label="Google" xmlns="http://www.w3.org/2000/svg"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg><span><strong data-count="5,0">5,0</strong> Google</span></div>
       <span class="x-proof-sep"></span>
-      <div class="x-proof-item"><img src="airbnb.png" alt="Airbnb" width="26" height="26" /><span><strong>4,9</strong> Airbnb</span></div>
+      <div class="x-proof-item" data-anim="up"><img src="airbnb.png" alt="Airbnb" width="26" height="26" /><span><strong data-count="4,9">4,9</strong> Airbnb</span></div>
       <span class="x-proof-sep"></span>
-      <div class="x-proof-item"><svg viewBox="0 0 40 40" role="img" aria-label="Booking.com" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#003B95"/><path fill="#fff" d="M16.7 28.2h-4.9c-1 0-1.8-.8-1.8-1.8V13.6c0-1 .8-1.8 1.8-1.8h4.3c3.3 0 5.4 1.7 5.4 4.4 0 1.6-.8 2.7-1.7 3.3 1.5.5 2.5 1.8 2.5 3.6 0 3-2.3 5.1-5.6 5.1Zm-3.4-9.7h2.2c1.4 0 2.2-.7 2.2-1.9s-.8-1.8-2.3-1.8h-2.1v3.7Zm0 6.8h2.6c1.5 0 2.4-.8 2.4-2s-.9-2-2.5-2h-2.5v4Zm12.9 3.2a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4Z"/></svg><span><strong>4,9</strong> Booking</span></div>
+      <div class="x-proof-item" data-anim="up"><svg viewBox="0 0 40 40" role="img" aria-label="Booking.com" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#003B95"/><path fill="#fff" d="M16.7 28.2h-4.9c-1 0-1.8-.8-1.8-1.8V13.6c0-1 .8-1.8 1.8-1.8h4.3c3.3 0 5.4 1.7 5.4 4.4 0 1.6-.8 2.7-1.7 3.3 1.5.5 2.5 1.8 2.5 3.6 0 3-2.3 5.1-5.6 5.1Zm-3.4-9.7h2.2c1.4 0 2.2-.7 2.2-1.9s-.8-1.8-2.3-1.8h-2.1v3.7Zm0 6.8h2.6c1.5 0 2.4-.8 2.4-2s-.9-2-2.5-2h-2.5v4Zm12.9 3.2a2.2 2.2 0 1 1 0-4.4 2.2 2.2 0 0 1 0 4.4Z"/></svg><span><strong data-count="4,9">4,9</strong> Booking</span></div>
       <span class="x-proof-sep"></span>
-      <div class="x-proof-item"><img src="abritel.png" alt="Abritel" width="26" height="26" /><span><strong>4,9</strong> Abritel</span></div>
+      <div class="x-proof-item" data-anim="up"><img src="abritel.png" alt="Abritel" width="26" height="26" /><span><strong data-count="4,9">4,9</strong> Abritel</span></div>
       <span class="x-proof-sep"></span>
-      <div class="x-proof-item"><span><strong>24h</strong> pour vous répondre</span></div>
+      <div class="x-proof-item" data-anim="up"><span><strong data-count="24" data-suffix="h">24h</strong> pour vous répondre</span></div>
     </div>
   </div>
 
   <!-- 3. SERVICES -->
   <section class="x-sec">
     <div class="x-wrap">
-      <div class="x-head split">
-        <div>
+      <div class="x-head split" data-stagger="0.12">
+        <div data-anim="up">
           <span class="x-kicker">Gestion complète</span>
           <h2 class="x-h2">Tout est pris en charge.<br><em>Vraiment tout.</em></h2>
         </div>
-        <p class="x-sub" style="margin-top: 0; max-width: 420px;">De la première photo à la dernière clé rendue, une seule équipe s'occupe de votre logement, 7 jours sur 7.</p>
+        <p class="x-sub" data-anim="up" style="margin-top: 0; max-width: 420px;">De la première photo à la dernière clé rendue, une seule équipe s'occupe de votre logement, 7 jours sur 7.</p>
       </div>
-      <div class="x-bento">
-        <article class="x-tile x-tile--hero">
+      <div class="x-bento" data-stagger="0.07">
+        <article class="x-tile x-tile--hero" data-anim="up">
           <img src="https://images.unsplash.com/photo-1615874694520-474822394e73?w=1200&q=80" srcset="https://images.unsplash.com/photo-1615874694520-474822394e73?w=700&q=75 700w, https://images.unsplash.com/photo-1615874694520-474822394e73?w=1200&q=80 1200w" sizes="(max-width: 1080px) 100vw, 50vw" alt="Salon élégant d'un appartement en location courte durée" loading="lazy" width="1200" height="800" />
           <div class="x-tile-body">
             <h3>Des annonces qui donnent envie de réserver</h3>
             <p>Shooting photo professionnel, textes soignés et diffusion sur Airbnb, Booking et Abritel.</p>
           </div>
         </article>
-        <article class="x-tile">
+        <article class="x-tile" data-anim="up">
           <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
           <div><h3>Voyageurs 7j/7</h3><p>Messages, arrivées, départs : voyageurs vérifiés et accompagnés.</p></div>
         </article>
-        <article class="x-tile">
+        <article class="x-tile" data-anim="up">
           <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
           <div><h3>Prix dynamiques</h3><p>Tarifs ajustés aux saisons, salons et événements.</p></div>
         </article>
-        <article class="x-tile">
+        <article class="x-tile" data-anim="up">
           <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></div>
           <div><h3>Maintenance</h3><p>Petits travaux et interventions rapides.</p></div>
         </article>
-        <article class="x-tile">
+        <article class="x-tile" data-anim="up">
           <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l3-3 3 3 5-6"/></svg></div>
           <div><h3>Suivi des revenus</h3><p>Un reporting clair de vos réservations et gains.</p></div>
         </article>
-        <article class="x-tile x-tile--photo">
+        <article class="x-tile x-tile--photo" data-anim="up">
           <img src="https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?w=1000&q=80" alt="Lit au linge blanc impeccable, préparé entre deux séjours" loading="lazy" width="1000" height="667" />
           <div class="x-tile-body">
             <h3>Ménage et linge hôtelier</h3>
             <p>Un logement impeccable et des draps frais entre chaque séjour.</p>
           </div>
         </article>
-        <article class="x-tile x-tile--gold">
+        <article class="x-tile x-tile--gold" data-anim="up">
           <div class="x-ico"><svg viewBox="0 0 24 24"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
           <div><h3>Offerts</h3><p>Fiche de bienvenue sur mesure et livret d'accueil digital.</p></div>
         </article>
       </div>
-      <div class="x-bento-cta"><a href="services.html" class="x-link">Voir le détail de nos services →</a></div>
+      <div class="x-bento-cta" data-anim="fade"><a href="services.html" class="x-link">Voir le détail de nos services →</a></div>
     </div>
   </section>
 
   <!-- 4. COMMISSION -->
   <section class="x-sec x-money">
     <div class="x-wrap x-money-grid">
-      <div>
+      <div data-anim="up">
         <span class="x-kicker">Notre rémunération</span>
         <h2 class="x-h2">Nous gagnons <em>quand vous gagnez.</em></h2>
         <p class="x-sub">Notre commission est calculée uniquement sur votre bénéfice net. Son taux dépend du nombre de logements que vous nous confiez.</p>
@@ -479,12 +502,12 @@
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Estimation gratuite sous 24h</b><span>Sans engagement.</span></div></li>
         </ul>
       </div>
-      <div class="x-flow" aria-label="Calcul de la commission">
-        <div class="x-flow-row plus"><span>Revenus des réservations</span><span>Vos nuitées</span></div>
-        <div class="x-flow-row minus"><span>Frais de ménage</span><span>déduits</span></div>
-        <div class="x-flow-row minus"><span>Frais de plateforme</span><span>déduits</span></div>
-        <div class="x-flow-total"><b>= Votre bénéfice net</b><span>Notre commission s'applique uniquement ici</span></div>
-        <p class="x-flow-note">Pas de réservation, pas de commission.</p>
+      <div class="x-flow" aria-label="Calcul de la commission" data-anim="up" data-stagger="0.16">
+        <div class="x-flow-row plus" data-anim="left"><span>Revenus des réservations</span><span>Vos nuitées</span></div>
+        <div class="x-flow-row minus" data-anim="left"><span>Frais de ménage</span><span>déduits</span></div>
+        <div class="x-flow-row minus" data-anim="left"><span>Frais de plateforme</span><span>déduits</span></div>
+        <div class="x-flow-total" data-anim="scale"><b>= Votre bénéfice net</b><span>Notre commission s'applique uniquement ici</span></div>
+        <p class="x-flow-note" data-anim="fade">Pas de réservation, pas de commission.</p>
       </div>
     </div>
   </section>
@@ -492,14 +515,14 @@
   <!-- 5. MÉTHODE -->
   <section class="x-sec">
     <div class="x-wrap">
-      <div class="x-head">
+      <div class="x-head" data-anim="up">
         <span class="x-kicker">Comment ça marche</span>
         <h2 class="x-h2">Trois étapes, <em>et on s'occupe du reste.</em></h2>
       </div>
-      <ol class="x-steps">
-        <li class="x-step"><span class="x-step-n">01</span><h3>Un premier échange</h3><p>Au téléphone, en visio ou sur place : nous répondons à vos questions et estimons vos revenus.</p></li>
-        <li class="x-step"><span class="x-step-n">02</span><h3>La visite du logement</h3><p>Nous évaluons son potentiel et vous proposons un plan d'action personnalisé.</p></li>
-        <li class="x-step"><span class="x-step-n">03</span><h3>Le lancement</h3><p>Shooting photo, annonces en ligne, premiers voyageurs accueillis : tout est géré.</p></li>
+      <ol class="x-steps" data-anim="line" data-stagger="0.18">
+        <li class="x-step" data-anim="up"><span class="x-step-n">01</span><h3>Un premier échange</h3><p>Au téléphone, en visio ou sur place : nous répondons à vos questions et estimons vos revenus.</p></li>
+        <li class="x-step" data-anim="up"><span class="x-step-n">02</span><h3>La visite du logement</h3><p>Nous évaluons son potentiel et vous proposons un plan d'action personnalisé.</p></li>
+        <li class="x-step" data-anim="up"><span class="x-step-n">03</span><h3>Le lancement</h3><p>Shooting photo, annonces en ligne, premiers voyageurs accueillis : tout est géré.</p></li>
       </ol>
     </div>
   </section>
@@ -508,37 +531,37 @@
   <section class="x-sec x-voice">
     <div class="x-wrap">
       <div class="x-voice-grid">
-        <div class="video-frame">
+        <div class="video-frame" data-anim="scale">
           <video controls playsinline preload="none" poster="madys-promo-poster.jpg" width="1280" height="720" aria-label="Vidéo de présentation de MADYS Conciergerie">
             <source src="madys-promo.mp4" type="video/mp4" />
             Votre navigateur ne peut pas lire cette vidéo.
           </video>
         </div>
-        <div>
+        <div data-anim="up">
           <span class="x-kicker">En vidéo</span>
           <h2 class="x-h2">MADYS en 50 secondes</h2>
           <p class="x-sub">Découvrez comment nous gérons votre location courte durée, de l'annonce à la remise des clés.</p>
         </div>
       </div>
-      <div class="x-reviews">
-        <figure class="x-review">
+      <div class="x-reviews" data-stagger="0.12">
+        <figure class="x-review" data-anim="up">
           <div class="x-review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
           <blockquote>« Gestion impeccable de A à Z. La propreté est irréprochable et la communication est fluide, ce qui permet de louer son bien en toute sérénité. »</blockquote>
           <figcaption><b>Propriétaire</b>Avis Google</figcaption>
         </figure>
-        <figure class="x-review">
+        <figure class="x-review" data-anim="up">
           <div class="x-review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
           <blockquote>« Madys gère mes 2 appartements en LCD à Malakoff depuis 18 mois maintenant. Ils sont très réactifs et pros. Je recommande. »</blockquote>
           <figcaption><b>Walid G.</b>Propriétaire à Malakoff · Avis Google</figcaption>
         </figure>
-        <figure class="x-review">
+        <figure class="x-review" data-anim="up">
           <div class="x-review-stars" aria-label="5 étoiles sur 5">★★★★★</div>
           <blockquote>« Super gestion, équipe et prestataires très sérieux. Communication au top. Rien à redire. »</blockquote>
           <figcaption><b>Propriétaire</b>Avis Google</figcaption>
         </figure>
       </div>
-      <div class="x-reviews-foot">
-        <div class="x-reviews-score"><strong>5,0</strong><span>★★★★★<br>Note moyenne sur Google</span></div>
+      <div class="x-reviews-foot" data-anim="fade">
+        <div class="x-reviews-score"><strong data-count="5,0">5,0</strong><span>★★★★★<br>Note moyenne sur Google</span></div>
         <a href="https://g.page/r/CbkULGfgs1-1EBM" target="_blank" rel="noopener" class="x-link">Lire tous nos avis Google →</a>
       </div>
     </div>
@@ -547,12 +570,12 @@
   <!-- 7. VILLES -->
   <section class="zones-section" id="zones">
     <div class="zones-inner">
-      <div class="x-head center">
+      <div class="x-head center" data-anim="up">
         <span class="x-kicker">Zones d'intervention</span>
         <h2 class="x-h2">Votre conciergerie Airbnb <em>en Île-de-France</em></h2>
         <p class="x-sub">Basée à Malakoff, MADYS gère des biens dans toute l'Île-de-France, de <a href="conciergerie-airbnb-paris.html" style="color: var(--gold-dark); font-weight: 600;">Paris</a> aux Hauts-de-Seine, au Val-de-Marne, aux Yvelines et à l'Essonne.</p>
       </div>
-      <div class="zones-search">
+      <div class="zones-search" data-anim="up">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input type="search" class="zones-search-input" placeholder="Rechercher votre ville" aria-label="Rechercher votre ville" autocomplete="off" />
       </div>
@@ -620,7 +643,7 @@
   <!-- 8. FAQ -->
   <section class="x-sec x-faq">
     <div class="x-wrap x-faq-grid">
-      <div>
+      <div data-anim="up">
         <span class="x-kicker">Questions fréquentes</span>
         <h2 class="x-h2">Les réponses, <em>simplement.</em></h2>
         <p class="x-sub">Ce que nous demandent le plus souvent les propriétaires avant de nous confier leur logement.</p>
@@ -668,7 +691,7 @@
 
   <!-- 9. DERNIER APPEL -->
   <section class="x-final">
-    <div class="x-wrap x-final-box">
+    <div class="x-wrap x-final-box" data-anim="scale">
       <div>
         <h2 class="x-h2">Prêt à louer <em>l'esprit léger&nbsp;?</em></h2>
         <p class="x-sub">Estimation gratuite, sans engagement, réponse sous 24h.</p>

@@ -321,8 +321,11 @@
     ];
     // Elements driven by a pinned scene (track cards, steps) are animated by the scene itself
     const pinCapable = canPin();
+    // Pages built with data-anim (the home page) choreograph their own entrances;
+    // only the city list and FAQ items there keep this generic reveal.
     const els = Array.from(document.querySelectorAll(revealSelectors.join(',')))
-      .filter(el => !(el.closest('[data-scrolly-track]') || (pinCapable && el.matches('[data-scrolly-step]'))));
+      .filter(el => !(el.closest('[data-scrolly-track]') || (pinCapable && el.matches('[data-scrolly-step]'))))
+      .filter(el => !(el.closest('.x-page') && !el.matches('.zones-list li, .faq-item')));
     // Once revealed, strip every reveal artefact so the element's own hover
     // transitions run without the stagger delay or the slow reveal timing.
     const settle = el => {
@@ -352,6 +355,62 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     els.forEach(el => observer.observe(el));
   }
+
+  // Choreographed entrances: [data-anim] elements (up, left, scale, fade, line) play once
+  // when they enter the viewport; [data-stagger] on a parent delays its children one after
+  // another; [data-count] figures count up in French format ("4,9", "24h"). Only opacity
+  // and transform are animated, so the browser composites everything off the main thread.
+  (function () {
+    const items = document.querySelectorAll('[data-anim]');
+    if (!items.length) return;
+    const counters = document.querySelectorAll('[data-count]');
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('in'));
+      return;
+    }
+    document.querySelectorAll('[data-stagger]').forEach(parent => {
+      const step = parseFloat(parent.getAttribute('data-stagger')) || 0.08;
+      Array.from(parent.children).filter(c => c.hasAttribute('data-anim'))
+        .forEach((c, i) => c.style.setProperty('--d', (i * step).toFixed(2) + 's'));
+    });
+    document.documentElement.classList.add('anim-ready');
+    const countUpFr = el => {
+      const raw = el.getAttribute('data-count');
+      const target = parseFloat(raw.replace(',', '.'));
+      const decimals = (raw.split(',')[1] || '').length;
+      const suffix = el.getAttribute('data-suffix') || '';
+      const start = performance.now(), duration = 1200;
+      const frame = now => {
+        const p = Math.min((now - start) / duration, 1);
+        const v = target * (1 - Math.pow(1 - p, 3));
+        el.textContent = v.toFixed(decimals).replace('.', ',') + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    };
+    // The real figure stays in the HTML (robots, no-JS); start visible counters from zero
+    counters.forEach(c => {
+      const decimals = (c.getAttribute('data-count').split(',')[1] || '').length;
+      c.textContent = (0).toFixed(decimals).replace('.', ',') + (c.getAttribute('data-suffix') || '');
+    });
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        // Also play elements already above the viewport (fast flick, anchor jump, restored scroll)
+        if (!entry.isIntersecting && entry.boundingClientRect.top > 0) return;
+        const el = entry.target;
+        obs.unobserve(el);
+        el.classList.add('in');
+        if (el.hasAttribute('data-count')) countUpFr(el);
+        el.querySelectorAll('[data-count]').forEach(countUpFr);
+        // Once played, hand the element back to its own hover transitions
+        const delay = parseFloat(getComputedStyle(el).getPropertyValue('--d')) || 0;
+        setTimeout(() => el.setAttribute('data-anim-done', ''), 1300 + delay * 1000);
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+    items.forEach(el => io.observe(el));
+    // Counters outside any animated block still count when seen
+    counters.forEach(c => { if (!c.closest('[data-anim]')) io.observe(c); });
+  })();
 
   // Count-up on key figures when they scroll into view (e.g. "+30%", "100%", "4.9★")
   if (!reduceMotion && 'IntersectionObserver' in window) {

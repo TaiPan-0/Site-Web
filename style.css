@@ -375,7 +375,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
 /* Fallback page fade-in for all browsers */
 @keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
-body { animation: pageFadeIn 0.45s ease both; }
+/* (fondu global retiré : il retardait l'affichage mesuré par Google) */
 @media (prefers-reduced-motion: reduce) {
   body { animation: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
@@ -1433,3 +1433,6 @@ a.city-card-link:hover { border-color: var(--gold); box-shadow: var(--shadow); t
   .x-final-box { grid-template-columns: 1fr; padding: 44px 24px; border-radius: 24px; gap: 28px; }
   .x-faq-list .faq-item { padding: 0 18px; }
 }
+
+/* Lisibilité : doré plus soutenu sur les fonds clairs (contraste WCAG AA) */
+.x-page, .art-page { --gold-dark: #8A6424; }

@@ -25,7 +25,7 @@
   }
   window.madysTrack = track;
 
-  const LOGO_IMG = `<img src="logo.png?v=2" alt="MADYS Conciergerie" style="height:54px;width:auto;display:block;">`;
+  const LOGO_IMG = `<img src="logo-nav.png" alt="MADYS Conciergerie" width="64" height="54" style="height:54px;width:auto;display:block;">`;
 
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 
@@ -177,12 +177,6 @@
     </div>
   </footer>`;
 
-  // Favicon (icône de l'onglet)
-  const favicon = document.createElement('link');
-  favicon.rel = 'icon';
-  favicon.type = 'image/png';
-  favicon.href = 'favicon.png?v=7';
-  document.head.appendChild(favicon);
 
   const whatsappHTML = `
   <a href="https://wa.me/33603236807?text=Bonjour%20MADYS%2C%20je%20souhaite%20des%20informations%20sur%20vos%20services."

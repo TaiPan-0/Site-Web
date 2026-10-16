@@ -38,250 +38,215 @@
   }
   </script>
   <style>
-    /* ── PARCOURS EN 3 ÉTAPES (scrollytelling) ──
-       Par défaut : étapes empilées (mobile, JS absent, animations réduites).
-       La classe .story--pinned, posée par le script sur grand écran, épingle la scène. */
-    .story { background: var(--off-white); padding: 72px 24px; }
-    .story-sticky { position: relative; max-width: 1180px; margin: 0 auto; padding-left: 30px; }
+    /* ── Gestion : frise des 3 étapes ── */
+    .gs-steps { position: relative; display: grid; gap: 28px; }
+    .gs-step { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border: 1px solid var(--line); border-radius: 26px; overflow: hidden; }
+    .gs-step:nth-child(even) .gs-media { order: 2; }
+    .gs-media { position: relative; min-height: 400px; overflow: hidden; }
+    .gs-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .anim-ready .gs-step:not(.in) .gs-media img { transform: scale(1.12); }
+    .gs-copy { padding: 52px 54px; display: flex; flex-direction: column; justify-content: center; }
+    .gs-n { font-size: 4rem; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: transparent; -webkit-text-stroke: 1.6px var(--gold); transition: color 0.9s ease 0.5s; }
+    .anim-ready .gs-step.in .gs-n { color: var(--gold); }
+    .gs-copy h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 800; letter-spacing: -0.025em; color: var(--ink); margin: 18px 0 14px; }
+    .gs-copy > p { font-size: 1rem; line-height: 1.75; color: var(--muted); }
+    .gs-copy ul { list-style: none; margin-top: 22px; display: grid; gap: 10px; }
+    .gs-copy li { display: flex; gap: 12px; font-size: 0.94rem; color: var(--ink); }
+    .gs-copy li::before { content: '✓'; color: var(--gold-dark); font-weight: 800; }
+    .gs-you { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; align-self: flex-start; font-size: 0.78rem; font-weight: 700; color: var(--ink); background: var(--cream); border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; }
+    .gs-you b { color: var(--gold-dark); }
 
-    .story-rail { position: absolute; left: 0; top: 6px; bottom: 6px; width: 2px; background: var(--grey-light); border-radius: 2px; }
-    .story-rail-fill {
-      position: absolute; inset: 0; border-radius: 2px;
-      background: linear-gradient(180deg, var(--gold-light), var(--gold), var(--gold-dark));
-      transform: scaleY(var(--fill, 0)); transform-origin: top; will-change: transform;
-    }
-    .story-dot { display: none; }
-    .story-hint { display: none; }
+    /* Carte du hero : votre rôle */
+    .gs-role { display: grid; gap: 14px; margin-top: 4px; }
+    .gs-role-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; background: var(--cream); }
+    .gs-role-row span { width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--ink); color: var(--gold); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
+    .gs-role-row b { display: block; font-size: 0.95rem; color: var(--ink); }
+    .gs-role-row small { font-size: 0.82rem; color: var(--muted); }
+    .gs-role-foot { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink); font-weight: 600; }
+    .gs-role-foot em { font-style: normal; color: var(--gold-dark); }
 
-    .story-step { margin-bottom: 56px; }
-    .story-step:last-child { margin-bottom: 0; }
-    .story-media { border-radius: 16px; overflow: hidden; margin-bottom: 26px; }
-    .step-img { width: 100%; height: 230px; object-fit: cover; display: block; }
+    /* Après le lancement */
+    .gs-after { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .gs-tile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 30px 26px; }
+    .gs-ico { width: 48px; height: 48px; border-radius: 14px; background: rgba(201,168,76,0.14); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .gs-ico svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .gs-tile h3 { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .gs-tile p { font-size: 0.9rem; line-height: 1.65; color: rgba(255,255,255,0.65); }
 
-    .step-num {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 4rem; font-weight: 800; color: var(--gold);
-      opacity: 0.32; line-height: 1; margin-bottom: 10px;
-    }
-    .step-title { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--dark); margin-bottom: 14px; letter-spacing: -0.015em; }
-    .step-desc { color: var(--grey); font-size: 0.95rem; line-height: 1.8; margin-bottom: 22px; }
-    .step-details { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .step-details li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--dark); }
-    .step-details li::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+    .gs-faq { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
 
-    .story-cta { background: var(--off-white); text-align: center; padding: 0 24px 80px; }
+    .x-phero-grid > * { animation: gsRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .x-phero-grid > :nth-child(2) { animation-delay: 0.15s; }
+    @keyframes gsRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .x-phero-grid > * { animation: none; } }
 
-    /* Mode empilé avec animations : chaque étape apparaît à son arrivée */
-    .story--flow .story-step { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-    .story--flow .story-step.in-view { opacity: 1; transform: none; }
-
-    /* Mode épinglé (grand écran) */
-    .story--pinned { padding: 0 56px; height: 220vh; }
-    .story--pinned .story-sticky {
-      position: sticky; top: 72px; height: calc(100vh - 72px);
-      padding-left: 0;
-      display: grid; grid-template-columns: 96px 1fr; align-items: center;
-    }
-    .story--pinned .story-rail { position: relative; left: auto; top: auto; bottom: auto; height: min(52vh, 420px); margin-left: 22px; }
-    .story--pinned .story-dot {
-      display: flex; align-items: center; justify-content: center;
-      position: absolute; left: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px;
-      border-radius: 50%; border: 2px solid var(--grey-light); background: var(--off-white);
-      font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--grey);
-      cursor: pointer; padding: 0;
-      transition: border-color 0.4s ease, background 0.4s ease, color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-    }
-    .story--pinned .story-dot[data-step="0"] { top: 0; }
-    .story--pinned .story-dot[data-step="1"] { top: 50%; }
-    .story--pinned .story-dot[data-step="2"] { top: 100%; }
-    .story--pinned .story-dot.is-reached { border-color: var(--gold); color: var(--gold-dark); }
-    .story--pinned .story-dot.is-current { background: var(--gold); border-color: var(--gold); color: var(--dark); transform: scale(1.15); box-shadow: var(--shadow-gold); }
-    .story--pinned .story-dot:focus-visible { outline: 2px solid var(--gold-dark); outline-offset: 3px; }
-
-    .story--pinned .story-stage { position: relative; height: 100%; }
-    .story--pinned .story-step {
-      position: absolute; inset: 0; margin: 0;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.55s ease, visibility 0s linear 0.55s;
-    }
-    .story--pinned .story-step.is-active { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity 0.55s ease, visibility 0s; }
-    .story--pinned .story-media { margin-bottom: 0; box-shadow: 0 30px 70px rgba(0,0,0,0.18); }
-    .story--pinned .step-img { height: min(54vh, 460px); }
-
-    /* L'image et le texte se déplacent à des vitesses différentes : effet de profondeur */
-    .story--pinned .story-media { transform: translateY(46px) scale(1.04); transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
-    .story--pinned .story-copy { transform: translateY(30px); transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1); }
-    .story--pinned .story-step.is-past .story-media { transform: translateY(-46px) scale(1.04); }
-    .story--pinned .story-step.is-past .story-copy { transform: translateY(-30px); }
-    .story--pinned .story-step.is-active .story-media,
-    .story--pinned .story-step.is-active .story-copy { transform: none; }
-
-    /* Les points de détail arrivent en cascade quand l'étape s'active */
-    .story--pinned .step-details li { opacity: 0; transform: translateX(-12px); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-    .story--pinned .story-step.is-active .step-details li { opacity: 1; transform: none; }
-    .story--pinned .story-step.is-active .step-details li:nth-child(1) { transition-delay: 0.25s; }
-    .story--pinned .story-step.is-active .step-details li:nth-child(2) { transition-delay: 0.35s; }
-    .story--pinned .story-step.is-active .step-details li:nth-child(3) { transition-delay: 0.45s; }
-    .story--pinned .step-num { font-size: 5rem; }
-    .story--pinned .step-title { font-size: 1.9rem; }
-
-    .story--pinned .story-hint {
-      display: flex; align-items: center; gap: 8px;
-      position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
-      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey);
-      transition: opacity 0.4s ease;
-    }
-    .story--pinned .story-hint.is-hidden { opacity: 0; }
-
-    .faq-section { background: var(--white); padding: 90px 56px; }
-    .faq-inner { max-width: 760px; margin: 0 auto; }
-
+    @media (max-width: 1080px) { .gs-after { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 900px) {
-      .faq-section { padding: 72px 24px; }
-    }
-
-    /* ── SCROLLYTELLING MOBILE : scène épinglée verticale, étapes qui glissent latéralement ── */
-    @media (max-width: 900px) {
-      .story--pinned { padding: 0 20px; height: 250vh; height: 250svh; }
-      .story--pinned .story-sticky {
-        height: calc(100vh - 72px); height: calc(100svh - 72px);
-        display: flex; flex-direction: column; align-items: stretch; padding: 16px 0 12px;
-      }
-      .story--pinned .story-rail { width: auto; height: 2px; margin: 18px 17px 28px; flex-shrink: 0; }
-      .story--pinned .story-rail-fill { transform: scaleX(var(--fill, 0)); transform-origin: left; }
-      .story--pinned .story-dot { width: 34px; height: 34px; margin: -17px 0 0 -17px; font-size: 0.66rem; }
-      .story--pinned .story-dot[data-step="0"] { top: 50%; left: 0; }
-      .story--pinned .story-dot[data-step="1"] { top: 50%; left: 50%; }
-      .story--pinned .story-dot[data-step="2"] { top: 50%; left: 100%; }
-      .story--pinned .story-stage { flex: 1; min-height: 0; height: auto; }
-      .story--pinned .story-step { display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 18px; padding-bottom: 24px; }
-      .story--pinned .story-media { box-shadow: 0 14px 34px rgba(0,0,0,0.16); transform: translate3d(54px, 0, 0) scale(1.03); }
-      .story--pinned .story-copy { transform: translate3d(86px, 0, 0); }
-      .story--pinned .story-step.is-past .story-media { transform: translate3d(-54px, 0, 0) scale(1.03); }
-      .story--pinned .story-step.is-past .story-copy { transform: translate3d(-86px, 0, 0); }
-      .story--pinned .step-img { height: min(230px, 27vh); }
-      .story--pinned .step-num { display: none; }
-      .story--pinned .step-title { font-size: 1.28rem; margin-bottom: 8px; }
-      .story--pinned .step-desc { font-size: 0.88rem; line-height: 1.6; margin-bottom: 12px; }
-      .story--pinned .step-details { gap: 7px; }
-      .story--pinned .step-details li { font-size: 0.84rem; }
-      .story--pinned .story-hint { bottom: 4px; font-size: 0.62rem; }
-    }
-    @media (max-width: 900px) and (max-height: 720px) {
-      .story--pinned .step-img { height: 21vh; }
-      .story--pinned .story-hint { display: none; }
+      .gs-steps { gap: 16px; }
+      .gs-step { grid-template-columns: 1fr; border-radius: 20px; }
+      .gs-step:nth-child(even) .gs-media { order: 0; }
+      .gs-media { min-height: 220px; }
+      .gs-copy { padding: 26px 22px 30px; }
+      .gs-n { font-size: 3rem; }
+      .gs-after { grid-template-columns: 1fr; gap: 12px; }
+      .gs-tile { padding: 24px 22px; }
+      .gs-faq { grid-template-columns: 1fr; gap: 28px; }
     }
   </style>
 </head>
 <body>
+<main class="x-page">
 
-  <div class="page-hero">
-    <div class="page-hero-inner">
-      <span class="section-label">Comment ça marche</span>
-      <h1 class="section-title">Démarrez en<br>3 étapes simples</h1>
-      <p class="section-subtitle">Prenez rendez-vous en un clic et laissez-nous prendre en charge l'intégralité de la gestion de votre bien.</p>
-    </div>
-  </div>
-
-  <!-- STEPS (scrollytelling) -->
-  <section class="story" id="story" aria-label="Les 3 étapes pour confier votre bien">
-    <div class="story-sticky">
-      <div class="story-rail">
-        <div class="story-rail-fill"></div>
-        <button type="button" class="story-dot" data-step="0" aria-label="Aller à l'étape 1">01</button>
-        <button type="button" class="story-dot" data-step="1" aria-label="Aller à l'étape 2">02</button>
-        <button type="button" class="story-dot" data-step="2" aria-label="Aller à l'étape 3">03</button>
+  <!-- HERO -->
+  <section class="x-phero">
+    <div class="x-wrap x-phero-grid">
+      <div>
+        <span class="x-kicker">Comment ça marche</span>
+        <h1 class="x-ph1">Confiez votre bien <em>en 3&nbsp;étapes simples.</em></h1>
+        <p class="x-plead">Un rendez-vous, une visite, une signature : ensuite, nous prenons en charge l'intégralité de la gestion de votre logement.</p>
+        <div class="x-pctas">
+          <a href="contact.html" class="btn-primary" data-calendly>Prendre rendez-vous</a>
+          <a href="index.html#simulateur" class="x-btn-dark">Estimer mes revenus</a>
+        </div>
       </div>
-
-      <div class="story-stage">
-
-        <article class="story-step">
-          <div class="story-media">
-            <img
-              src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=1000&q=85"
-              alt="Premier rendez-vous avec la conciergerie MADYS pour estimer un bien"
-              class="step-img"
-            />
-          </div>
-          <div class="story-copy">
-            <div class="step-num">01</div>
-            <h2 class="step-title">Prendre rendez-vous</h2>
-            <p class="step-desc">Un premier rendez-vous physique ou en visioconférence pour répondre à toutes vos questions et présenter nos services. Nous planifions ensuite une première visite de votre bien.</p>
-            <ul class="step-details">
-              <li>Réponse sous 24h garantie</li>
-              <li>Rendez-vous ou visio selon votre préférence</li>
-              <li>Estimation de rentabilité offerte</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="story-step">
-          <div class="story-media">
-            <img
-              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1000&q=85"
-              alt="Visite d'un appartement par la conciergerie MADYS en Île-de-France"
-              class="step-img"
-            />
-          </div>
-          <div class="story-copy">
-            <div class="step-num">02</div>
-            <h2 class="step-title">Visite du logement</h2>
-            <p class="step-desc">Notre équipe visite votre bien, évalue son potentiel et vous propose un plan d'action personnalisé. Nous discutons ensemble de vos objectifs et des améliorations à apporter.</p>
-            <ul class="step-details">
-              <li>Évaluation complète du bien</li>
-              <li>Conseils d'aménagement et de mise en valeur</li>
-              <li>Plan tarifaire personnalisé</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="story-step">
-          <div class="story-media">
-            <img
-              src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1000&q=85"
-              alt="Mise en gestion Airbnb d'un appartement par MADYS Conciergerie"
-              class="step-img"
-            />
-          </div>
-          <div class="story-copy">
-            <div class="step-num">03</div>
-            <h2 class="step-title">Lancement des services</h2>
-            <p class="step-desc">Après la signature du contrat et la remise des clés, nous prenons en charge toute la gestion. Shooting photo, publication des annonces, accueil des premiers voyageurs — tout est géré.</p>
-            <ul class="step-details">
-              <li>Shooting photo professionnel dès J+3</li>
-              <li>Annonces en ligne sous 7 jours</li>
-              <li>Tableau de bord propriétaire en temps réel</li>
-            </ul>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="story-hint" aria-hidden="true">
-        Faites défiler
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <div class="x-card">
+        <p class="x-card-title">Votre rôle, en tout et pour tout</p>
+        <div class="gs-role">
+          <div class="gs-role-row"><span>1</span><div><b>Un premier échange</b><small>30 minutes, en visio ou sur place</small></div></div>
+          <div class="gs-role-row"><span>2</span><div><b>Une visite du logement</b><small>Nous venons à vous</small></div></div>
+          <div class="gs-role-row"><span>3</span><div><b>Une signature et les clés</b><small>Résiliable avec un mois de préavis</small></div></div>
+        </div>
+        <p class="gs-role-foot">Ensuite ? <em>Vous encaissez, nous gérons.</em></p>
       </div>
     </div>
   </section>
 
-  <div class="story-cta">
-    <a href="contact.html" class="btn-primary">
-      Prendre Rendez-vous
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
+  <!-- 3 ÉTAPES -->
+  <section class="x-sec" style="padding-top: 20px;">
+    <div class="x-wrap gs-steps">
+      <article class="gs-step" data-anim="up">
+        <div class="gs-media"><img src="img/1517502884422-41eaead166d4-1000.webp" alt="Premier rendez-vous avec la conciergerie MADYS pour estimer un bien" loading="lazy" width="1000" height="667" /></div>
+        <div class="gs-copy">
+          <span class="gs-n">01</span>
+          <h2>Prendre rendez-vous</h2>
+          <p>Un premier rendez-vous, physique ou en visioconférence, pour répondre à toutes vos questions et vous présenter nos services. Nous planifions ensuite la visite de votre bien.</p>
+          <ul><li>Réponse sous 24h</li><li>Rendez-vous ou visio, selon votre préférence</li><li>Estimation de rentabilité offerte</li></ul>
+          <span class="gs-you">Votre temps : <b>30 minutes</b></span>
+        </div>
+      </article>
+      <article class="gs-step" data-anim="up">
+        <div class="gs-media"><img src="img/1560518883-ce09059eeffa-1000.webp" alt="Visite d'un appartement par la conciergerie MADYS en Île-de-France" loading="lazy" width="1000" height="667" /></div>
+        <div class="gs-copy">
+          <span class="gs-n">02</span>
+          <h2>Visite du logement</h2>
+          <p>Notre équipe visite votre bien, évalue son potentiel et vous propose un plan d'action personnalisé. Nous parlons ensemble de vos objectifs et des améliorations à prévoir.</p>
+          <ul><li>Évaluation complète du bien</li><li>Conseils d'aménagement et de mise en valeur</li><li>Plan tarifaire personnalisé</li></ul>
+          <span class="gs-you">Votre temps : <b>une visite</b></span>
+        </div>
+      </article>
+      <article class="gs-step" data-anim="up">
+        <div class="gs-media"><img src="img/1586023492125-27b2c045efd7-1000.webp" alt="Mise en gestion Airbnb d'un appartement par MADYS Conciergerie" loading="lazy" width="1000" height="667" /></div>
+        <div class="gs-copy">
+          <span class="gs-n">03</span>
+          <h2>Lancement des services</h2>
+          <p>Après la signature et la remise des clés, nous prenons tout en charge : shooting photo, publication des annonces, accueil des premiers voyageurs.</p>
+          <ul><li>Shooting photo professionnel dès J+3</li><li>Annonces en ligne sous 7 jours</li><li>Fiche de bienvenue et livret d'accueil digital offerts</li></ul>
+          <span class="gs-you">Votre temps : <b>zéro</b></span>
+        </div>
+      </article>
+    </div>
+  </section>
 
-  <div class="cta-band">
-    <div class="cta-band-inner">
-      <h2 class="cta-band-title">Des questions ?<br><span>Parlons-en.</span></h2>
-      <p class="cta-band-subtitle">Notre équipe est disponible pour répondre à toutes vos interrogations.</p>
-      <div class="cta-band-buttons">
-        <a href="contact.html" class="btn-primary">Nous contacter</a>
-        <a href="faq.html" class="btn-secondary-light">Consulter la FAQ</a>
+  <!-- APRÈS LE LANCEMENT -->
+  <section class="x-sec x-dark">
+    <div class="x-wrap">
+      <div class="x-head" data-anim="up">
+        <span class="x-kicker">Et ensuite ?</span>
+        <h2 class="x-h2">Votre quotidien de propriétaire, <em>en toute sérénité</em></h2>
+        <p class="x-sub">Une fois votre logement lancé, vous gardez une vision claire de tout, sans avoir à vous en occuper.</p>
+      </div>
+      <div class="gs-after" data-stagger="0.1">
+        <article class="gs-tile" data-anim="up">
+          <div class="gs-ico"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h3>Vos revenus</h3>
+          <p>Les réservations s'enchaînent, avec des prix ajustés en permanence à la demande.</p>
+        </article>
+        <article class="gs-tile" data-anim="up">
+          <div class="gs-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l3-3 3 3 5-6"/></svg></div>
+          <h3>Un rapport chaque mois</h3>
+          <p>Réservations, taux d'occupation, revenus : un point clair et transparent.</p>
+        </article>
+        <article class="gs-tile" data-anim="up">
+          <div class="gs-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <h3>Vos dates bloquées</h3>
+          <p>Vous voulez profiter de votre logement ? Votre calendrier personnel reste prioritaire.</p>
+        </article>
+        <article class="gs-tile" data-anim="up">
+          <div class="gs-ico"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Une équipe joignable</h3>
+          <p>Une question, une demande ? Nous sommes là 7 jours sur 7, par téléphone ou WhatsApp.</p>
+        </article>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="x-sec">
+    <div class="x-wrap gs-faq">
+      <div data-anim="up">
+        <span class="x-kicker">Questions fréquentes</span>
+        <h2 class="x-h2">Avant de <em>vous lancer</em></h2>
+        <p class="x-sub">Les réponses aux questions que se posent les propriétaires au moment de nous confier leur logement.</p>
+        <p style="margin-top: 26px;"><a href="faq.html" class="x-link">Toutes les questions →</a></p>
+      </div>
+      <div class="x-faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            Suis-je engagé sur une longue durée ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Non. Le contrat de gestion est résiliable à tout moment avec un mois de préavis. Le premier échange et l'estimation sont gratuits et sans engagement.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Puis-je bloquer des dates pour mon usage personnel ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Absolument. Vous restez propriétaire et pouvez bloquer des dates à tout moment, via notre interface ou en nous contactant. Votre calendrier personnel est toujours prioritaire.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Combien coûte la gestion ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Une commission calculée uniquement sur le bénéfice net, après déduction des frais de ménage et des frais de plateforme. Son taux dépend du nombre de logements que vous nous confiez. Aucun frais fixe.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Dans quelles villes intervenez-vous ?
+            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-answer"><p>Basés à Malakoff, nous gérons des biens dans toute l'Île-de-France, notamment dans les <a href="conciergerie-hauts-de-seine.html" style="color: var(--gold-dark);">Hauts-de-Seine</a>, le <a href="conciergerie-val-de-marne.html" style="color: var(--gold-dark);">Val-de-Marne</a> et le sud de Paris.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DERNIER APPEL -->
+  <section class="x-final">
+    <div class="x-wrap x-final-box" data-anim="scale">
+      <div>
+        <h2 class="x-h2">Première étape : <em>30 minutes.</em></h2>
+        <p class="x-sub">Réservez un échange gratuit et sans engagement, nous répondons à toutes vos questions.</p>
+      </div>
+      <div class="x-final-ctas">
+        <a href="contact.html" class="btn-primary" data-calendly>Réserver un appel</a>
+        <a href="contact.html" class="btn-secondary-light">Nous écrire</a>
+      </div>
+    </div>
+  </section>
+
+</main>
 
   <!-- NOSCRIPT:start -->
   <noscript>
@@ -344,135 +309,13 @@
         <a href="conciergerie-airbnb-creteil.html">Créteil</a>
         <a href="conciergerie-airbnb-versailles.html">Versailles</a>
         <a href="conciergerie-airbnb-massy.html">Massy</a>
+        <a href="conciergerie-hauts-de-seine.html">Tout le 92</a>
+        <a href="conciergerie-val-de-marne.html">Tout le 94</a>
       </p>
-      <p><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></p>
+      <p><a href="conseils.html">Conseils propriétaires</a> · <a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></p>
     </div>
   </noscript>
   <!-- NOSCRIPT:end -->
   <script src="components.js"></script>
-  <script>
-  // Scrollytelling des 3 étapes.
-  // Grand écran : scène épinglée pilotée par le défilement.
-  // Téléphone   : scène épinglée avec un point d'arrêt par étape (un swipe = une étape).
-  // Sinon       : étapes empilées.
-  (function () {
-    const story = document.getElementById('story');
-    if (!story) return;
-    const NAV_H = 72;
-    const sticky = story.querySelector('.story-sticky');
-    const steps = Array.from(story.querySelectorAll('.story-step'));
-    const dots = Array.from(story.querySelectorAll('.story-dot'));
-    const fill = story.querySelector('.story-rail-fill');
-    const hint = story.querySelector('.story-hint');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const wide = window.matchMedia('(min-width: 901px) and (min-height: 620px)');
-    const mobileMq = window.matchMedia('(max-width: 900px)');
-    const clamp01 = v => Math.min(Math.max(v, 0), 1);
-    let pinned = false, snap = false, stepLen = 0, current = -1, ticking = false;
-    let flowObserver = null, markers = [], lastWidth = window.innerWidth, lastFill = '';
-
-    function setFill(v) {
-      const s = v.toFixed(3);
-      if (s === lastFill) return;
-      lastFill = s;
-      fill.style.setProperty('--fill', s);
-    }
-
-    function setMode() {
-      lastWidth = window.innerWidth;
-      pinned = window.madysCanPin ? window.madysCanPin() : (wide.matches && !reduce.matches);
-      snap = pinned && mobileMq.matches;
-      story.classList.toggle('story--pinned', pinned);
-      story.classList.toggle('story--flow', !pinned && !reduce.matches);
-      current = -1; lastFill = '';
-      steps.forEach(s => s.classList.remove('is-active', 'is-past'));
-      markers.forEach(m => m.remove()); markers = [];
-      story.style.height = '';
-      if (flowObserver) { flowObserver.disconnect(); flowObserver = null; }
-      if (reduce.matches) { fill.style.setProperty('--fill', '1'); return; }
-
-      if (snap) {
-        stepLen = Math.round(window.innerHeight * 0.45);
-        story.style.height = (sticky.offsetHeight + (steps.length - 1) * stepLen) + 'px';
-        // Pas de point d'arrêt sur la dernière étape : la page doit continuer librement
-        steps.slice(0, -1).forEach((_, i) => {
-          const m = document.createElement('div');
-          m.className = 'scrolly-snap';
-          m.style.top = (i * stepLen) + 'px';
-          story.appendChild(m);
-          markers.push(m);
-        });
-        document.documentElement.classList.add('has-scroll-snap');
-      }
-      if (!pinned && 'IntersectionObserver' in window) {
-        flowObserver = new IntersectionObserver((entries, obs) => {
-          entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in-view'); obs.unobserve(en.target); } });
-        }, { threshold: 0.15 });
-        steps.forEach(s => flowObserver.observe(s));
-      } else if (!pinned) {
-        steps.forEach(s => s.classList.add('in-view'));
-      }
-      update();
-    }
-
-    function activate(idx) {
-      if (idx === current) return;
-      current = idx;
-      steps.forEach((s, i) => {
-        s.classList.toggle('is-active', i === idx);
-        s.classList.toggle('is-past', i < idx);
-      });
-      dots.forEach((d, i) => {
-        d.classList.toggle('is-reached', i <= idx);
-        d.classList.toggle('is-current', i === idx);
-      });
-    }
-
-    function update() {
-      ticking = false;
-      if (reduce.matches) return;
-      const rect = story.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const n = steps.length;
-      if (snap) {
-        const p = clamp01((NAV_H - rect.top) / ((n - 1) * stepLen));
-        setFill(p);
-        if (hint) hint.classList.toggle('is-hidden', p > 0.04);
-        activate(Math.round(p * (n - 1)));
-      } else if (pinned) {
-        const travel = rect.height - vh;
-        const p = travel > 0 ? clamp01(-rect.top / travel) : 0;
-        setFill(Math.min(1, p * 1.5));
-        if (hint) hint.classList.toggle('is-hidden', p > 0.04);
-        activate(Math.min(n - 1, Math.floor(p * n)));
-      } else {
-        // Mode empilé : la ligne se remplit au fil de la lecture
-        setFill(clamp01((vh * 0.6 - rect.top) / rect.height));
-      }
-    }
-
-    const requestUpdate = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    // Le mode n'est réévalué que si la largeur change, jamais quand la barre d'adresse
-    // du téléphone apparaît ou disparaît.
-    window.addEventListener('resize', () => {
-      if (window.innerWidth !== lastWidth) setMode(); else requestUpdate();
-    });
-    reduce.addEventListener('change', setMode);
-
-    dots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        if (!pinned) return;
-        const top = story.getBoundingClientRect().top + window.scrollY;
-        const target = snap
-          ? top + i * stepLen - NAV_H
-          : top + (story.offsetHeight - window.innerHeight) * ((i + 0.5) / steps.length);
-        window.scrollTo({ top: target, behavior: 'smooth' });
-      });
-    });
-
-    setMode();
-  })();
-  </script>
 </body>
 </html>

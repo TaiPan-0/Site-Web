@@ -85,6 +85,7 @@
         <p class="footer-col-title">Informations</p>
         <ul class="footer-links">
           <li><a href="faq.html">Questions fréquentes</a></li>
+          <li><a href="conseils.html">Conseils propriétaires</a></li>
           <li><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a></li>
           <li><a href="mentions-legales.html">Mentions Légales</a></li>
           <li><a href="confidentialite.html">Politique de Confidentialité</a></li>
@@ -164,6 +165,8 @@
       <a href="conciergerie-airbnb-creteil.html">Créteil</a>
       <a href="conciergerie-airbnb-versailles.html">Versailles</a>
       <a href="conciergerie-airbnb-massy.html">Massy</a>
+      <a href="conciergerie-hauts-de-seine.html">Tout le 92</a>
+      <a href="conciergerie-val-de-marne.html">Tout le 94</a>
     </div>
     <div class="footer-bottom">
       <p class="footer-copy">© 2026 Madys Conciergerie. Tous droits réservés.</p>

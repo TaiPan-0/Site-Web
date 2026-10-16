@@ -37,318 +37,227 @@
   }
   </script>
   <style>
-    /* STATS */
-    .stats-section { background: var(--dark); padding: 60px 56px; }
-    .stats-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
-    .stat-num { font-family: 'Montserrat', sans-serif; font-size: 2.8rem; font-weight: 700; color: var(--gold); }
-    .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+    /* ── Investir ── */
+    .iv-sim { position: relative; }
+    .iv-sim .sim-card { margin: 0; padding: 32px 30px; border-radius: 24px; border: 1px solid var(--line); box-shadow: 0 40px 80px rgba(20,22,29,0.10); }
+    .iv-sim .sim-fields { grid-template-columns: 1fr; gap: 14px; }
+    .iv-sim .sim-field select { background-color: var(--cream); }
+    .iv-sim .sim-btn { margin-top: 20px; }
+    .iv-sim .sim-lead { background: var(--cream); }
+    .iv-sim-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .iv-sim-top b { font-size: 1.12rem; font-weight: 800; color: var(--ink); }
+    .iv-sim-top span { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dark); background: rgba(201,168,76,0.14); padding: 6px 10px; border-radius: 100px; }
 
-    /* PROCESS */
-    .process-section { background: var(--off-white); padding: 90px 56px; }
-    .process-inner { max-width: 1200px; margin: 0 auto; }
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-top: 56px;
-    }
-    .process-card {
-      background: var(--white);
-      border: 1px solid var(--grey-light);
-      border-radius: var(--radius);
-      padding: 32px 26px;
-      position: relative;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .process-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,17,23,0.08); }
-    .process-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      background: rgba(201,168,76,0.12);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--gold); margin-bottom: 16px;
-    }
-    .process-icon svg { width: 26px; height: 26px; }
-    .process-num {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.4rem; font-weight: 700; color: var(--gold);
-      opacity: 0.45; line-height: 1; margin-bottom: 8px;
-    }
-    .process-card-title { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--dark); margin-bottom: 12px; }
-    .process-card-desc { font-size: 0.88rem; color: var(--grey); line-height: 1.7; }
+    .iv-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .iv-stat { padding: 8px 28px; text-align: center; }
+    .iv-stat + .iv-stat { border-left: 1px solid rgba(255,255,255,0.12); }
+    .iv-stat strong { display: block; font-size: clamp(2rem, 3.6vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; color: #fff; }
+    .iv-stat span { font-size: 0.86rem; color: rgba(255,255,255,0.6); }
 
-    /* AVANTAGES */
-    .avantages-section { background: var(--white); padding: 90px 56px; }
-    .avantages-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .avantages-section .section-title { color: var(--dark); }
-    .avantages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
-    .avantage-card {
-      background: var(--off-white); border-radius: var(--radius);
-      padding: 24px; border: 1px solid var(--grey-light);
-    }
-    .avantage-icon { font-size: 1.4rem; margin-bottom: 10px; }
-    .avantage-title { font-weight: 600; font-size: 0.9rem; color: var(--dark); margin-bottom: 6px; }
-    .avantage-desc { font-size: 0.82rem; color: var(--grey); line-height: 1.6; }
-    .avantages-img { width: 100%; height: 480px; object-fit: cover; border-radius: 16px; }
+    .iv-steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .iv-steps::before { content: ''; position: absolute; top: 27px; left: 6%; right: 6%; height: 1px; background: linear-gradient(90deg, var(--gold), var(--line)); transform-origin: left; transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.1s; }
+    .anim-ready .iv-steps:not(.in)::before { transform: scaleX(0); }
+    .iv-step { padding: 0 20px; text-align: center; }
+    .iv-step-n { width: 56px; height: 56px; margin: 0 auto 22px; border-radius: 50%; background: var(--cream); border: 1.5px solid var(--gold); color: var(--gold-dark); font-weight: 800; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; transition: background 0.8s ease, color 0.8s ease; transition-delay: calc(var(--d, 0s) + 0.4s); }
+    .anim-ready .iv-step.in .iv-step-n { background: var(--ink); color: var(--gold); }
+    .iv-step h3 { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .iv-step p { font-size: 0.9rem; line-height: 1.65; color: var(--muted); }
 
+    .iv-adv { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .iv-adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .iv-tile { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px 26px; }
+    .iv-ico { width: 46px; height: 46px; border-radius: 14px; background: var(--cream); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .iv-ico svg { width: 21px; height: 21px; stroke: var(--gold-dark); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .iv-tile h3 { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+    .iv-tile p { font-size: 0.9rem; line-height: 1.65; color: var(--muted); }
+    .iv-photo { position: relative; border-radius: 22px; overflow: hidden; min-height: 420px; }
+    .iv-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .anim-ready .iv-photo:not(.in) img { transform: scale(1.12); }
+
+    .iv-guides { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .iv-guide { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px 26px; text-decoration: none; transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
+    .iv-guide:hover { transform: translateY(-5px); box-shadow: 0 24px 50px rgba(20,22,29,0.08); border-color: rgba(201,168,76,0.5); }
+    .iv-guide span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dark); }
+    .iv-guide h3 { font-size: 1.12rem; font-weight: 800; color: var(--ink); line-height: 1.3; margin: 12px 0 auto; padding-bottom: 18px; }
+    .iv-guide b { font-size: 0.86rem; color: var(--ink); }
+
+    .x-phero-grid > * { animation: ivRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .x-phero-grid > :nth-child(2) { animation-delay: 0.15s; }
+    @keyframes ivRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .x-phero-grid > * { animation: none; } }
+
+    @media (max-width: 1080px) { .iv-guides { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 900px) {
-      .stats-section, .process-section, .avantages-section { padding: 60px 24px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .process-grid { grid-template-columns: 1fr 1fr; }
-      .avantages-inner { grid-template-columns: 1fr; gap: 48px; }
-      .avantages-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── REFONTE : frise en 4 étapes au lieu de cartes ── */
-    .process-grid { position: relative; gap: 32px; margin-top: 64px; }
-    .process-grid::before {
-      content: ''; position: absolute; left: 27px; right: 27px; top: 26px; height: 2px;
-      background: linear-gradient(90deg, var(--gold), var(--gold-light) 65%, var(--grey-light));
-    }
-    .process-card { background: none; border: 0; border-radius: 0; padding: 0; }
-    .process-card:hover { transform: none; box-shadow: none; }
-    .process-icon {
-      width: 54px; height: 54px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--white);
-      margin-bottom: 22px; position: relative; z-index: 1;
-      box-shadow: 0 0 0 8px var(--off-white);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .process-card:hover .process-icon { transform: scale(1.08); }
-    .process-icon svg { width: 24px; height: 24px; }
-    .process-num { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; opacity: 1; color: var(--gold-dark); margin-bottom: 8px; }
-    .process-num::before { content: 'Étape '; }
-    .process-card-title { font-size: 1.08rem; font-weight: 700; margin-bottom: 10px; }
-
-    /* Avantages : liste avec pictogrammes dorés */
-    .avantages-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 28px; }
-    .avantage-card {
-      display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; align-items: start;
-      padding: 18px 20px;
-    }
-    .avantage-icon {
-      grid-row: 1 / span 2; width: 44px; height: 44px; margin: 0; border-radius: 10px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      display: flex; align-items: center; justify-content: center; font-size: 0;
-    }
-    .avantage-icon svg { width: 20px; height: 20px; stroke: var(--white); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .avantage-title { grid-column: 2; font-weight: 700; margin-bottom: 4px; }
-    .avantage-desc { grid-column: 2; }
-
-    @media (max-width: 900px) {
-      .process-grid { grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
-      .process-grid::before {
-        left: 26px; right: auto; top: 12px; bottom: 12px; width: 2px; height: auto;
-        background: linear-gradient(180deg, var(--gold), var(--gold-light) 65%, var(--grey-light));
-      }
-      .process-card { display: grid; grid-template-columns: 54px 1fr; column-gap: 18px; align-items: start; }
-      .process-icon { grid-row: 1 / span 3; margin-bottom: 0; box-shadow: 0 0 0 6px var(--off-white); }
-      .process-num, .process-card-title, .process-card-desc { grid-column: 2; }
-      .process-num { margin-top: 4px; }
-      .avantages-inner { gap: 32px; }
-      .avantages-img { height: 240px; }
+      .iv-sim .sim-card { padding: 24px 20px; border-radius: 20px; }
+      .iv-stats { grid-template-columns: 1fr 1fr; gap: 26px 0; }
+      .iv-stat:nth-child(3) { border-left: 0; }
+      .iv-stat { padding: 0 12px; }
+      .iv-steps { grid-template-columns: 1fr; gap: 22px; }
+      .iv-steps::before { top: 0; bottom: 0; left: 27px; right: auto; width: 1px; height: auto; background: linear-gradient(180deg, var(--gold), var(--line)); transform-origin: top; }
+      .anim-ready .iv-steps:not(.in)::before { transform: scaleY(0); }
+      .iv-step { display: grid; grid-template-columns: 56px 1fr; column-gap: 16px; text-align: left; padding: 0; }
+      .iv-step-n { margin: 0; grid-row: 1 / span 2; }
+      .iv-step h3 { margin: 6px 0 6px; }
+      .iv-adv { grid-template-columns: 1fr; }
+      .iv-adv-grid { grid-template-columns: 1fr; gap: 12px; }
+      .iv-photo { min-height: 240px; order: -1; }
+      .iv-guides { grid-template-columns: 1fr; gap: 12px; }
     }
   </style>
 </head>
 <body>
+<main class="x-page">
 
-  <div class="page-hero">
-    <div class="page-hero-inner">
-      <span class="section-label">Investir</span>
-      <h1 class="section-title">La location courte durée,<br>une opportunité à saisir</h1>
-      <p class="section-subtitle">Découvrez comment transformer votre bien immobilier en source de revenus optimisée grâce à notre expertise.</p>
-    </div>
-  </div>
-
-  <!-- STATS -->
-  <div class="stats-section">
-    <div class="stats-grid">
+  <!-- HERO + SIMULATEUR -->
+  <section class="x-phero">
+    <div class="x-wrap x-phero-grid">
       <div>
-        <div class="stat-num">4.9★</div>
-        <div class="stat-label">Note moyenne Airbnb</div>
-      </div>
-      <div>
-        <div class="stat-num">+30%</div>
-        <div class="stat-label">Revenus vs location longue durée</div>
-      </div>
-      <div>
-        <div class="stat-num">7j/7</div>
-        <div class="stat-label">Disponibilité de notre équipe</div>
-      </div>
-      <div>
-        <div class="stat-num">100%</div>
-        <div class="stat-label">Gestion prise en charge</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROCESS -->
-  <section class="process-section">
-    <div class="process-inner">
-      <div class="section-header">
-        <span class="section-label">Notre accompagnement</span>
-        <h2 class="section-title">Comment investir dans<br>la location saisonnière ?</h2>
-        <p class="section-subtitle">De la recherche du bien à la gestion quotidienne, nous vous accompagnons à chaque étape de votre projet d'investissement.</p>
-      </div>
-      <div class="process-grid">
-        <div class="process-card">
-          <div class="process-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          </div>
-          <div class="process-num">01</div>
-          <h3 class="process-card-title">Conseil & recherche</h3>
-          <p class="process-card-desc">Un accompagnement personnalisé pour définir votre projet et identifier le bien au plus fort potentiel locatif.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          </div>
-          <div class="process-num">02</div>
-          <h3 class="process-card-title">Déploiement de l'équipe</h3>
-          <p class="process-card-desc">Photographe, équipe de ménage et artisans dédiés sont mobilisés pour préparer votre logement.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-          </div>
-          <div class="process-num">03</div>
-          <h3 class="process-card-title">Travaux & décoration</h3>
-          <p class="process-card-desc">Nos partenaires architectes et décorateurs subliment votre bien pour séduire les voyageurs.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-icon">
-            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg>
-          </div>
-          <div class="process-num">04</div>
-          <h3 class="process-card-title">Gestion des locations</h3>
-          <p class="process-card-desc">Nous prenons en charge l'intégralité de la gestion, sans aucune intervention de votre part.</p>
+        <span class="x-kicker">Investir en location courte durée</span>
+        <h1 class="x-ph1">Faites de votre bien <em>une vraie source de revenus.</em></h1>
+        <p class="x-plead">Vous avez un logement, ou un projet d'investissement en Île-de-France ? Nous vous aidons à en tirer le meilleur en location courte durée, puis nous gérons tout à votre place.</p>
+        <div class="x-pctas">
+          <a href="contact.html" class="x-btn-dark" data-calendly>Parler de mon projet</a>
+          <a href="combien-rapporte-un-airbnb-ile-de-france.html" class="x-link">Combien rapporte un Airbnb ? →</a>
         </div>
       </div>
-      <div style="text-align: center; margin-top: 48px;">
-        <a href="contact.html" class="btn-primary">Commencer mon projet
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- AVANTAGES LCD -->
-  <section class="avantages-section">
-    <div class="avantages-inner">
-      <div>
-        <span class="section-label">Pourquoi la LCD ?</span>
-        <h2 class="section-title">Les avantages de la location courte durée</h2>
-        <p class="section-subtitle">Confiez votre bien à MADYS et profitez de tous les bénéfices de la location courte durée, sans les contraintes.</p>
-        <div class="avantages-grid">
-          <div class="avantage-card">
-            <div class="avantage-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
-            <p class="avantage-title">Revenus supérieurs</p>
-            <p class="avantage-desc">Jusqu'à 30–50% de plus qu'une location classique selon la zone.</p>
-          </div>
-          <div class="avantage-card">
-            <div class="avantage-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L21 2m-4 4l3 3m-6 0l2 2"/></svg></div>
-            <p class="avantage-title">Flexibilité totale</p>
-            <p class="avantage-desc">Récupérez votre bien quand vous en avez besoin, sans préavis long.</p>
-          </div>
-          <div class="avantage-card">
-            <div class="avantage-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
-            <p class="avantage-title">Bien entretenu</p>
-            <p class="avantage-desc">Ménage professionnel après chaque séjour, état constant contrôlé.</p>
-          </div>
-          <div class="avantage-card">
-            <div class="avantage-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-5m5 5V8m5 9v-9"/></svg></div>
-            <p class="avantage-title">Suivi transparent</p>
-            <p class="avantage-desc">Rapports mensuels détaillés, accès à votre tableau de bord en temps réel.</p>
-          </div>
-        </div>
-        <div style="margin-top: 36px;">
-          <a href="contact.html" class="btn-primary">Estimer mon potentiel
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-      <div>
-        <img
-          src="https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1000&q=85"
-          alt="Séjour lumineux d'un appartement en location courte durée"
-          class="avantages-img" loading="lazy"
-        />
-      </div>
-    </div>
-  </section>
-
-  <!-- SIMULATEUR -->
-  <section class="simulator-section" id="simulateur">
-    <div class="simulator-inner">
-      <div class="section-header">
-        <span class="section-label">Estimation gratuite</span>
-        <h2 class="section-title">Combien votre bien peut-il<br>vous rapporter ?</h2>
-        <p class="section-subtitle">Estimez en quelques secondes vos revenus potentiels en location courte durée.</p>
-      </div>
-      <div class="sim-card">
-        <div class="sim-fields">
-          <div class="sim-field">
-            <label for="sim-zone">Zone</label>
-            <select id="sim-zone">
-              <option value="paris">Paris</option>
-              <option value="petite" selected>Petite couronne (92, 93, 94)</option>
-              <option value="grande">Grande couronne (77, 78, 91, 95)</option>
-            </select>
-          </div>
-          <div class="sim-field">
-            <label for="sim-type">Type de logement</label>
-            <select id="sim-type">
-              <option value="studio">Studio</option>
-              <option value="t2" selected>2 pièces</option>
-              <option value="t3">3 pièces</option>
-              <option value="t4">4 pièces et +</option>
-            </select>
-          </div>
-          <div class="sim-field">
-            <label for="sim-standing">Standing</label>
-            <select id="sim-standing">
-              <option value="0.85">Simple</option>
-              <option value="1" selected>Confort</option>
-              <option value="1.18">Haut de gamme</option>
-            </select>
-          </div>
-        </div>
-        <button type="button" class="sim-btn" id="sim-go">Estimer mes revenus</button>
-        <div class="sim-result" id="sim-result" hidden>
-          <div class="sim-result-main">
-            <span class="sim-result-label">Revenus mensuels estimés</span>
-            <span class="sim-result-value" id="sim-value">—</span>
-            <span class="sim-result-sub" id="sim-uplift"></span>
-          </div>
-          <p class="sim-disclaimer">Estimation indicative, hors charges, basée sur un taux d'occupation moyen de 85&nbsp;%. Pour une étude personnalisée et gratuite, <a href="contact.html">contactez-nous</a>.</p>
-          <form class="sim-lead" data-lead="simulateur" novalidate>
-            <p class="sim-lead-title">Recevez votre estimation détaillée, gratuite</p>
-            <p class="sim-lead-sub">Nous l'affinons selon votre adresse, vos équipements et la saisonnalité, et vous la renvoyons sous 24h.</p>
-            <div class="sim-lead-fields">
-              <label class="visually-hidden" for="sim-lead-prenom">Prénom</label>
-              <input id="sim-lead-prenom" name="prenom" type="text" placeholder="Prénom" autocomplete="given-name" required />
-              <label class="visually-hidden" for="sim-lead-contact">Téléphone ou e-mail</label>
-              <input id="sim-lead-contact" name="contact" type="text" placeholder="Téléphone ou e-mail" autocomplete="tel" required />
+      <div class="iv-sim">
+        <div class="sim-card" id="simulateur">
+          <div class="iv-sim-top"><b>Estimez vos revenus</b><span>Gratuit</span></div>
+          <div class="sim-fields">
+            <div class="sim-field">
+              <label for="sim-zone">Zone</label>
+              <select id="sim-zone">
+                <option value="paris">Paris</option>
+                <option value="petite" selected>Petite couronne (92, 93, 94)</option>
+                <option value="grande">Grande couronne (77, 78, 91, 95)</option>
+              </select>
             </div>
-            <button type="submit" class="sim-btn">Recevoir mon estimation détaillée</button>
-            <p class="lead-ok" hidden>Merci ! Nous vous recontactons sous 24h avec votre estimation détaillée.</p>
-            <p class="lead-error" hidden>L'envoi n'a pas abouti. Appelez-nous au <a href="tel:0603236807">06 03 23 68 07</a> ou réessayez.</p>
-            <p class="sim-lead-alt">Vous préférez en parler ? <a href="contact.html" data-calendly>Réservez un appel de 30 min</a></p>
-          </form>
+            <div class="sim-field">
+              <label for="sim-type">Type de logement</label>
+              <select id="sim-type">
+                <option value="studio">Studio</option>
+                <option value="t2" selected>2 pièces</option>
+                <option value="t3">3 pièces</option>
+                <option value="t4">4 pièces et +</option>
+              </select>
+            </div>
+            <div class="sim-field">
+              <label for="sim-standing">Standing</label>
+              <select id="sim-standing">
+                <option value="0.85">Simple</option>
+                <option value="1" selected>Confort</option>
+                <option value="1.18">Haut de gamme</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="sim-btn" id="sim-go">Estimer mes revenus</button>
+          <div class="sim-result" id="sim-result" hidden>
+            <div class="sim-result-main">
+              <span class="sim-result-label">Revenus mensuels estimés</span>
+              <span class="sim-result-value" id="sim-value">—</span>
+              <span class="sim-result-sub" id="sim-uplift"></span>
+            </div>
+            <p class="sim-disclaimer">Estimation indicative, hors charges, basée sur un taux d'occupation moyen de 85&nbsp;%. Pour une étude personnalisée et gratuite, <a href="contact.html">contactez-nous</a>.</p>
+            <form class="sim-lead" data-lead="simulateur" novalidate>
+              <p class="sim-lead-title">Recevez votre estimation détaillée, gratuite</p>
+              <p class="sim-lead-sub">Nous l'affinons selon votre adresse, vos équipements et la saisonnalité, et vous la renvoyons sous 24h.</p>
+              <div class="sim-lead-fields">
+                <label class="visually-hidden" for="sim-lead-prenom">Prénom</label>
+                <input id="sim-lead-prenom" name="prenom" type="text" placeholder="Prénom" autocomplete="given-name" required />
+                <label class="visually-hidden" for="sim-lead-contact">Téléphone ou e-mail</label>
+                <input id="sim-lead-contact" name="contact" type="text" placeholder="Téléphone ou e-mail" autocomplete="tel" required />
+              </div>
+              <button type="submit" class="sim-btn">Recevoir mon estimation détaillée</button>
+              <p class="lead-ok" hidden>Merci ! Nous vous recontactons sous 24h avec votre estimation détaillée.</p>
+              <p class="lead-error" hidden>L'envoi n'a pas abouti. Appelez-nous au <a href="tel:0603236807">06 03 23 68 07</a> ou réessayez.</p>
+              <p class="sim-lead-alt">Vous préférez en parler ? <a href="contact.html" data-calendly>Réservez un appel de 30 min</a></p>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="cta-band">
-    <div class="cta-band-inner">
-      <h2 class="cta-band-title">Votre bien a du <span>potentiel</span>.<br>On s'en occupe.</h2>
-      <p class="cta-band-subtitle">Obtenez une estimation gratuite de vos revenus potentiels en Île-de-France.</p>
-      <div class="cta-band-buttons">
-        <a href="contact.html" class="btn-primary">Prendre rendez-vous</a>
-        <a href="services.html" class="btn-secondary-light">Voir nos services</a>
+  <!-- CHIFFRES -->
+  <section class="x-sec x-dark" style="padding-top: 64px; padding-bottom: 64px;">
+    <div class="x-wrap iv-stats" data-stagger="0.1">
+      <div class="iv-stat" data-anim="up"><strong data-count="4,9" data-suffix="★">4,9★</strong><span>Note moyenne sur Airbnb</span></div>
+      <div class="iv-stat" data-anim="up"><strong data-count="5,0" data-suffix="★">5,0★</strong><span>Avis Google des propriétaires</span></div>
+      <div class="iv-stat" data-anim="up"><strong>7j/7</strong><span>Une équipe disponible</span></div>
+      <div class="iv-stat" data-anim="up"><strong data-count="24" data-suffix="h">24h</strong><span>Pour une estimation détaillée</span></div>
+    </div>
+  </section>
+
+  <!-- ACCOMPAGNEMENT -->
+  <section class="x-sec">
+    <div class="x-wrap">
+      <div class="x-head center" data-anim="up">
+        <span class="x-kicker">Notre accompagnement</span>
+        <h2 class="x-h2">De votre projet <em>aux premiers voyageurs</em></h2>
+        <p class="x-sub">De la recherche du bien à la gestion quotidienne, nous vous accompagnons à chaque étape de votre investissement.</p>
+      </div>
+      <ol class="iv-steps" data-anim="line" data-stagger="0.16">
+        <li class="iv-step" data-anim="up"><span class="iv-step-n">01</span><h3>Conseil et recherche</h3><p>Un accompagnement personnalisé pour définir votre projet et identifier le bien au plus fort potentiel locatif.</p></li>
+        <li class="iv-step" data-anim="up"><span class="iv-step-n">02</span><h3>Préparation</h3><p>Photographe, équipe de ménage et artisans sont mobilisés pour préparer votre logement.</p></li>
+        <li class="iv-step" data-anim="up"><span class="iv-step-n">03</span><h3>Travaux et décoration</h3><p>Nos partenaires architectes et décorateurs mettent votre bien en valeur pour séduire les voyageurs.</p></li>
+        <li class="iv-step" data-anim="up"><span class="iv-step-n">04</span><h3>Gestion des locations</h3><p>Nous prenons en charge toute la gestion, sans aucune intervention de votre part.</p></li>
+      </ol>
+      <div style="text-align: center; margin-top: 52px;" data-anim="fade"><a href="contact.html" class="btn-primary" data-calendly>Commencer mon projet</a></div>
+    </div>
+  </section>
+
+  <!-- AVANTAGES -->
+  <section class="x-sec" style="padding-top: 0;">
+    <div class="x-wrap">
+      <div class="x-head" data-anim="up">
+        <span class="x-kicker">Pourquoi la courte durée</span>
+        <h2 class="x-h2">Les avantages, <em>sans les contraintes</em></h2>
+      </div>
+      <div class="iv-adv">
+        <div class="iv-adv-grid" data-stagger="0.08">
+          <article class="iv-tile" data-anim="up"><div class="iv-ico"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div><h3>Un potentiel de revenus supérieur</h3><p>Des prix fixés chaque nuit selon la demande, souvent plus rémunérateurs qu'un loyer classique selon la zone.</p></article>
+          <article class="iv-tile" data-anim="up"><div class="iv-ico"><svg viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L21 2m-4 4l3 3m-6 0l2 2"/></svg></div><h3>Une flexibilité totale</h3><p>Récupérez votre logement quand vous en avez besoin, sans bail de longue durée.</p></article>
+          <article class="iv-tile" data-anim="up"><div class="iv-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Un bien entretenu</h3><p>Ménage professionnel après chaque séjour et état du logement contrôlé en permanence.</p></article>
+          <article class="iv-tile" data-anim="up"><div class="iv-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 17v-5m5 5V8m5 9v-9"/></svg></div><h3>Un suivi transparent</h3><p>Un rapport mensuel détaillé de vos réservations et de vos revenus.</p></article>
+        </div>
+        <div class="iv-photo" data-anim="fade"><img src="img/1600210491892-03d54c0aaf87-1000.webp" alt="Séjour lumineux d'un appartement en location courte durée" loading="lazy" width="1000" height="667" /></div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section class="x-sec" style="padding-top: 0;">
+    <div class="x-wrap">
+      <div class="x-head split" data-anim="up">
+        <div>
+          <span class="x-kicker">Avant d'investir</span>
+          <h2 class="x-h2">Nos guides <em>pour bien décider</em></h2>
+        </div>
+        <a href="conseils.html" class="x-link">Tous nos conseils →</a>
+      </div>
+      <div class="iv-guides" data-stagger="0.1">
+        <a class="iv-guide" href="combien-rapporte-un-airbnb-ile-de-france.html" data-anim="up"><span>Revenus</span><h3>Combien rapporte un Airbnb en Île-de-France&nbsp;?</h3><b>Lire →</b></a>
+        <a class="iv-guide" href="location-courte-ou-longue-duree.html" data-anim="up"><span>Stratégie</span><h3>Location courte ou longue durée : que choisir&nbsp;?</h3><b>Lire →</b></a>
+        <a class="iv-guide" href="guide-location-courte-duree-paris.html" data-anim="up"><span>Règles</span><h3>Louer en courte durée à Paris : les règles</h3><b>Lire →</b></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DERNIER APPEL -->
+  <section class="x-final">
+    <div class="x-wrap x-final-box" data-anim="scale">
+      <div>
+        <h2 class="x-h2">Votre bien a du potentiel. <em>On s'en occupe.</em></h2>
+        <p class="x-sub">Estimation gratuite de vos revenus en Île-de-France, réponse sous 24h.</p>
+      </div>
+      <div class="x-final-ctas">
+        <a href="#simulateur" class="btn-primary">Estimer mes revenus</a>
+        <a href="contact.html" class="btn-secondary-light" data-calendly>Réserver un appel</a>
+      </div>
+    </div>
+  </section>
+
+</main>
 
   <!-- NOSCRIPT:start -->
   <noscript>
@@ -411,8 +320,10 @@
         <a href="conciergerie-airbnb-creteil.html">Créteil</a>
         <a href="conciergerie-airbnb-versailles.html">Versailles</a>
         <a href="conciergerie-airbnb-massy.html">Massy</a>
+        <a href="conciergerie-hauts-de-seine.html">Tout le 92</a>
+        <a href="conciergerie-val-de-marne.html">Tout le 94</a>
       </p>
-      <p><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></p>
+      <p><a href="conseils.html">Conseils propriétaires</a> · <a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a> · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a></p>
     </div>
   </noscript>
   <!-- NOSCRIPT:end -->

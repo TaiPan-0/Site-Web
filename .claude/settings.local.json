@@ -109,7 +109,15 @@
       "Bash(sed -i 's/aux Hauts-de-Seine, au Val-de-Marne et aux Yvelines\\\\.</aux Hauts-de-Seine, au Val-de-Marne, aux Yvelines et à l\\\\x27Essonne.</; s/ainsi que dans les communes voisines : @@NEAR@@/ainsi que dans les secteurs voisins : @@NEAR@@/g' city_tpl.html)",
       "Bash(bash gen_cities.sh)",
       "mcp__f5570cbd-45d8-41dd-95d1-80f610786f18__search_threads",
-      "Bash(grep -n '^main\\\\|[ ,]main[ {,]' style.css)"
+      "Bash(grep -n '^main\\\\|[ ,]main[ {,]' style.css)",
+      "Bash(perl -pi -e 's#<p><a href=\"guide-location-courte-duree-paris.html\">Louer à Paris : les règles</a> · #<p><a href=\"conseils.html\">Conseils propriétaires</a> · <a href=\"guide-location-courte-duree-paris.html\">Louer à Paris : les règles</a> · #' __TRACKED_VAR__/apply_noscript.sh)",
+      "Bash(bash __TRACKED_VAR__/apply_noscript.sh)",
+      "Bash(perl -0pi -e 's#<p style=\"margin-top: 28px;\"><a href=\"faq.html\" class=\"x-link\">Toutes les questions →</a></p>#<p style=\"margin-top: 28px; display: flex; flex-wrap: wrap; gap: 14px 26px;\"><a href=\"faq.html\" class=\"x-link\">Toutes les questions →</a><a href=\"conseils.html\" class=\"x-link\">Nos conseils →</a></p>#' index.html)",
+      "Bash(perl -0pi -e 's#\\(      <a href=\"conciergerie-airbnb-massy.html\">Massy</a>\\\\n\\)#$1      <a href=\"conciergerie-hauts-de-seine.html\">Tout le 92</a>\\\\n      <a href=\"conciergerie-val-de-marne.html\">Tout le 94</a>\\\\n#' components.js)",
+      "Bash(perl -0pi -e 's#aux Hauts-de-Seine, au Val-de-Marne, aux Yvelines#aux <a href=\"conciergerie-hauts-de-seine.html\" style=\"color: var\\(--gold-dark\\); font-weight: 600;\">Hauts-de-Seine</a>, au <a href=\"conciergerie-val-de-marne.html\" style=\"color: var\\(--gold-dark\\); font-weight: 600;\">Val-de-Marne</a>, aux Yvelines#' index.html)",
+      "Bash(perl -0pi -e 's#\\(  <url>\\\\n    <loc>https://madysconciergerie.com/conciergerie-airbnb-paris.html</loc>\\)#  <url>\\\\n    <loc>https://madysconciergerie.com/conciergerie-hauts-de-seine.html</loc>\\\\n    <lastmod>2026-10-16</lastmod>\\\\n    <changefreq>monthly</changefreq>\\\\n    <priority>0.9</priority>\\\\n  </url>\\\\n  <url>\\\\n    <loc>https://madysconciergerie.com/conciergerie-val-de-marne.html</loc>\\\\n    <lastmod>2026-10-16</lastmod>\\\\n    <changefreq>monthly</changefreq>\\\\n    <priority>0.9</priority>\\\\n  </url>\\\\n$1#' sitemap.xml)",
+      "Bash(perl -pi -e 's#grep -o '\\\\''<a href=\"conciergerie-airbnb-\\\\[\\\\^\"\\\\]\\\\*\">\\\\[\\\\^<\\\\]\\\\*</a>'\\\\'' components.js#grep -o '\\\\''<a href=\"conciergerie-[^\"]*\">[^<]*</a>'\\\\'' components.js#' __TRACKED_VAR__/apply_noscript.sh)",
+      "Bash(grep -n 'grep -o' __TRACKED_VAR__/apply_noscript.sh)"
     ]
   }
 }

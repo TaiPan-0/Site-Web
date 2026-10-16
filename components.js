@@ -305,7 +305,7 @@
   window.addEventListener('scroll', () => {
     if (!scrollTicking) { scrollTicking = true; window.requestAnimationFrame(onScrollFrame); }
   }, { passive: true });
-  onScrollFrame();
+  requestAnimationFrame(onScrollFrame);
 
   // Scroll reveal animations
   if (!reduceMotion && 'IntersectionObserver' in window) {

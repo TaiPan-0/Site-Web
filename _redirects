@@ -2,7 +2,3 @@
 # pour que Google ne voie qu'une seule version de chaque page.
 https://peppy-stroopwafel-658bb6.netlify.app/*  https://madysconciergerie.com/:splat  301!
 http://www.madysconciergerie.com/*              https://madysconciergerie.com/:splat  301!
-
-# Une seule adresse par page : /services renvoie vers /services.html (l'adresse déclarée à Google).
-# Netlify n'applique pas cette règle quand un fichier existe déjà à l'adresse demandée (images, sitemap…).
-/:page  /:page.html  301

@@ -254,6 +254,27 @@
     @keyframes xRise { from { opacity: 0.01; transform: translateY(22px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .x-hero-copy > *, .x-simcard { animation: none; } }
 
+    /* ── Avis des propriétaires ── */
+    .x-owners { background: #fff; border-top: 1px solid var(--line); }
+    .x-owners-grid { display: grid; grid-template-columns: 340px 1fr; gap: 48px; align-items: start; }
+    .x-reel { position: sticky; top: 100px; margin: 0; }
+    .x-reel video { display: block; width: 100%; aspect-ratio: 9 / 16; height: auto; border-radius: 28px; background: #0F1117; box-shadow: 0 40px 80px rgba(20,22,29,0.22); border: 6px solid var(--ink); }
+    .x-reel figcaption { margin-top: 14px; text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+    .x-owner-quotes { display: grid; gap: 20px; }
+    .x-owner { margin: 0; background: var(--cream); border: 1px solid var(--line); border-radius: 24px; padding: 34px 36px; }
+    .x-owner-stars { color: var(--gold); letter-spacing: 3px; margin-bottom: 16px; }
+    .x-owner blockquote p { font-size: 1.02rem; line-height: 1.8; color: var(--ink); }
+    .x-owner blockquote p + p { margin-top: 12px; }
+    .x-owner figcaption { display: flex; align-items: center; gap: 14px; margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--muted); }
+    .x-owner figcaption b { display: block; font-size: 0.98rem; color: var(--ink); }
+    .x-owner-av { width: 46px; height: 46px; flex-shrink: 0; border-radius: 50%; background: var(--ink); color: var(--gold); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; }
+    @media (max-width: 900px) {
+      .x-owners-grid { grid-template-columns: 1fr; gap: 28px; }
+      .x-reel { position: static; max-width: 300px; margin: 0 auto; }
+      .x-owner { padding: 26px 22px; border-radius: 20px; }
+      .x-owner blockquote p { font-size: 0.96rem; }
+    }
+
     /* ══ Mise en scène au défilement ══ */
     /* Surlignage doré du titre qui se trace après l'arrivée du texte */
     .anim-ready .x-h1 em { background-size: 0% 100%; background-repeat: no-repeat; animation: xHighlight 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.75s forwards; }
@@ -358,8 +379,8 @@
         <p class="x-lead">MADYS gère votre location courte durée de A à Z en Île-de-France : annonces, voyageurs, ménage, linge et maintenance. Vous encaissez, nous gérons.</p>
         <ul class="x-checks">
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Commission sur le bénéfice net</li>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Aucun frais fixe</li>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Résiliable avec un mois de préavis</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Pas d'abonnement mensuel</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Estimation gratuite sous 24h</li>
         </ul>
         <div class="x-hero-ctas">
           <a href="contact.html" class="x-btn-dark" data-calendly>Réserver un appel de 30 min</a>
@@ -500,8 +521,7 @@
         <h2 class="x-h2">Nous gagnons <em>quand vous gagnez.</em></h2>
         <p class="x-sub">Notre commission est calculée uniquement sur votre bénéfice net. Son taux dépend du nombre de logements que vous nous confiez.</p>
         <ul class="x-promises">
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Aucun frais fixe ni frais caché</b><span>Pas d'abonnement : tous nos services sont inclus.</span></div></li>
-          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Résiliable avec un mois de préavis</b><span>Vous restez libre, à tout moment.</span></div></li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Pas d'abonnement mensuel</b><span>Seul le forfait photos est facturé à part ; le ménage est payé par les voyageurs.</span></div></li>
           <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg><div><b>Estimation gratuite sous 24h</b><span>Sans engagement.</span></div></li>
         </ul>
       </div>
@@ -527,6 +547,46 @@
         <li class="x-step" data-anim="up"><span class="x-step-n">02</span><h3>La visite du logement</h3><p>Nous évaluons son potentiel et vous proposons un plan d'action personnalisé.</p></li>
         <li class="x-step" data-anim="up"><span class="x-step-n">03</span><h3>Le lancement</h3><p>Shooting photo, annonces en ligne, premiers voyageurs accueillis : tout est géré.</p></li>
       </ol>
+    </div>
+  </section>
+
+  <!-- 5 bis. AVIS DES PROPRIÉTAIRES -->
+  <section class="x-sec x-owners">
+    <div class="x-wrap">
+      <div class="x-head" data-anim="up">
+        <span class="x-kicker">Avis de propriétaires</span>
+        <h2 class="x-h2">Ils nous ont confié <em>leur logement</em></h2>
+        <p class="x-sub">Ce que disent les propriétaires dont nous gérons les locations, avec leurs propres mots.</p>
+      </div>
+      <div class="x-owners-grid">
+        <figure class="x-reel" data-anim="scale">
+          <video controls playsinline preload="none" poster="temoignage-anne-laure-poster.jpg" width="1080" height="1920"
+                 aria-label="Témoignage vidéo d'Anne-Laure G., propriétaire du logement Chez Laurette">
+            <source src="temoignage-anne-laure.mp4" type="video/mp4" />
+            Votre navigateur ne peut pas lire cette vidéo.
+          </video>
+          <figcaption>Anne-Laure raconte son expérience · 1 min 20</figcaption>
+        </figure>
+        <div class="x-owner-quotes" data-stagger="0.14">
+          <figure class="x-owner" data-anim="up">
+            <div class="x-owner-stars" aria-label="Avis très positif">★★★★★</div>
+            <blockquote>
+              <p>« Je suis globalement très satisfaite des services de Madys Conciergerie. Ils ont permis d'augmenter mon taux de remplissage, c'est très clair : je le vois sur septembre et octobre. Normalement, à partir de mi-août, j'ai un peu moins de réservations, ce sont les mois creux, et là ça fonctionne très bien.</p>
+              <p>Vous êtes très réactif, disponible, d'une grande gentillesse, et vous cherchez en permanence à améliorer vos prestations. Grâce à votre formation, vous êtes très performant sur tout ce qui est numérique et plateformes ; j'ai notamment été impressionnée par le livret d'accueil. Vous cherchez toujours à améliorer le séjour des locataires, vous accompagnez très bien vos clients, et dès que vous savez qu'une plateforme est plus performante, vous en faites profiter vos clients.</p>
+              <p>Je recommande vivement votre conciergerie, j'en parle d'ailleurs autour de moi. »</p>
+            </blockquote>
+            <figcaption><span class="x-owner-av">AG</span><span><b>Anne-Laure G.</b>Propriétaire du logement « Chez Laurette »</span></figcaption>
+          </figure>
+          <figure class="x-owner" data-anim="up">
+            <div class="x-owner-stars" aria-label="Avis très positif">★★★★★</div>
+            <blockquote>
+              <p>« Je suis vraiment très contente de notre collaboration et de ce qui a été mis en place. J'apprécie beaucoup ton professionnalisme, ta disponibilité, ton écoute et surtout ton accompagnement. C'est très agréable de pouvoir compter sur quelqu'un de confiance, qui est investi et qui cherche toujours à faire au mieux.</p>
+              <p>Je suis satisfaite du travail réalisé et de l'évolution depuis qu'on travaille ensemble. C'est un vrai plus de pouvoir déléguer certaines choses sereinement et de se sentir accompagnée. Merci à toi pour ton implication, ta gentillesse et ton sérieux ! »</p>
+            </blockquote>
+            <figcaption><span class="x-owner-av">EA</span><span><b>Esma A.</b>Propriétaire</span></figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -658,21 +718,14 @@
             Combien coûte MADYS ?
             <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
           </button>
-          <div class="faq-answer"><p>Une commission calculée uniquement sur le bénéfice net, après déduction des frais de ménage et des frais de plateforme. Son taux dépend du nombre de logements que vous nous confiez. Aucun frais fixe.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question">
-            Suis-je engagé sur une longue durée ?
-            <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
-          </button>
-          <div class="faq-answer"><p>Non. Le contrat de gestion est résiliable à tout moment avec un mois de préavis. Le premier échange et l'estimation sont gratuits et sans engagement.</p></div>
+          <div class="faq-answer"><p>Une commission calculée uniquement sur le bénéfice net, après déduction des frais de ménage et des frais de plateforme. Son taux dépend du nombre de logements que vous nous confiez. Pas d'abonnement mensuel.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question">
             Que comprend la gestion ?
             <div class="faq-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
           </button>
-          <div class="faq-answer"><p>Annonces et photos professionnelles, accueil et communication avec les voyageurs, ménage et linge, maintenance, tarification dynamique et suivi de vos revenus. La fiche de bienvenue et le livret d'accueil digital sont offerts. <a href="services.html" style="color: var(--gold-dark);">Voir nos services</a>.</p></div>
+          <div class="faq-answer"><p>Annonces et photos professionnelles, accueil et communication avec les voyageurs, organisation du ménage, du linge et de la petite maintenance, tarification dynamique et suivi de vos revenus. Seul le forfait photos est facturé à part, le ménage étant payé par les voyageurs ; la fiche de bienvenue et le livret d'accueil digital sont offerts. <a href="services.html" style="color: var(--gold-dark);">Voir nos services</a>.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-question">

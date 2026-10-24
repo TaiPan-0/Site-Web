@@ -211,7 +211,7 @@
   const landingFooterHTML = `
   <footer class="landing-footer">
     <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Madys Conciergerie · Malakoff, Île-de-France</p>
+      <p class="footer-copy">© 2026 Madys Conciergerie · Île-de-France</p>
       <div class="footer-legal">
         <a href="mentions-legales.html">Mentions Légales</a>
         <a href="confidentialite.html">Confidentialité</a>

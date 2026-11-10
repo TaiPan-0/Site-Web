@@ -936,6 +936,7 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
   padding: 15px 18px; font-size: 0.9rem; color: var(--dark); line-height: 1.6;
 }
 .city-points li::before { content: ''; flex-shrink: 0; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: var(--gold); }
+.city-proof { margin-top: 22px; padding: 14px 18px; border-left: 3px solid var(--gold); background: rgba(201,168,76,0.08); border-radius: 6px; font-size: 0.95rem; }
 .city-intro-img { width: 100%; height: 440px; object-fit: cover; border-radius: 16px; display: block; box-shadow: var(--shadow); }
 .city-services { background: var(--white); }
 .city-services-inner { max-width: 1200px; margin: 0 auto; }

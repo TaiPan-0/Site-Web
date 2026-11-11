@@ -86,7 +86,7 @@
         <ul class="footer-links">
           <li><a href="faq.html">Questions fréquentes</a></li>
           <li><a href="conseils.html">Conseils propriétaires</a></li>
-          <li><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a></li>
+          <li><a href="louer-airbnb-sans-compensation-ile-de-france.html">Louer sans compensation</a></li>          <li><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a></li>
           <li><a href="mentions-legales.html">Mentions Légales</a></li>
           <li><a href="confidentialite.html">Politique de Confidentialité</a></li>
         </ul>

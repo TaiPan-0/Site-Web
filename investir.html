@@ -49,31 +49,31 @@
     .iv-sim .sim-btn { margin-top: 20px; }
     .iv-sim .sim-lead { background: var(--cream); }
     .iv-sim-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .iv-sim-top b { font-size: 1.12rem; font-weight: 600; color: var(--ink); }
-    .iv-sim-top span { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; color: var(--gold-dark); background: rgba(201,168,76,0.14); padding: 6px 10px; border-radius: 100px; }
+    .iv-sim-top b { font-size: 1.125rem; font-weight: 600; color: var(--ink); }
+    .iv-sim-top span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; color: var(--gold-dark); background: rgba(201,168,76,0.14); padding: 6px 10px; border-radius: 100px; }
 
     .iv-stats { display: grid; grid-template-columns: repeat(4, 1fr); }
     .iv-stat { padding: 8px 28px; text-align: center; }
     .iv-stat + .iv-stat { border-left: 1px solid rgba(255,255,255,0.12); }
     .iv-stat strong { display: block; font-size: clamp(2rem, 3.6vw, 2.8rem); font-weight: 600; letter-spacing: -0.03em; color: #fff; }
-    .iv-stat span { font-size: 0.86rem; color: rgba(255,255,255,0.6); }
+    .iv-stat span { font-size: 0.875rem; color: rgba(255,255,255,0.6); }
 
     .iv-steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
-    .iv-steps::before { content: ''; position: absolute; top: 27px; left: 6%; right: 6%; height: 1px; background: linear-gradient(90deg, var(--gold), var(--line)); transform-origin: left; transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1) 0.1s; }
+    .iv-steps::before { content: ''; position: absolute; top: 27px; left: 6%; right: 6%; height: 1px; background: linear-gradient(90deg, var(--gold), var(--line)); transform-origin: left; transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.1s; }
     .anim-ready .iv-steps:not(.in)::before { transform: scaleX(0); }
     .iv-step { padding: 0 20px; text-align: center; }
     .iv-step-n { width: 56px; height: 56px; margin: 0 auto 22px; border-radius: 50%; background: var(--cream); border: 1.5px solid var(--gold); color: var(--gold-dark); font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; transition: background 0.8s ease, color 0.8s ease; transition-delay: calc(var(--d, 0s) + 0.4s); }
     .anim-ready .iv-step.in .iv-step-n { background: var(--ink); color: var(--gold); }
-    .iv-step h3 { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
-    .iv-step p { font-size: 0.9rem; line-height: 1.65; color: var(--muted); }
+    .iv-step h3 { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+    .iv-step p { font-size: 0.875rem; line-height: 1.65; color: var(--muted); }
 
     .iv-adv { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .iv-adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .iv-tile { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px 26px; }
     .iv-ico { width: 46px; height: 46px; border-radius: 14px; background: var(--cream); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
     .iv-ico svg { width: 21px; height: 21px; stroke: var(--gold-dark); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .iv-tile h3 { font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
-    .iv-tile p { font-size: 0.9rem; line-height: 1.65; color: var(--muted); }
+    .iv-tile h3 { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .iv-tile p { font-size: 0.875rem; line-height: 1.65; color: var(--muted); }
     .iv-photo { position: relative; border-radius: 22px; overflow: hidden; min-height: 420px; }
     .iv-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.8s cubic-bezier(0.22, 1, 0.36, 1); }
     .anim-ready .iv-photo:not(.in) img { transform: scale(1.12); }
@@ -81,13 +81,12 @@
     .iv-guides { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .iv-guide { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px 26px; text-decoration: none; transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
     .iv-guide:hover { transform: translateY(-5px); box-shadow: 0 24px 50px rgba(20,22,29,0.08); border-color: rgba(201,168,76,0.5); }
-    .iv-guide span { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; color: var(--gold-dark); }
-    .iv-guide h3 { font-size: 1.12rem; font-weight: 600; color: var(--ink); line-height: 1.3; margin: 12px 0 auto; padding-bottom: 18px; }
-    .iv-guide b { font-size: 0.86rem; color: var(--ink); }
+    .iv-guide span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; color: var(--gold-dark); }
+    .iv-guide h3 { font-size: 1.125rem; font-weight: 600; color: var(--ink); line-height: 1.3; margin: 12px 0 auto; padding-bottom: 18px; }
+    .iv-guide b { font-size: 0.875rem; color: var(--ink); }
 
-    .x-phero-grid > * { animation: ivRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .x-phero-grid > :nth-child(2) { animation-delay: 0.15s; }
-    @keyframes ivRise { from { opacity: 0.01; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    .x-phero-grid > * { animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .x-phero-grid > :nth-child(2) { animation-delay: 0.15s; }
     @media (prefers-reduced-motion: reduce) { .x-phero-grid > * { animation: none; } }
 
     @media (max-width: 1080px) { .iv-guides { grid-template-columns: 1fr 1fr; } }

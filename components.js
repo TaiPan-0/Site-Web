@@ -510,7 +510,7 @@
       });
       card.addEventListener('mouseleave', () => {
         if (raf) { cancelAnimationFrame(raf); raf = null; }
-        card.style.transition = 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease';
+        card.style.transition = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease';
         card.style.transform = '';
         setTimeout(() => { card.style.transition = ''; }, 600);
       });

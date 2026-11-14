@@ -55,18 +55,18 @@
     .gs-copy h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 600; letter-spacing: -0.025em; color: var(--ink); margin: 18px 0 14px; }
     .gs-copy > p { font-size: 1rem; line-height: 1.75; color: var(--muted); }
     .gs-copy ul { list-style: none; margin-top: 22px; display: grid; gap: 10px; }
-    .gs-copy li { display: flex; gap: 12px; font-size: 0.94rem; color: var(--ink); }
+    .gs-copy li { display: flex; gap: 12px; font-size: 0.9375rem; color: var(--ink); }
     .gs-copy li::before { content: '✓'; color: var(--gold-dark); font-weight: 600; }
-    .gs-you { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; align-self: flex-start; font-size: 0.78rem; font-weight: 600; color: var(--ink); background: var(--cream); border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; }
+    .gs-you { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; align-self: flex-start; font-size: 0.75rem; font-weight: 600; color: var(--ink); background: var(--cream); border: 1px solid var(--line); border-radius: 100px; padding: 8px 14px; }
     .gs-you b { color: var(--gold-dark); }
 
     /* Carte du hero : votre rôle */
     .gs-role { display: grid; gap: 14px; margin-top: 4px; }
     .gs-role-row { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; background: var(--cream); }
-    .gs-role-row span { width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--ink); color: var(--gold); font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; }
-    .gs-role-row b { display: block; font-size: 0.95rem; color: var(--ink); }
-    .gs-role-row small { font-size: 0.82rem; color: var(--muted); }
-    .gs-role-foot { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink); font-weight: 600; }
+    .gs-role-row span { width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%; background: var(--ink); color: var(--gold); font-weight: 600; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; }
+    .gs-role-row b { display: block; font-size: 0.9375rem; color: var(--ink); }
+    .gs-role-row small { font-size: 0.8125rem; color: var(--muted); }
+    .gs-role-foot { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.875rem; color: var(--ink); font-weight: 600; }
     .gs-role-foot em { font-style: normal; color: var(--gold-dark); }
 
     /* Après le lancement */
@@ -74,14 +74,13 @@
     .gs-tile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 30px 26px; }
     .gs-ico { width: 48px; height: 48px; border-radius: 14px; background: rgba(201,168,76,0.14); display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
     .gs-ico svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .gs-tile h3 { font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
-    .gs-tile p { font-size: 0.9rem; line-height: 1.65; color: rgba(255,255,255,0.65); }
+    .gs-tile h3 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .gs-tile p { font-size: 0.875rem; line-height: 1.65; color: rgba(255,255,255,0.65); }
 
     .gs-faq { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
 
-    .x-phero-grid > * { animation: gsRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .x-phero-grid > :nth-child(2) { animation-delay: 0.15s; }
-    @keyframes gsRise { from { opacity: 0.01; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    .x-phero-grid > * { animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .x-phero-grid > :nth-child(2) { animation-delay: 0.15s; }
     @media (prefers-reduced-motion: reduce) { .x-phero-grid > * { animation: none; } }
 
     @media (max-width: 1080px) { .gs-after { grid-template-columns: 1fr 1fr; } }

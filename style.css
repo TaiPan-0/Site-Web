@@ -920,6 +920,8 @@ img.img-in:not(.reveal) { animation: imgIn 0.6s ease both; }
 .city-others { background: var(--white); padding-top: 56px; padding-bottom: 56px; text-align: center; }
 .city-others-lead { color: var(--grey); font-size: 0.9375rem; max-width: 640px; margin: 10px auto 0; }
 .city-others-lead a { color: var(--gold-dark); font-weight: 600; }
+.city-guide-more { color: var(--grey); font-size: 0.9375rem; text-align: center; max-width: 760px; margin: 24px auto 0; line-height: 1.7; }
+.city-guide-more a { color: var(--gold-dark); font-weight: 600; }
 .city-others-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 22px; max-width: 1100px; margin-left: auto; margin-right: auto; }
 .city-others-links a {
   padding: 10px 20px; border: 1px solid var(--grey-light); border-radius: 100px;

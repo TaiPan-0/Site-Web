@@ -86,7 +86,7 @@
         <ul class="footer-links">
           <li><a href="faq.html">Questions fréquentes</a></li>
           <li><a href="conseils.html">Conseils propriétaires</a></li>
-          <li><a href="louer-airbnb-sans-compensation-ile-de-france.html">Louer sans compensation</a></li>          <li><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a></li>
+          <li><a href="louer-airbnb-sans-compensation-ile-de-france.html">Louer sans compensation</a></li><li><a href="louer-airbnb-stade-de-france.html">Louer près du Stade de France</a></li><li><a href="airbnb-pres-de-disneyland-paris.html">Louer près de Disneyland Paris</a></li><li><a href="airbnb-pres-aeroport-orly.html">Louer près d'Orly</a></li><li><a href="location-courte-duree-pres-hopital.html">Louer près d'un hôpital</a></li>          <li><a href="guide-location-courte-duree-paris.html">Louer à Paris : les règles</a></li>
           <li><a href="mentions-legales.html">Mentions Légales</a></li>
           <li><a href="confidentialite.html">Politique de Confidentialité</a></li>
         </ul>

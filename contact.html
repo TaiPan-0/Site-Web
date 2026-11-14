@@ -48,7 +48,7 @@
     a.ct-way:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 16px 34px rgba(20,22,29,0.06); }
     .ct-ico { width: 46px; height: 46px; flex-shrink: 0; border-radius: 14px; background: var(--ink); display: flex; align-items: center; justify-content: center; }
     .ct-ico svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .ct-way small { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+    .ct-way small { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; color: var(--muted); margin-bottom: 3px; }
     .ct-way b { font-size: 1rem; color: var(--ink); word-break: break-word; }
     .ct-social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
     .ct-social a { font-size: 0.84rem; font-weight: 600; color: var(--ink); text-decoration: none; border: 1px solid var(--line); background: #fff; border-radius: 100px; padding: 9px 16px; transition: border-color 0.25s ease, color 0.25s ease; }
@@ -56,16 +56,16 @@
 
     .ct-form { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 36px 34px; box-shadow: 0 40px 80px rgba(20,22,29,0.08); }
     .ct-form .booking-card { background: var(--cream); border: 1px solid var(--line); border-radius: 18px; }
-    .form-title { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 6px; }
+    .form-title { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 6px; }
     .form-subtitle { font-size: 0.9rem; color: var(--muted); margin-bottom: 26px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-bottom: 7px; letter-spacing: 0.04em; }
+    .form-label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 7px; letter-spacing: 0.04em; }
     .form-control { width: 100%; padding: 13px 14px; border: 1.5px solid var(--line); border-radius: 10px; font-family: 'Montserrat', 'Montserrat Fallback', sans-serif; font-size: 0.92rem; color: var(--ink); background: var(--cream); transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; outline: none; }
     .form-control:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); background: #fff; }
     textarea.form-control { resize: vertical; min-height: 120px; }
     select.form-control { cursor: pointer; }
-    .form-submit { width: 100%; padding: 16px; background: var(--ink); color: #fff; border: none; border-radius: 10px; font-family: 'Montserrat', 'Montserrat Fallback', sans-serif; font-size: 0.86rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+    .form-submit { width: 100%; padding: 16px; background: var(--ink); color: #fff; border: none; border-radius: 10px; font-family: 'Montserrat', 'Montserrat Fallback', sans-serif; font-size: 0.86rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
     .form-submit:hover { background: #262a36; transform: translateY(-2px); }
     .form-note { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 12px; }
     .form-trust { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 22px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
@@ -74,14 +74,14 @@
 
     .ct-next { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .ct-next li { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 22px; padding: 30px 26px; }
-    .ct-next span { display: block; font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1.4px var(--gold); line-height: 1; margin-bottom: 18px; transition: color 0.8s ease; transition-delay: calc(var(--d, 0s) + 0.4s); }
+    .ct-next span { display: block; font-size: 2.4rem; font-weight: 600; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1.4px var(--gold); line-height: 1; margin-bottom: 18px; transition: color 0.8s ease; transition-delay: calc(var(--d, 0s) + 0.4s); }
     .anim-ready .ct-next li.in span { color: var(--gold); }
-    .ct-next h3 { font-size: 1.08rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .ct-next h3 { font-size: 1.08rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
     .ct-next p { font-size: 0.9rem; line-height: 1.65; color: rgba(255,255,255,0.65); }
 
     .ct-review { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 34px 38px; }
     .ct-review-score { display: flex; align-items: center; gap: 16px; }
-    .ct-review-score strong { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; color: var(--ink); }
+    .ct-review-score strong { font-size: 2.6rem; font-weight: 600; letter-spacing: -0.03em; color: var(--ink); }
     .ct-review-score span { font-size: 0.9rem; color: var(--muted); line-height: 1.45; }
     .ct-review-score em { font-style: normal; color: var(--gold); letter-spacing: 3px; display: block; }
 
